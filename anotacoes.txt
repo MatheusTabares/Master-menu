@@ -1,4 +1,5 @@
-tutorial web service restfull com spring boot:
+*tutorial web service restfull com spring boot:
 	http://blog.algaworks.com/como-criar-web-services-restful-com-spring-boot/
 
-instalar extensão POSTMAN no Crhome para testes de requisição;
+*instalar extensão POSTMAN no Crhome para testes de requisição;
+*DEVMEDIA:join.tecnologia / devmedia241010

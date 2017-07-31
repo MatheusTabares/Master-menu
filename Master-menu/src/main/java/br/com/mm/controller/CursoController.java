@@ -1,4 +1,4 @@
-package br.com.mm.resource;
+package br.com.mm.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.mm.model.Curso;
 
 @RestController
-public class CursoResource {
+public class CursoController {
 	private Map<Integer, Curso> cursos;
 
-	public CursoResource() {
+	public CursoController() {
 		cursos = new HashMap<Integer, Curso>();
 		
 		Curso c1 = new Curso(1, "Curso 1", "24hs");
