@@ -7,18 +7,39 @@ import java.util.Optional;
 import br.com.mastermenu.solicitation.model.Solicitation;
 
 public class SolicitationDAOInMemory implements SolicitationDAO {
-
-	@Override
-	public List<Solicitation> list() {
+	private Solicitation s1;
+	private Solicitation s2;
+	private Solicitation s3;
+	private List<Solicitation> list = new ArrayList<>();
+	
+	public SolicitationDAOInMemory() {
 		Solicitation s1 = new Solicitation(1, "Pedido 1", Optional.of("Descrição 1"));
 		Solicitation s2 = new Solicitation(2, "Pedido 2", Optional.of("Descrição 2"));
 		Solicitation s3 = new Solicitation(3, "Pedido 3", Optional.of("Descrição 3"));
-		List<Solicitation> list = new ArrayList<>();
 		list.add(s1);
 		list.add(s2);
 		list.add(s3); 
-		
+	}
+
+	@Override
+	public List<Solicitation> list() {
 		return list;
+	}
+
+	@Override
+	public Solicitation findById(int id) {
+		for(Solicitation solicitation : list) {
+			if(solicitation.getId().equals(id)) {
+				return solicitation;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Solicitation insert(Solicitation solicitation) {
+		list.add(solicitation);
+		return solicitation;
 	}
 	
 }

@@ -6,4 +6,8 @@ import br.com.mastermenu.solicitation.model.Solicitation;
 
 public interface SolicitationDAO {
 	public List<Solicitation> list();
+	
+	public Solicitation findById(int id);
+	
+	public Solicitation insert(Solicitation solicitation);
 }
