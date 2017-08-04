@@ -52,6 +52,16 @@ public class Application {
 				return "Solicitation not found for update!";
 			}
 		});
+		
+		delete(mastermenu + "/solicitation", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			if (solicitationService.delete(id)) {
+				return true;
+			} else {
+				res.status(404);
+				return false;
+			}
+		});
 	}
 	
 	private static Solicitation parseSolicitationFromBody(String body) {

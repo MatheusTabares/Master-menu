@@ -39,6 +39,15 @@ public class SolicitationServiceImp implements SolicitationService {
 		return null;
 	}
 	
+	@Override
+	public boolean delete(int id) {
+		Optional<Solicitation> solicitation = solicitationDAO.findById(id);
+		if(solicitation.isPresent()) {
+			return solicitationDAO.delete(id);
+		}
+		return false;
+	}
+	
 	private boolean validateSolicitation(Solicitation solicitation) {
 		if(!solicitation.getTitle().isEmpty() && solicitation.getTitle().trim().equals("")) {
 			return false;

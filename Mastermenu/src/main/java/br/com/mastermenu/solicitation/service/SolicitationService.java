@@ -12,4 +12,6 @@ public interface SolicitationService {
 	public Solicitation insert(Solicitation solicitation);
 	
 	public Solicitation update(int indexSolicitation, Solicitation solicitation);
+	
+	public boolean delete(int id);
 }

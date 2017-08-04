@@ -47,5 +47,11 @@ public class SolicitationDAOInMemory implements SolicitationDAO {
 		list.set(indexSolicitation, solicitationUpdated);
 		return list.get(indexSolicitation);
 	}
+
+	@Override
+	public boolean delete(int id) {
+		list.remove(id);
+		return true;
+	}
 	
 }
