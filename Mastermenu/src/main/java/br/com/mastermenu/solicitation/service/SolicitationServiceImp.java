@@ -19,7 +19,7 @@ public class SolicitationServiceImp implements SolicitationService {
 	}
 
 	@Override
-	public Solicitation findById(int id) {
+	public Optional<Solicitation> findById(int id) {
 		return solicitationDAO.findById(id);   
 	}
 
@@ -30,9 +30,17 @@ public class SolicitationServiceImp implements SolicitationService {
 		}
 		return null;
 	}
+
+	@Override
+	public Solicitation update(int indexSolicitation, Solicitation solicitation) {
+		if(validateSolicitation(solicitation)) {
+			return solicitationDAO.update(indexSolicitation, solicitation);
+		}
+		return null;
+	}
 	
 	private boolean validateSolicitation(Solicitation solicitation) {
-		if(solicitation.getTitle().equals("") || solicitation.getTitle().isEmpty()) {
+		if(!solicitation.getTitle().isEmpty() && solicitation.getTitle().trim().equals("")) {
 			return false;
 		}
 		return true;

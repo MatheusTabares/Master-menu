@@ -13,9 +13,9 @@ public class SolicitationDAOInMemory implements SolicitationDAO {
 	private List<Solicitation> list = new ArrayList<>();
 	
 	public SolicitationDAOInMemory() {
-		Solicitation s1 = new Solicitation(1, "Pedido 1", Optional.of("Descrição 1"));
-		Solicitation s2 = new Solicitation(2, "Pedido 2", Optional.of("Descrição 2"));
-		Solicitation s3 = new Solicitation(3, "Pedido 3", Optional.of("Descrição 3"));
+		s1 = new Solicitation(1, "Pedido 1", Optional.of("Descrição 1"));
+		s2 = new Solicitation(2, "Pedido 2", Optional.of("Descrição 2"));
+		s3 = new Solicitation(3, "Pedido 3", Optional.of("Descrição 3"));
 		list.add(s1);
 		list.add(s2);
 		list.add(s3); 
@@ -27,19 +27,25 @@ public class SolicitationDAOInMemory implements SolicitationDAO {
 	}
 
 	@Override
-	public Solicitation findById(int id) {
+	public Optional<Solicitation> findById(int id) {
 		for(Solicitation solicitation : list) {
 			if(solicitation.getId().equals(id)) {
-				return solicitation;
+				return Optional.of(solicitation);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
 	public Solicitation insert(Solicitation solicitation) {
 		list.add(solicitation);
 		return solicitation;
+	}
+
+	@Override
+	public Solicitation update(int indexSolicitation, Solicitation solicitationUpdated) {
+		list.set(indexSolicitation, solicitationUpdated);
+		return list.get(indexSolicitation);
 	}
 	
 }

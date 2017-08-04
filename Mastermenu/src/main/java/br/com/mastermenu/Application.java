@@ -21,8 +21,8 @@ public class Application {
 		
 		get(mastermenu + "/solicitation/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			if (solicitationService.findById(id) != null) {
-				Solicitation solicitation = solicitationService.findById(id);
+			if (solicitationService.findById(id).isPresent()) {
+				Optional<Solicitation> solicitation = solicitationService.findById(id);
 				return gson.toJson(solicitation);
 			} else {
 				res.status(404);
@@ -38,6 +38,19 @@ public class Application {
 			}
 			res.status(404);
 			return "Solicitation not inserted!";
+		});
+		
+		put(mastermenu + "/solicitation/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Solicitation> solicitation = solicitationService.findById(id);
+			if (solicitation.isPresent()) {
+				String body = req.body();
+				Solicitation solicitationUpdated = solicitationService.update(id, parseSolicitationFromBody(body));
+				return gson.toJson(solicitationUpdated);
+			} else {
+				res.status(404);
+				return "Solicitation not found for update!";
+			}
 		});
 	}
 	

@@ -7,7 +7,9 @@ import br.com.mastermenu.solicitation.model.Solicitation;
 public interface SolicitationService {
 	public List<Solicitation> list(Optional<String> filter);
 	
-	public Solicitation findById(int id);
+	public Optional<Solicitation> findById(int id);
 	
 	public Solicitation insert(Solicitation solicitation);
+	
+	public Solicitation update(int indexSolicitation, Solicitation solicitation);
 }
