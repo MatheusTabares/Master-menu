@@ -17,4 +17,12 @@
   		<artifactId>spring-boot-starter-web</artifactId>
   	</dependency>
   </dependencies>
+  
+  <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>5.2.10.Final</version>
+	</dependency>
+  
 </project>

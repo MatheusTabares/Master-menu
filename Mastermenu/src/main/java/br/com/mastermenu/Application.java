@@ -10,12 +10,17 @@ import br.com.mastermenu.product.service.ProductService;
 import br.com.mastermenu.solicitation.model.Solicitation;
 import br.com.mastermenu.solicitation.service.SolicitationService;
 import br.com.mastermenu.solicitation.service.SolicitationServiceImp;
+import br.com.mastermenu.util.Conection;
 
 public class Application {
 	
 	private static final String mastermenu = "mastermenu/v1";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		Conection conection = new Conection();
+		
+		conection.abrirConexao();
+		
 		SolicitationService solicitationService = new SolicitationServiceImp();
 		IProductService productService = new ProductService();
 		
