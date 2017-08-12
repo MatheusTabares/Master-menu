@@ -8,12 +8,11 @@ import br.com.mastermenu.product.model.Product;
 public interface IProductDAO {
 	public Product create(Product product);
 	
-	public List<Product> read();
+	public List<Product> read(Optional<String> filter);
 	
-	public Product update(int indexProduct, Product productUpdated);
+	public Product update(Product productUpdated);
 	
-	
-	public boolean delete(int id);
+	public boolean delete(Product product);
 	
 	public Optional<Product> readById(int id);
-}
+}	

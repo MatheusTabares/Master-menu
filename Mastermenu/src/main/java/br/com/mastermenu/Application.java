@@ -4,6 +4,9 @@ import static spark.Spark.*;
 import java.util.Optional;
 import com.google.gson.Gson;
 
+import br.com.mastermenu.composition.model.Composition;
+import br.com.mastermenu.composition.service.CompositionService;
+import br.com.mastermenu.composition.service.ICompositionService;
 import br.com.mastermenu.product.model.Product;
 import br.com.mastermenu.product.service.IProductService;
 import br.com.mastermenu.product.service.ProductService;
@@ -23,6 +26,7 @@ public class Application {
 		
 		SolicitationService solicitationService = new SolicitationServiceImp();
 		IProductService productService = new ProductService();
+		ICompositionService compositionService = new CompositionService();
 		
 		Gson gson = new Gson();
 		get(mastermenu + "/solicitation", (req, res) -> {
@@ -74,19 +78,24 @@ public class Application {
 			}
 		});
 		
-		get(mastermenu + "/product", (req, res) -> {
-			String products = gson.toJson(productService.read(Optional.empty()));
+		/**
+		 * TODO: CRUD PRODUCT
+		 */
+		
+		get(mastermenu + "/product/:filter", (req, res) -> {
+			Optional<String> filter = Optional.ofNullable(req.params(":filter"));
+			String products = gson.toJson(productService.read(filter));
 			return  products;
 		});
 		
 		get(mastermenu + "/product/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			if (productService.readById(id).isPresent()) {
-				Optional<Product> product = productService.readById(id);
+			Optional<Product> product = productService.readById(id);
+			if (product.isPresent()) {
 				return gson.toJson(product);
 			} else {
 				res.status(404);
-				return "Product not found!";
+				return "Produto não encontrado!";
 			}
 		});
 		
@@ -97,7 +106,7 @@ public class Application {
 				return gson.toJson(product);
 			}
 			res.status(404);
-			return "Product not inserted!";
+			return "Produto não inserido!";
 		});
 		
 		put(mastermenu + "/product/:id", (req, res) -> {
@@ -105,17 +114,70 @@ public class Application {
 			Optional<Product> product = productService.readById(id);
 			if (product.isPresent()) {
 				String body = req.body();
-				Product productUpdated = productService.update(id, parseProductFromBody(body));
+				Product productUpdated = productService.update(parseProductFromBody(body));
 				return gson.toJson(productUpdated);
 			} else {
 				res.status(404);
-				return "Product not found for update!";
+				return "Produto não encontrado para atualizar!";
 			}
 		});
 		
 		delete(mastermenu + "/product", (req, res) -> {
 			int id = Integer.parseInt(req.queryParams("id"));
 			if (productService.delete(id)) {
+				return true;
+			} else {
+				res.status(404);
+				return false;
+			}
+		});
+		/**
+		 * TODO: CRUD COMPOSITION
+		 */
+		
+		get(mastermenu + "/composition/:filter", (req, res) -> {
+			Optional<String> filter = Optional.ofNullable(req.params(":filter"));
+			String compositions = gson.toJson(compositionService.read(filter));
+			return  compositions;
+		});
+		
+		get(mastermenu + "/composition/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Composition> composition = compositionService.readById(id);
+			if (composition.isPresent()) {
+				return gson.toJson(composition);
+			} else {
+				res.status(404);
+				return "Composição não encontrada!";
+			}
+		});
+		
+		post(mastermenu + "/composition", (req, res) -> {
+			String body = req.body();
+			Composition composition = compositionService.create(parseCompositionFromBody(body));
+			if(composition != null) {
+				return gson.toJson(composition);
+			}
+			res.status(404);
+			return "Composição não inserida!";
+		});
+		
+		put(mastermenu + "/composition/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Composition> composition = compositionService.readById(id);
+			if (composition.isPresent()) {
+				String body = req.body();
+				Composition compositionUpdated = compositionService.update(parseCompositionFromBody(body));
+				return gson.toJson(compositionUpdated);
+			} else {
+				res.status(404);
+				return "Composição não encontrada para atualizar!";
+			}
+		});
+		
+		delete(mastermenu + "/composition", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			if (compositionService.delete(id)) {
 				return true;
 			} else {
 				res.status(404);
@@ -135,5 +197,10 @@ public class Application {
 		Gson gson = new Gson();
 		return gson.fromJson(body, Product.class);
 	}
-
+	
+	private static Composition parseCompositionFromBody(String body) {
+		//log.info(body);
+		Gson gson = new Gson();
+		return gson.fromJson(body, Composition.class);
+	}
 }

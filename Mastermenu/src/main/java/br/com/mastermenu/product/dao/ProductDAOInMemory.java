@@ -67,18 +67,20 @@ public class ProductDAOInMemory implements IProductDAO {
 	}
 
 	@Override
-	public List<Product> read() {
+	public List<Product> read(Optional<String> filter) {
 		return listProduct;
 	}
 
 	@Override
-	public Product update(int indexProduct, Product productUpdated) {
-		listProduct.set(indexProduct, productUpdated);
-		return listProduct.get(indexProduct);
+	public Product update(Product productUpdated) {
+		//listProduct.set(productUpdated);
+		//return listProduct.get(indexProduct);
+		return null;
 	}
 
 	@Override
-	public boolean delete(int id) {
+	public boolean delete(Product product) {
+		int id = 1;
 		listProduct.remove(id);
 		return true;
 	}

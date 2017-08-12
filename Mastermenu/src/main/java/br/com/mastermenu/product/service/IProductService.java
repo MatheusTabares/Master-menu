@@ -11,7 +11,7 @@ public interface IProductService {
 	
 	public List<Product> read(Optional<String> filter);
 	
-	public Product update(int indexProduct, Product productUpdated);
+	public Product update(Product productUpdated);
 	
 	public boolean delete(int id);
 	

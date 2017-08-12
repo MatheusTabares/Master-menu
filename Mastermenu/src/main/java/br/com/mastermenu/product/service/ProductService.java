@@ -3,17 +3,20 @@ package br.com.mastermenu.product.service;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.mastermenu.composition.dao.CompositionDAO;
+import br.com.mastermenu.composition.dao.ICompositionDAO;
+import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.product.dao.IProductDAO;
+import br.com.mastermenu.product.dao.ProductDAO;
 import br.com.mastermenu.product.dao.ProductDAOInMemory;
 import br.com.mastermenu.product.model.Product;
 
 public class ProductService implements IProductService{
 	
-	private IProductDAO productDAO = new ProductDAOInMemory();
-
+	private IProductDAO productDAO = new ProductDAO();
 	@Override
 	public Product create(Product product) {
-		if(validationProduct(product)) {
+		if(validationProduct(product, Optional.empty())) {
 			return productDAO.create(product);
 		}
 		return null;
@@ -21,22 +24,27 @@ public class ProductService implements IProductService{
 
 	@Override
 	public List<Product> read(Optional<String> filter) {
-		return productDAO.read();
+		List<Product> list = productDAO.read(filter);
+		if(list.size() > 0) {
+			return list;
+		};
+		return null;
 	}
 
 	@Override
-	public Product update(int indexProduct, Product productUpdated) {
-		if(validationProduct(productUpdated)) {
-			return productDAO.update(indexProduct, productUpdated);
+	public Product update(Product productUpdated) {
+		if(validationProduct(productUpdated, Optional.of("update"))) {
+			return productDAO.update(productUpdated);
 		}
 		return null;
 	}
 
 	@Override
 	public boolean delete(int id) {
-		Optional<Product> product = productDAO.readById(id);
-		if(product.isPresent()) {
-			return productDAO.delete(id);
+		Optional<Product> productDeleted = productDAO.readById(id);
+		if(productDeleted.isPresent()) {
+			productDAO.delete(productDeleted.get());
+			return true;
 		}
 		return false;
 	}
@@ -46,20 +54,18 @@ public class ProductService implements IProductService{
 		return productDAO.readById(id);
 	}
 	
-	private boolean validationProduct(Product product) {
-		List<Product> listProduct = productDAO.read();
-		for(Product p : listProduct) {
-			if(product.getTitle() != null && p.getTitle().trim().equalsIgnoreCase(product.getTitle().trim())) {
+	private boolean validationProduct(Product product, Optional<String> toUpdate) {
+		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
+			if(product.getId() == null) {
 				return false;
 			}
 		}
-		if(product.getCategory() != null && !product.getCategory().trim().equals("") &&
-			!product.getTitle().trim().equals("") && product.getListComposition() != null &&
-			product.getListComposition().size() != 0) {
-			
+		if(product.getTitle() != null && !product.getTitle().trim().equals("") && 
+				product.getCategory() != null && !product.getCategory().trim().equals("")) {
 			return true;
 		}
 		return false;
 	}
+	
 
 }

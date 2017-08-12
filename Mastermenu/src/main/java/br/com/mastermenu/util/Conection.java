@@ -8,7 +8,7 @@ public class Conection {
         Connection conexao;
         Class.forName("com.mysql.jdbc.Driver");
         
-        conexao = DriverManager.getConnection("jdbc:mysql://localhost/mastermenu?serverTimezone=UTC", "root", "root");
+        conexao = DriverManager.getConnection("jdbc:mysql://localhost/mastermenu?serverTimezone=UTC", "root", "");
         
         return conexao;
     }
