@@ -2,8 +2,10 @@ package br.com.mastermenu;
 
 import static spark.Spark.*;
 import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import com.google.gson.Gson;
-
 import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.composition.service.CompositionService;
 import br.com.mastermenu.composition.service.ICompositionService;
@@ -13,16 +15,31 @@ import br.com.mastermenu.product.service.ProductService;
 import br.com.mastermenu.solicitation.model.Solicitation;
 import br.com.mastermenu.solicitation.service.SolicitationService;
 import br.com.mastermenu.solicitation.service.SolicitationServiceImp;
-import br.com.mastermenu.util.Conection;
 
 public class Application {
 	
 	private static final String mastermenu = "mastermenu/v1";
+	
+	private static EntityManagerFactory ENTITY_MANAGER_FACTORY;
 
 	public static void main(String[] args) throws Exception {
-		Conection conection = new Conection();
+		ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("db_mastermenu");
 		
-		conection.abrirConexao();
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		
+		Composition c = new Composition();
+		c.setName("PRIMEIRO TESTE COMPOSIÇÃO");
+		try {
+			em.getTransaction().begin();
+			em.persist(c);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+		
+		
 		
 		SolicitationService solicitationService = new SolicitationServiceImp();
 		IProductService productService = new ProductService();
