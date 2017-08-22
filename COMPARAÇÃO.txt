@@ -1,14 +1,17 @@
 =======================GERAL:
 Terminais de atendimento e Totens 
-LINKS: http://menu.enterplug.com.br/auto-atendimento-restaurante/
-	http://www.revistapetrus.com.br/empresa-catarinense-desenvolve-terminal-de-autoatendimento-em-conveniencias-e-restaurantes/
-	https://sischef.com/
-	https://goomer.com.br/
-	http://gdsol.com.br/solucoes/automacao-de-restaurantes-2
-	https://www.sagestart.com.br/?ads_cmpid=782047181&ads_adid=43718971427&ads_matchtype=b&ads_network=g&ads_creative=195614056001&utm_term=%2Bsistema%20%2Brestaurante&ads_targetid=kwd-31694612969&utm_campaign&utm_source=adwords&utm_medium=ppc&ttv=2&gclid=EAIaIQobChMI6Zvqq7_p1QIVgQaRCh3D9QcrEAMYAiAAEgLXhfD_BwE
-	http://altec.ws/web/
+LINKS: 
+	https://sischef.com/ -> {fora do escopo, apenas gerenciamento de pedidos}
+	https://goomer.com.br/ -> {fora do escopo, cardapio digital apenas dentro do restaurante. Não faz pedido e/ou controle pelo sistema, apenas visualiza os produtos.}
+	https://www.sagestart.com.br/?ads_cmpid=782047181&ads_adid=43718971427&ads_matchtype=b&ads_network=g&ads_creative=195614056001&utm_term=%2Bsistema%
+	20%2Brestaurante&ads_targetid=kwd-31694612969&utm_campaign&utm_source=adwords&utm_medium=ppc&ttv=2&gclid=EAIaIQobChMI6Zvqq7_p1QIVgQaRCh3D9QcrEAMYAi
+	AAEgLXhfD_BwE -> {fora do escopo, gerenciamento de empresa}
+	http://altec.ws/web/ -> {fora do escopo, comanda digital utilizada pelos garçons}
+	
+	
+	
 =======================CARDÁPIO DIGITAL CONSUMER: 
-LINK: http://www.programaconsumer.com.br/download-sucesso
+LINK: http://www.programaconsumer.com.br/download-sucesso 
 
 APENAS UM SITE QUE DISPONIBILIZA OS PRODUTOS DE UM ESTABELECIMENTO ALIMENTICIO.
 
@@ -36,22 +39,87 @@ LINK: http://www.ecomanda.com.br/sistema-de-restaurante
 
 
 POSITIVOS {
-	*LAYOUT
-	*OFFLINE
-	*QRCODE NA MESA	
-	*FECHAR COMANDA
-	*AVALIAÇÃO
-	*PARA CADA CIDADE UMA IMAGEM DIFERENTE
-	*BUSCA POR CEP
 }
 
 
 NEGATIVOS {
 	-LAYOUT
-	
 	*NÃO TEM RESERVA
 	*NÃO EXISTE MAPA PARA PROCURAR MAIS PROXIMOS DE MIM	
 	*NÃO FAZ PEDIDO ONLINE
 	*OPÇÃO HAPPY HOUR
 	*FIDELIZAÇÃO
 }
+
+=======================MENU ENTERPLUG: 
+LINK: http://menu.enterplug.com.br/auto-atendimento-restaurante/
+
+POSITIVOS {
+	*LAYOUT
+	*OPÇÃO LEVAR PARA VIAJEM
+}
+
+
+NEGATIVOS {
+	-NÃO POSSUI PAGAMENTO PELO SISTEMA
+	-NA LISTA DE PEDIDOS, OS ADICIONAIS SE MISTURAM COM OS PRODUTOS
+	*NÃO TEM RESERVA
+	*NÃO EXISTE MAPA PARA PROCURAR MAIS PROXIMOS DE MIM	
+	*NÃO FAZ PEDIDO ONLINE
+	*OPÇÃO HAPPY HOUR
+	*FIDELIZAÇÃO
+}
+
+
+
+
+=======================CONCLUSÃO:
+SISTEMA DE AUTO ATENDIMENTO PARA CLIENTES DE ESTABELECIMENTOS ALIMENTÍCIOS.
+PARA CLIENTE:
+	*Acessar apenas um sistema genérico
+	*Um login
+	*Visualizar produtos da loja
+	*Solicitar produtos
+	*Acompanhar produtos
+	*Realizar pagamento pelo sistema
+	*Reservar mesa
+	*Mapear estabelecimentos
+	*Avaliar estabelecimentos
+	
+PARA ESTABELECIMENTO:
+	*Visibilidade de sua loja
+	*Diferencial
+	*Opção HAPPY HOUR
+	*Fidelização
+	*Retirar sobrecarga de garçom
+	
+SEGURANÇA:
+	*Cliente poderá solicitar pedido apenas se estiver dentro da loja(token de segurança)
+	*Backup de dados
+	*Reserva de mesa apenas com pagamento antecipado
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+ 
