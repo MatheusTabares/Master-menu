@@ -16,7 +16,7 @@ public class ProductDAO implements IProductDAO{
 	private final Session session;
 	
 	public ProductDAO() {
-		this.session = HibernateUtil.getSessionFactory().openSession();
+		this.session = HibernateUtil.getSessionFactory().getCurrentSession();
 	}
 	
 	@Override

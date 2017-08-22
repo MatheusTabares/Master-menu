@@ -4,12 +4,18 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-	private static SessionFactory sf;
+	private static final SessionFactory sf;
 
-    public static SessionFactory getSessionFactory() {
-        if (sf == null) {
-            sf = new Configuration().configure().buildSessionFactory();
+    static {
+        try {
+        	sf = new Configuration().buildSessionFactory();
+        } catch(Throwable ex) {
+        	System.err.println("Falha para iniciar a sessão!" + ex);
+        	throw new ExceptionInInitializerError(ex);
         }
-        return sf;
+    }
+    
+    public static SessionFactory getSessionFactory() {
+    	return sf;
     }
 }
