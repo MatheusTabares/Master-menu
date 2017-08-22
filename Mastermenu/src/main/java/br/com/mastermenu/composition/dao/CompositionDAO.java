@@ -3,19 +3,16 @@ package br.com.mastermenu.composition.dao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-
 import br.com.mastermenu.composition.model.Composition;
-import br.com.mastermenu.util.HibernateUtil;
 
 public class CompositionDAO implements ICompositionDAO{
 	private final Session session;
 	
 	public CompositionDAO() {
-		this.session = HibernateUtil.getSessionFactory().openSession();
+		this.session = null;
 	}
 	
 	@Override

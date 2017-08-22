@@ -2,21 +2,18 @@ package br.com.mastermenu.product.dao;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-
 import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.product.model.Product;
-import br.com.mastermenu.util.HibernateUtil;
 
 public class ProductDAO implements IProductDAO{
 	
 	private final Session session;
 	
 	public ProductDAO() {
-		this.session = HibernateUtil.getSessionFactory().getCurrentSession();
+		this.session = null;
 	}
 	
 	@Override
