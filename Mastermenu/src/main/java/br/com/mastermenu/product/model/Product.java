@@ -12,17 +12,12 @@ import javax.persistence.OneToMany;
 
 import br.com.mastermenu.composition.model.Composition;
 
-@Entity
 public class Product {
 	
-	@Id
-	@GeneratedValue
 	private Integer id;
 	private String category;
 	private String title;
 	private Optional<String> description;
-	
-	@OneToMany(mappedBy = "product", targetEntity = Composition.class, fetch = FetchType.LAZY)
 	private List<Composition> listComposition;
 	
 	public Product() {}
