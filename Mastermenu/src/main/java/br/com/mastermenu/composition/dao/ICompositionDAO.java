@@ -5,7 +5,7 @@ import java.util.Optional;
 import br.com.mastermenu.composition.model.Composition;
 
 public interface ICompositionDAO {
-public Composition create(Composition composition);
+	public Composition create(Composition composition);
 	
 	public List<Composition> read(Optional<String> filter);
 	

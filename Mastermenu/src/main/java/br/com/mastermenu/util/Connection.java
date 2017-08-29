@@ -1,15 +1,14 @@
 package br.com.mastermenu.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
-public class Conection {
-	public static Connection abrirConexao() throws Exception{
-        Connection conexao;
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        
-        conexao = DriverManager.getConnection("jdbc:mysql://localhost/mastermenu?serverTimezone=UTC", "root", "");
-        
-        return conexao;
-    }
+public class Connection {
+	private static EntityManagerFactory ENTITY_MANAGER_FACTORY;
+	
+	public static EntityManager connection() {
+		ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("db_mastermenu");
+		return ENTITY_MANAGER_FACTORY.createEntityManager();
+	}
 }

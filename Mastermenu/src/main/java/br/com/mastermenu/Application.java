@@ -15,18 +15,19 @@ import br.com.mastermenu.product.service.ProductService;
 import br.com.mastermenu.solicitation.model.Solicitation;
 import br.com.mastermenu.solicitation.service.SolicitationService;
 import br.com.mastermenu.solicitation.service.SolicitationServiceImp;
+import br.com.mastermenu.util.Connection;
 
 public class Application {
 	
 	private static final String mastermenu = "mastermenu/v1";
 	
-	private static EntityManagerFactory ENTITY_MANAGER_FACTORY;
+	//private static EntityManagerFactory ENTITY_MANAGER_FACTORY;
 
 	public static void main(String[] args) throws Exception {
-		ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("db_mastermenu");
+		//ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("db_mastermenu");
 		
-		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		
+		//EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		/*EntityManager em = Connection.connection();
 		Composition c = new Composition();
 		c.setName("PRIMEIRO TESTE COMPOSIÇÃO");
 		try {
@@ -37,7 +38,7 @@ public class Application {
 			e.printStackTrace();
 		} finally {
 			em.close();
-		}
+		}*/
 		
 		
 		
