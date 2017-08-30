@@ -7,7 +7,7 @@ import br.com.mastermenu.composition.model.Composition;
 public interface ICompositionService {
 	public Composition create(Composition composition);
 	
-	public List<Composition> read(Optional<String> filter);
+	public List<Composition> read();
 	
 	public Composition update(Composition compositionUpdated);
 	

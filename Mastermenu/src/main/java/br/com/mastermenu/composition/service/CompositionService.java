@@ -19,8 +19,8 @@ public class CompositionService implements ICompositionService {
 	}
 
 	@Override
-	public List<Composition> read(Optional<String> filter) {
-		List<Composition> list = compositionDAO.read(filter);
+	public List<Composition> read() {
+		List<Composition> list = compositionDAO.read();
 		if(list.size() > 0) {
 			return list;
 		};

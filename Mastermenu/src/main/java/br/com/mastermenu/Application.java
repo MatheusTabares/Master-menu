@@ -153,9 +153,9 @@ public class Application {
 		 * TODO: CRUD COMPOSITION
 		 */
 		
-		get(mastermenu + "/composition/:filter", (req, res) -> {
-			Optional<String> filter = Optional.ofNullable(req.params(":filter"));
-			String compositions = gson.toJson(compositionService.read(filter));
+		get(mastermenu + "/composition", (req, res) -> {
+			//Optional<String> filter = Optional.ofNullable(req.queryParams("filter"));
+			String compositions = gson.toJson(compositionService.read());
 			return  compositions;
 		});
 		

@@ -34,11 +34,7 @@ public class CompositionDAO implements ICompositionDAO{
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
-	public List<Composition> read(Optional<String> filter) {
-		if(filter.isPresent()) {
-			return session.createCriteria(Composition.class)
-			.add(Restrictions.eq("name", filter)).list();
-		}
+	public List<Composition> read() {
 		return session.createCriteria(Composition.class).list();
 	}
 
