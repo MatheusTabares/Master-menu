@@ -18,18 +18,16 @@ public class CompositionDAO implements ICompositionDAO{
 	}
 	
 	@Override
-	public Composition create(Composition c) {
+	public void create(Composition c) {
 		try {
 			em.getTransaction().begin();
 			em.persist(c);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		} finally {
 			em.close();
 		}
-		return c;
 	}
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
@@ -39,11 +37,10 @@ public class CompositionDAO implements ICompositionDAO{
 	}
 
 	@Override
-	public Composition update(Composition compositionUpdated) {
+	public void update(Composition compositionUpdated) {
 		Transaction t = session.beginTransaction();
 		session.update(compositionUpdated);
 		t.commit();
-		return compositionUpdated;
 	}
 
 	@Override

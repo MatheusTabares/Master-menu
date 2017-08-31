@@ -154,7 +154,6 @@ public class Application {
 		 */
 		
 		get(mastermenu + "/composition", (req, res) -> {
-			//Optional<String> filter = Optional.ofNullable(req.queryParams("filter"));
 			String compositions = gson.toJson(compositionService.read());
 			return  compositions;
 		});
@@ -172,21 +171,21 @@ public class Application {
 		
 		post(mastermenu + "/composition", (req, res) -> {
 			String body = req.body();
-			Composition composition = compositionService.create(parseCompositionFromBody(body));
-			if(composition != null) {
-				return gson.toJson(composition);
+			Composition compositionValidated = parseCompositionFromBody(body); 
+			if(validationComposition(compositionValidated, Optional.empty()) == true) {
+				compositionService.create(compositionValidated);
+				return gson.toJson("Ingrediente - " + compositionValidated.getName() +", inserido com sucesso!");
 			}
 			res.status(404);
-			return "Composição não inserida!";
+			return "Ingrediente não inserido!";
 		});
 		
-		put(mastermenu + "/composition/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			Optional<Composition> composition = compositionService.readById(id);
-			if (composition.isPresent()) {
-				String body = req.body();
-				Composition compositionUpdated = compositionService.update(parseCompositionFromBody(body));
-				return gson.toJson(compositionUpdated);
+		put(mastermenu + "/composition", (req, res) -> {
+			String body = req.body();
+			Composition compositionValidated = parseCompositionFromBody(body);
+			if (validationComposition(compositionValidated, Optional.of("update")) == true) {
+				compositionService.update(compositionValidated);
+				return gson.toJson("Ingrediente - " + compositionValidated.getName() + ", atualizada com sucesso!");
 			} else {
 				res.status(404);
 				return "Composição não encontrada para atualizar!";
@@ -195,13 +194,26 @@ public class Application {
 		
 		delete(mastermenu + "/composition", (req, res) -> {
 			int id = Integer.parseInt(req.queryParams("id"));
-			if (compositionService.delete(id)) {
-				return true;
+			Optional<Composition> compostionDeleted = compositionService.readById(id);
+			if(compostionDeleted.isPresent()) {
+				return compositionService.delete(compostionDeleted.get());
 			} else {
 				res.status(404);
 				return false;
 			}
 		});
+	}
+	
+	private static boolean validationComposition(Composition compositionUpdated, Optional<String> toUpdate) {
+		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
+			if(compositionUpdated.getId() == null) {
+				return false;
+			}
+		}
+		if(compositionUpdated.getName() != null && !compositionUpdated.getName().trim().equals("")) {
+			return true;
+		}
+		return false;
 	}
 	
 	private static Solicitation parseSolicitationFromBody(String body) {

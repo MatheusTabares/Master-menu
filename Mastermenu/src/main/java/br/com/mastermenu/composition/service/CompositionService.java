@@ -11,55 +11,28 @@ public class CompositionService implements ICompositionService {
 
 	private ICompositionDAO compositionDAO = new CompositionDAO();
 	@Override
-	public Composition create(Composition composition) {
-		if(validationComposition(composition, Optional.empty())) {
-			return compositionDAO.create(composition);
-		}
-		return null;
+	public void create(Composition composition) {
+		compositionDAO.create(composition);
 	}
 
 	@Override
 	public List<Composition> read() {
-		List<Composition> list = compositionDAO.read();
-		if(list.size() > 0) {
-			return list;
-		};
-		return null;
+		return compositionDAO.read();
 	}
 
 	@Override
-	public Composition update(Composition compositionUpdated) {
-		if(validationComposition(compositionUpdated, Optional.of("update"))) {
-			return compositionDAO.update(compositionUpdated);
-		}
-		return null;
+	public void update(Composition compositionUpdated) {
+		compositionDAO.update(compositionUpdated);
 	}
 
 	@Override
-	public boolean delete(int id) {
-		Optional<Composition> compostionDeleted = compositionDAO.readById(id);
-		if(compostionDeleted.isPresent()) {
-			compositionDAO.delete(compostionDeleted.get());
-			return true;
-		}
-		return false;
+	public boolean delete(Composition compostionDeleted) {
+		return compositionDAO.delete(compostionDeleted);
 	}
-
+	
 	@Override
 	public Optional<Composition> readById(int id) {
 		return compositionDAO.readById(id);
 	}
-	
-	private boolean validationComposition(Composition compositionUpdated, Optional<String> toUpdate) {
-		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
-			if(compositionUpdated.getId() == null) {
-				return false;
-			}
-		}
-		if(compositionUpdated.getName() != null && !compositionUpdated.getName().trim().equals("")) {
-			return true;
-		}
-		return false;
-	}
-	
+		
 }
