@@ -2,9 +2,6 @@ package br.com.mastermenu;
 
 import static spark.Spark.*;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import com.google.gson.Gson;
 import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.composition.service.CompositionService;
@@ -12,89 +9,16 @@ import br.com.mastermenu.composition.service.ICompositionService;
 import br.com.mastermenu.product.model.Product;
 import br.com.mastermenu.product.service.IProductService;
 import br.com.mastermenu.product.service.ProductService;
-import br.com.mastermenu.solicitation.model.Solicitation;
-import br.com.mastermenu.solicitation.service.SolicitationService;
-import br.com.mastermenu.solicitation.service.SolicitationServiceImp;
-import br.com.mastermenu.util.Connection;
 
 public class Application {
 	
 	private static final String mastermenu = "mastermenu/v1";
 	
-	//private static EntityManagerFactory ENTITY_MANAGER_FACTORY;
-
 	public static void main(String[] args) throws Exception {
-		//ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("db_mastermenu");
-		
-		//EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		/*EntityManager em = Connection.connection();
-		Composition c = new Composition();
-		c.setName("PRIMEIRO TESTE COMPOSIÇÃO");
-		try {
-			em.getTransaction().begin();
-			em.persist(c);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}*/
-		
-		
-		
-		SolicitationService solicitationService = new SolicitationServiceImp();
 		IProductService productService = new ProductService();
 		ICompositionService compositionService = new CompositionService();
 		
 		Gson gson = new Gson();
-		get(mastermenu + "/solicitation", (req, res) -> {
-			String solicitations = gson.toJson(solicitationService.list(Optional.empty()));
-			return  solicitations;
-		});
-		
-		get(mastermenu + "/solicitation/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			if (solicitationService.findById(id).isPresent()) {
-				Optional<Solicitation> solicitation = solicitationService.findById(id);
-				return gson.toJson(solicitation);
-			} else {
-				res.status(404);
-				return "Solicitation not found!";
-			}
-		});
-		
-		post(mastermenu + "/solicitation", (req, res) -> {
-			String body = req.body();
-			Solicitation solicitation = solicitationService.insert(parseSolicitationFromBody(body));
-			if(solicitation != null) {
-				return gson.toJson(solicitation);
-			}
-			res.status(404);
-			return "Solicitation not inserted!";
-		});
-		
-		put(mastermenu + "/solicitation/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			Optional<Solicitation> solicitation = solicitationService.findById(id);
-			if (solicitation.isPresent()) {
-				String body = req.body();
-				Solicitation solicitationUpdated = solicitationService.update(id, parseSolicitationFromBody(body));
-				return gson.toJson(solicitationUpdated);
-			} else {
-				res.status(404);
-				return "Solicitation not found for update!";
-			}
-		});
-		
-		delete(mastermenu + "/solicitation", (req, res) -> {
-			int id = Integer.parseInt(req.queryParams("id"));
-			if (solicitationService.delete(id)) {
-				return true;
-			} else {
-				res.status(404);
-				return false;
-			}
-		});
 		
 		/**
 		 * TODO: CRUD PRODUCT
@@ -218,13 +142,7 @@ public class Application {
 		}
 		return false;
 	}
-	
-	private static Solicitation parseSolicitationFromBody(String body) {
-		//log.info(body);
-		Gson gson = new Gson();
-		return gson.fromJson(body, Solicitation.class);
-	}
-	
+
 	private static Product parseProductFromBody(String body) {
 		//log.info(body);
 		Gson gson = new Gson();

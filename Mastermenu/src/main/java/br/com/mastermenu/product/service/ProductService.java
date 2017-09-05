@@ -2,13 +2,8 @@ package br.com.mastermenu.product.service;
 
 import java.util.List;
 import java.util.Optional;
-
-import br.com.mastermenu.composition.dao.CompositionDAO;
-import br.com.mastermenu.composition.dao.ICompositionDAO;
-import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.product.dao.IProductDAO;
 import br.com.mastermenu.product.dao.ProductDAO;
-import br.com.mastermenu.product.dao.ProductDAOInMemory;
 import br.com.mastermenu.product.model.Product;
 
 public class ProductService implements IProductService{
