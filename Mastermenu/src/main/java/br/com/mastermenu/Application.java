@@ -152,35 +152,23 @@ public class Application {
 		/**
 		 * TODO: CRUD COMPOSITION
 		 */
+		post(mastermenu + "/composition", (req, res) -> {
+			String body = req.body();
+			Composition compositionValidated = parseCompositionFromBody(body); 
+			if(validationComposition(compositionValidated, Optional.empty()) == true) {
+				compositionService.create(compositionValidated);
+				return gson.toJson("Composição - " + compositionValidated.getName() +", inserido com sucesso!");
+			}
+			res.status(404);
+			return "Composição não inserido!";
+		});
 		
 		get(mastermenu + "/composition", (req, res) -> {
 			String compositions = gson.toJson(compositionService.read());
 			if(!compositions.trim().equals(""))
 				return  compositions;
 			else
-				return "sem adicionais!";
-		});
-		
-		get(mastermenu + "/composition/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			Optional<Composition> composition = compositionService.readById(id);
-			if (composition.isPresent()) {
-				return gson.toJson(composition);
-			} else {
-				res.status(404);
-				return "Adicional não encontrado!";
-			}
-		});
-		
-		post(mastermenu + "/composition", (req, res) -> {
-			String body = req.body();
-			Composition compositionValidated = parseCompositionFromBody(body); 
-			if(validationComposition(compositionValidated, Optional.empty()) == true) {
-				compositionService.create(compositionValidated);
-				return gson.toJson("Ingrediente - " + compositionValidated.getName() +", inserido com sucesso!");
-			}
-			res.status(404);
-			return "Ingrediente não inserido!";
+				return "Sem composição!";
 		});
 		
 		put(mastermenu + "/composition", (req, res) -> {
@@ -188,7 +176,7 @@ public class Application {
 			Composition compositionValidated = parseCompositionFromBody(body);
 			if (validationComposition(compositionValidated, Optional.of("update")) == true) {
 				compositionService.update(compositionValidated);
-				return gson.toJson("Ingrediente - " + compositionValidated.getName() + ", atualizada com sucesso!");
+				return gson.toJson("Composição - " + compositionValidated.getName() + ", atualizada com sucesso!");
 			} else {
 				res.status(404);
 				return "Composição não encontrada para atualizar!";
@@ -203,6 +191,17 @@ public class Application {
 			} else {
 				res.status(404);
 				return false;
+			}
+		});
+		
+		get(mastermenu + "/composition/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Composition> composition = compositionService.readById(id);
+			if (composition.isPresent()) {
+				return gson.toJson(composition);
+			} else {
+				res.status(404);
+				return "Composição não encontrada!";
 			}
 		});
 	}
