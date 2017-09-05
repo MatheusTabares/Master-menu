@@ -3,14 +3,10 @@ package br.com.mastermenu.composition.dao;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.util.Connection;
 
 public class CompositionDAO implements ICompositionDAO{
-	private final Session session = null;
 	private final EntityManager em;
 	
 	public CompositionDAO() {
@@ -25,35 +21,45 @@ public class CompositionDAO implements ICompositionDAO{
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			em.close();
+			em.getTransaction().rollback();
 		}
 	}
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<Composition> read() {
-		return session.createCriteria(Composition.class).list();
+		return em.createQuery("FROM " + Composition.class.getName()).getResultList();
 	}
 
 	@Override
 	public void update(Composition compositionUpdated) {
-		Transaction t = session.beginTransaction();
-		session.update(compositionUpdated);
-		t.commit();
+		try {
+            em.getTransaction().begin();
+            em.merge(compositionUpdated);
+            em.getTransaction().commit();
+	   } catch (Exception ex) {
+	            ex.printStackTrace();
+	            em.getTransaction().rollback();
+	   }
 	}
 
 	@Override
 	public boolean delete(Composition composition) {
-		Transaction t = session.beginTransaction();
-		session.delete(composition);
-		t.commit();
-		return true;
+		try {
+			em.getTransaction().begin();
+            em.remove(composition);
+            em.getTransaction().commit();
+	   } catch (Exception ex) {
+	            ex.printStackTrace();
+	            em.getTransaction().rollback();
+	            return false;
+	   }
+	   return true;
 	}
 
 	@Override
 	public Optional<Composition> readById(int id) {
-		return Optional.ofNullable(session.get(Composition.class, id));
+		return Optional.ofNullable(em.find(Composition.class, id));
 	}
 
 }

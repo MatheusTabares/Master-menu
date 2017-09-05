@@ -155,7 +155,10 @@ public class Application {
 		
 		get(mastermenu + "/composition", (req, res) -> {
 			String compositions = gson.toJson(compositionService.read());
-			return  compositions;
+			if(!compositions.trim().equals(""))
+				return  compositions;
+			else
+				return "sem adicionais!";
 		});
 		
 		get(mastermenu + "/composition/:id", (req, res) -> {
@@ -165,7 +168,7 @@ public class Application {
 				return gson.toJson(composition);
 			} else {
 				res.status(404);
-				return "Composição não encontrada!";
+				return "Adicional não encontrado!";
 			}
 		});
 		
@@ -204,14 +207,15 @@ public class Application {
 		});
 	}
 	
-	private static boolean validationComposition(Composition compositionUpdated, Optional<String> toUpdate) {
+	private static boolean validationComposition(Composition composition, Optional<String> toUpdate) {
 		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
-			if(compositionUpdated.getId() == null) {
-				return false;
+			if(composition.getId() != null && composition.getName() != null && !composition.getName().trim().equals("")) {
+				return true;
 			}
-		}
-		if(compositionUpdated.getName() != null && !compositionUpdated.getName().trim().equals("")) {
-			return true;
+		} else {
+			if(composition.getId() == null && composition.getName() != null && !composition.getName().trim().equals("")) {
+				return true;
+			}
 		}
 		return false;
 	}
