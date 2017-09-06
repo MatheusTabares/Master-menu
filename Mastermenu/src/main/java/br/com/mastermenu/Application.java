@@ -24,10 +24,46 @@ public class Application {
 		 * TODO: CRUD PRODUCT
 		 */
 		
-		get(mastermenu + "/product/:filter", (req, res) -> {
-			Optional<String> filter = Optional.ofNullable(req.params(":filter"));
-			String products = gson.toJson(productService.read(filter));
-			return  products;
+		post(mastermenu + "/product", (req, res) -> {
+			String body = req.body();
+			Product productValidated = parseProductFromBody(body); 
+			if(validationProduct(productValidated, Optional.empty()) == true) {
+				productService.create(productValidated);
+				return gson.toJson("Produto - " + productValidated.getName() +", inserido com sucesso!");
+			}
+			res.status(404);
+			return "Produto não inserido!";
+		});
+		
+		get(mastermenu + "/product", (req, res) -> {
+			String products = gson.toJson(productService.read());
+			if(!products.trim().equals(""))
+				return  products;
+			else
+				return "Sem produtos!";
+		});
+		
+		put(mastermenu + "/product", (req, res) -> {
+			String body = req.body();
+			Product productValidated = parseProductFromBody(body);
+			if (validationProduct(productValidated, Optional.of("update")) == true) {
+				productService.update(productValidated);
+				return gson.toJson("Produto - " + productValidated.getName() + ", atualizado com sucesso!");
+			} else {
+				res.status(404);
+				return "Produto não encontrado para atualizar!";
+			}
+		});
+		
+		delete(mastermenu + "/product", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			Optional<Product> productDeleted = productService.readById(id);
+			if(productDeleted.isPresent()) {
+				return productService.delete(productDeleted.get());
+			} else {
+				res.status(404);
+				return false;
+			}
 		});
 		
 		get(mastermenu + "/product/:id", (req, res) -> {
@@ -38,39 +74,6 @@ public class Application {
 			} else {
 				res.status(404);
 				return "Produto não encontrado!";
-			}
-		});
-		
-		post(mastermenu + "/product", (req, res) -> {
-			String body = req.body();
-			Product product = productService.create(parseProductFromBody(body));
-			if(product != null) {
-				return gson.toJson(product);
-			}
-			res.status(404);
-			return "Produto não inserido!";
-		});
-		
-		put(mastermenu + "/product/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			Optional<Product> product = productService.readById(id);
-			if (product.isPresent()) {
-				String body = req.body();
-				Product productUpdated = productService.update(parseProductFromBody(body));
-				return gson.toJson(productUpdated);
-			} else {
-				res.status(404);
-				return "Produto não encontrado para atualizar!";
-			}
-		});
-		
-		delete(mastermenu + "/product", (req, res) -> {
-			int id = Integer.parseInt(req.queryParams("id"));
-			if (productService.delete(id)) {
-				return true;
-			} else {
-				res.status(404);
-				return false;
 			}
 		});
 		/**
@@ -137,6 +140,23 @@ public class Application {
 			}
 		} else {
 			if(composition.getId() == null && composition.getName() != null && !composition.getName().trim().equals("")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static boolean validationProduct(Product product, Optional<String> toUpdate) {
+		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
+			if(product.getId() != null && product.getName() != null && !product.getName().trim().equals("")
+					&& product.getPrice() != 0.0 && product.getCompositions().size() != 0
+					&& product.getOptionsComposition().size() != 0) {
+				return true;
+			}
+		} else {
+			if(product.getId() == null && product.getName() != null && !product.getName().trim().equals("")
+					&& product.getPrice() != 0.0 && product.getCompositions().size() != 0
+					&& product.getOptionsComposition().size() != 0) {
 				return true;
 			}
 		}

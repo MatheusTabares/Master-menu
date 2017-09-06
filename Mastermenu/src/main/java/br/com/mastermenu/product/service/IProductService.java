@@ -2,19 +2,16 @@ package br.com.mastermenu.product.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import br.com.mastermenu.product.model.Product;
 
 public interface IProductService {
+	public void create(Product product);
 	
-	public Product create(Product product);
+	public List<Product> read();
 	
-	public List<Product> read(Optional<String> filter);
+	public void update(Product productUpdated);
 	
-	public Product update(Product productUpdated);
-	
-	public boolean delete(int id);
+	public boolean delete(Product product);
 	
 	public Optional<Product> readById(int id);
-	
 }

@@ -2,63 +2,64 @@ package br.com.mastermenu.product.dao;
 
 import java.util.List;
 import java.util.Optional;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
-import br.com.mastermenu.composition.model.Composition;
+import javax.persistence.EntityManager;
 import br.com.mastermenu.product.model.Product;
+import br.com.mastermenu.util.Connection;
 
 public class ProductDAO implements IProductDAO{
 	
-	private final Session session;
+	private final EntityManager em;
 	
 	public ProductDAO() {
-		this.session = null;
+		this.em = Connection.connection();
 	}
 	
 	@Override
-	public Product create(Product product) {
-		Transaction t = session.beginTransaction();
-		session.save(product);
-		t.commit();
-		return product;
-	}
-
-	@SuppressWarnings({ "deprecation", "unchecked" })
-	@Override
-	public List<Product> read(Optional<String> filter) {
-		if(filter.isPresent()) {
-			if(filter.get().trim().equals("title")) {
-				return session.createCriteria(Composition.class)
-						.add(Restrictions.eq("title", filter)).list();
-			} /*else {
-				TODO: BUSCAR POR CATEGORIA
-				return session.createCriteria(Composition.class)
-							.add(arg0)
-			}*/
+	public void create(Product p) {
+		try {
+			em.getTransaction().begin();
+			em.persist(p);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback();
 		}
-		return session.createCriteria(Composition.class).list();
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	@Override
+	public List<Product> read() {
+		return em.createQuery("FROM " + Product.class.getName()).getResultList();
 	}
 
 	@Override
-	public Product update(Product productUpdated) {
-		Transaction t = session.beginTransaction();
-		session.update(productUpdated);
-		t.commit();
-		return productUpdated;
+	public void update(Product productUpdated) {
+		try {
+            em.getTransaction().begin();
+            em.merge(productUpdated);
+            em.getTransaction().commit();
+	   } catch (Exception ex) {
+	            ex.printStackTrace();
+	            em.getTransaction().rollback();
+	   }
 	}
 
 	@Override
-	public boolean delete(Product product) {
-		Transaction t = session.beginTransaction();
-		session.delete(product);
-		t.commit();
-		return true;
+	public boolean delete(Product p) {
+		try {
+			em.getTransaction().begin();
+            em.remove(p);
+            em.getTransaction().commit();
+	   } catch (Exception ex) {
+	            ex.printStackTrace();
+	            em.getTransaction().rollback();
+	            return false;
+	   }
+	   return true;
 	}
 
 	@Override
 	public Optional<Product> readById(int id) {
-		return Optional.ofNullable(session.get(Product.class, id));
+		return Optional.ofNullable(em.find(Product.class, id));
 	}
-
 }

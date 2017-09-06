@@ -1,65 +1,121 @@
 package br.com.mastermenu.product.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import br.com.mastermenu.composition.model.Composition;
 
+@Entity
 public class Product {
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String category;
-	private String title;
+	
+	@Column(nullable = false)
+	private String name;
 	private Optional<String> description;
-	private List<Composition> listComposition;
+	
+	@Column(nullable = false)
+	private double price = 0.0;
+	
+	@Column(nullable = false)
+	private List<Composition> compositions;
+	private int quantity;
+	private Date date;
+	
+	@Column(nullable = false)
+	private List<Composition> optionsComposition;
 	
 	public Product() {}
 	
-	public Product(int id, String category, String title, Optional<String> description, List<Composition> listComposition) {
-		this.id = id;
-		this.category = category;
-		this.title = title;
-		this.description = description;
-		this.listComposition = listComposition;
-		
-	}
 	public Integer getId() {
 		return id;
 	}
+
+
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getCategory() {
-		return category;
+
+	public String getName() {
+		return name;
 	}
-	public void setCategory(String category) {
-		this.category = category;
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+
+
 	public Optional<String> getDescription() {
 		return description;
 	}
+
+
 	public void setDescription(Optional<String> description) {
 		this.description = description;
 	}
-	public List<Composition> getListComposition() {
-		return listComposition;
+
+
+	public double getPrice() {
+		return price;
 	}
-	public void setListComposition(List<Composition> listComposition) {
-		this.listComposition = listComposition;
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
+	public List<Composition> getCompositions() {
+		return compositions;
+	}
+
+
+	public void setCompositions(List<Composition> compositions) {
+		this.compositions = compositions;
+	}
+
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+	public List<Composition> getOptionsComposition() {
+		return optionsComposition;
+	}
+
+
+	public void setOptionsComposition(List<Composition> optionsComposition) {
+		this.optionsComposition = optionsComposition;
 	}
 	
-	
+		
 }
