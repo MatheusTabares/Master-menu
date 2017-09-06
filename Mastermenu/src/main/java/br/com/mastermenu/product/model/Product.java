@@ -11,11 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import br.com.mastermenu.composition.model.Composition;
 
-@Entity
+@Entity(name = "product")
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +30,14 @@ public class Product {
 	@Column(nullable = false)
 	private double price = 0.0;
 	
-	@Column(nullable = false)
+	@OneToMany(mappedBy = "product", targetEntity = Composition.class,
+			fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Composition> compositions;
 	private int quantity;
 	private Date date;
 	
-	@Column(nullable = false)
+	@ManyToMany
+    @JoinTable(name="product_has_optionsComposition")
 	private List<Composition> optionsComposition;
 	
 	public Product() {}
@@ -41,8 +45,6 @@ public class Product {
 	public Integer getId() {
 		return id;
 	}
-
-
 
 	public void setId(Integer id) {
 		this.id = id;
