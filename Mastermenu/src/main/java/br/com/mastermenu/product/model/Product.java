@@ -25,16 +25,15 @@ public class Product {
 	
 	@Column(nullable = false)
 	private String name;
-	private Optional<String> description;
+	
+	private String description;
 	
 	@Column(nullable = false)
 	private double price = 0.0;
 	
-	@OneToMany(mappedBy = "product", targetEntity = Composition.class,
-			fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany
+    @JoinTable(name="product_has_composition")
 	private List<Composition> compositions;
-	private int quantity;
-	private Date date;
 	
 	@ManyToMany
     @JoinTable(name="product_has_optionsComposition")
@@ -60,12 +59,12 @@ public class Product {
 	}
 
 
-	public Optional<String> getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
 
-	public void setDescription(Optional<String> description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -88,27 +87,6 @@ public class Product {
 	public void setCompositions(List<Composition> compositions) {
 		this.compositions = compositions;
 	}
-
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-
-	public Date getDate() {
-		return date;
-	}
-
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 
 	public List<Composition> getOptionsComposition() {
 		return optionsComposition;
