@@ -1,6 +1,13 @@
 package br.com.mastermenu;
 
 import static spark.Spark.*;
+
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Optional;
 import com.google.gson.Gson;
 import br.com.mastermenu.composition.model.Composition;
@@ -9,6 +16,7 @@ import br.com.mastermenu.composition.service.ICompositionService;
 import br.com.mastermenu.product.model.Product;
 import br.com.mastermenu.product.service.IProductService;
 import br.com.mastermenu.product.service.ProductService;
+import spark.ModelAndView;
 
 public class Application {
 	
@@ -20,6 +28,8 @@ public class Application {
 		
 		Gson gson = new Gson();
 		
+		get(mastermenu + "/index", (req, res) -> new ModelAndView(new HashMap<String, Object>(), "index.html"));
+
 		/**
 		 * TODO: CRUD PRODUCT
 		 */
@@ -174,4 +184,5 @@ public class Application {
 		Gson gson = new Gson();
 		return gson.fromJson(body, Composition.class);
 	}
+	
 }
