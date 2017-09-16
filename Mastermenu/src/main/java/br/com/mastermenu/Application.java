@@ -28,8 +28,8 @@ public class Application {
 		
 		Gson gson = new Gson();
 		
-		get(mastermenu + "/index", (req, res) -> new ModelAndView(new HashMap<String, Object>(), "index.html"));
-
+		staticFileLocation("/public");
+		//URL DE ACESSO: http://localhost:4567/index.html
 		/**
 		 * TODO: CRUD PRODUCT
 		 */
