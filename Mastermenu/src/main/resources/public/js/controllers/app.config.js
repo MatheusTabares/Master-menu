@@ -4,6 +4,14 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/client/menu.html',
 				controller : 'MenuCtrl'
 			})
+			.when('/bebidas', {
+				templateUrl : '../../view/client/bebidas.html',
+				controller : 'BebidasCtrl'
+			})
+			.when('/comidas', {
+				templateUrl : '../../view/client/comidas.html',
+				controller : 'ComidasCtrl'
+			})
 			.when('/main', {
 				templateUrl : '../../view/client/main.html',
 				controller : 'MainCtrl'
