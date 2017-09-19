@@ -1,6 +1,16 @@
 <div class="container-fluid">
 	<h1>Mater-Menu : Comidas</h1>
-	<p>Aqui vao as Comidas!</p>
+	<table class="table table-striped">
+		<tr>
+			<th>Nome</th>
+			<th>Preço R$</th>
+		</tr>
+		<tr ng-repeat="produto in produtos">
+			<td>{{produto.name}}</td>
+			<td>{{produto.price}}</td>
+			<td><button ng-click="adicionar(produto)">Add</button></td>
+		</tr>
+	</table>
 	
 	<a href="#/menu">Voltar</a>
 </div>

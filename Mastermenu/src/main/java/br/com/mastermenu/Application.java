@@ -86,6 +86,15 @@ public class Application {
 				return "Produto não encontrado!";
 			}
 		});
+		
+		get(mastermenu + "/produtoPorCategoria/:idCategoria", (req, res) -> {
+			int idCategoria = Integer.parseInt(req.params(":idCategoria"));
+			String products = gson.toJson(productService.encontrarPorIdCategoria(idCategoria));
+			if(!products.trim().equals(""))
+				return  products;
+			else
+				return "Sem produtos!";
+		});
 		/**
 		 * TODO: CRUD COMPOSITION
 		 */

@@ -62,4 +62,12 @@ public class ProductDAO implements IProductDAO{
 	public Optional<Product> readById(int id) {
 		return Optional.ofNullable(em.find(Product.class, id));
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> encontrarPorIdCategoria(int idCategoria) {
+		return em.createQuery("FROM " + Product.class.getName() + " WHERE categoria_id like :categoria_id")
+			   .setParameter("categoria_id", idCategoria).getResultList();
+		//return em.createQuery("FROM " + Product.class.getName() + "P WHERE P.categoria_id = " + idCategoria).getResultList();
+	}
 }

@@ -33,5 +33,10 @@ public class ProductService implements IProductService{
 	public Optional<Product> readById(int id) {
 		return productDAO.readById(id);
 	}
+
+	@Override
+	public List<Product> encontrarPorIdCategoria(int idCategoria) {
+		return productDAO.encontrarPorIdCategoria(idCategoria);
+	}
 		
 }

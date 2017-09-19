@@ -1,6 +1,10 @@
 angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'mastermenuServices' ])
 		.config([ '$routeProvider', function($routeProvider) {
-			$routeProvider.when('/menu', {
+			$routeProvider.when('/listaDePedidos', {
+				templateUrl : '../../view/client/listaDePedidos.html',
+				controller : 'ListaDePedidosCtrl'
+			})
+			.when('/menu', {
 				templateUrl : '../../view/client/menu.html',
 				controller : 'MenuCtrl'
 			})

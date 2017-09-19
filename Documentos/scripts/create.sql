@@ -13,16 +13,21 @@ CREATE TABLE product (
 );
 
 CREATE TABLE product_has_composition (
-	id_product INT NOT NULL,
-    id_composition INT NOT NULL,
-    FOREIGN KEY (id_product) REFERENCES product(id),
-    FOREIGN KEY (id_composition) REFERENCES composition(id)
+	product_id INT NOT NULL,
+    composition_id INT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES product(id),
+    FOREIGN KEY (composition_id) REFERENCES composition(id)
 );
 
 CREATE TABLE product_has_optionsComposition (
-	id_product INT NOT NULL,
-    id_composition INT NOT NULL,
-    FOREIGN KEY (id_product) REFERENCES product(id),
-    FOREIGN KEY (id_composition) REFERENCES composition(id)
+	product_id INT NOT NULL,
+    composition_id INT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES product(id),
+    FOREIGN KEY (composition_id) REFERENCES composition(id)
+);
+
+CREATE TABLE categoria (
+    id		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name 	VARCHAR(30) NOT NULL
 );
 

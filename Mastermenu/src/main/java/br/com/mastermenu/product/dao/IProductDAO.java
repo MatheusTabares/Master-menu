@@ -14,4 +14,6 @@ public interface IProductDAO {
 	public boolean delete(Product product);
 	
 	public Optional<Product> readById(int id);
+	
+	public List<Product> encontrarPorIdCategoria(int idCategoria);
 }	

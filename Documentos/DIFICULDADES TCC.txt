@@ -1,0 +1,8 @@
+DIFICULDADES TCC
+
+*Converter Lista em JSON, stackOverFlow não tinha resposta. SOLUÇÃO: primeiro teste - retornar uma string qualquer
+foi sucesso. segundo teste - retornar apenas um objeto da lista, erro de converssão. terceiro teste - retirar propriedade
+Product de dentro do objeto Categoria, deixei somente a propriedade categoria dentro de Product, resolveu.
+
+
+*Manipulação de objetos entre páginas, solução: https://pt.stackoverflow.com/questions/30912/como-passar-um-objeto-para-outra-p%C3%A1gina-usando-angularjs
