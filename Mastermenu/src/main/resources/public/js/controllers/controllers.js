@@ -8,6 +8,16 @@ mastermenuControllers.controller('BebidasCtrl', [
 				function(data) {
 					$scope.produtos = data;
 				});
+		$scope.adicionar = function(produto) {
+ 			$scope.solicitation = {
+ 					"id" : null,
+ 					"product" : produto,
+ 			}
+ 			$http.post("mastermenu/v1/solicitation", $scope.solicitation).success(
+				function(data) {
+					 alert(data);
+				});
+ 		}
 	} ]);
 
 mastermenuControllers.controller('ComidasCtrl', [
@@ -20,8 +30,14 @@ mastermenuControllers.controller('ComidasCtrl', [
  					$scope.produtos = data;
  				});
  		$scope.adicionar = function(produto) {
- 			window.sessionStorage.setItem('produto', JSON.stringify(produto));
-            window.location.href='#/edit.html'
+ 			$scope.solicitation = {
+ 					"id" : null,
+ 					"product" : produto,
+ 			}
+ 			$http.post("mastermenu/v1/solicitation", $scope.solicitation).success(
+				function(data) {
+					 alert(data);
+				});
  		}
  	} ]);
 
@@ -31,8 +47,10 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   	'$location',
   	function($scope, $http, $location) {
   		$scope.init = function(){                   
-            $scope.produto = JSON.parse(window.sessionStorage.getItem('produto'));
-            window.sessionStorage.removeItem('produto');
+  			$http.get("mastermenu/v1/solicitation").success(
+  	 				function(data) {
+  	 					$scope.solicitations = data;
+  	 				});
         }
         $scope.init();
   	} ]);

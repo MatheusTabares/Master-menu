@@ -16,6 +16,9 @@ import br.com.mastermenu.composition.service.ICompositionService;
 import br.com.mastermenu.product.model.Product;
 import br.com.mastermenu.product.service.IProductService;
 import br.com.mastermenu.product.service.ProductService;
+import br.com.mastermenu.solicitation.model.Solicitation;
+import br.com.mastermenu.solicitation.service.ISolicitationService;
+import br.com.mastermenu.solicitation.service.SolicitationService;
 import spark.ModelAndView;
 
 public class Application {
@@ -25,11 +28,34 @@ public class Application {
 	public static void main(String[] args) throws Exception {
 		IProductService productService = new ProductService();
 		ICompositionService compositionService = new CompositionService();
+		ISolicitationService solicitationService = new SolicitationService();
 		
 		Gson gson = new Gson();
 		
 		staticFileLocation("/public");
 		//URL DE ACESSO: http://localhost:4567/index.html
+		/**
+		 * TODO: CRUD SOLICITATION
+		 */
+		
+		post(mastermenu + "/solicitation", (req, res) -> {
+			String body = req.body();
+			Solicitation solicitation = parseSolicitationFromBody(body); 
+			if(solicitation != null) {
+				solicitationService.create(solicitation);
+				return gson.toJson("Pedido - " + solicitation.getProduct().getName() +", adicionado a lista!");
+			}
+			res.status(404);
+			return "Pedido não inserido!";
+		});
+		
+		get(mastermenu + "/solicitation", (req, res) -> {
+			String solicitations = gson.toJson(solicitationService.read());
+			if(!solicitations.trim().equals(""))
+				return solicitations;
+			else
+				return "Sem produtos!";
+		});
 		/**
 		 * TODO: CRUD PRODUCT
 		 */
@@ -182,6 +208,12 @@ public class Application {
 		return false;
 	}
 
+	private static Solicitation parseSolicitationFromBody(String body) {
+		//log.info(body);
+		Gson gson = new Gson();
+		return gson.fromJson(body, Solicitation.class);
+	}
+	
 	private static Product parseProductFromBody(String body) {
 		//log.info(body);
 		Gson gson = new Gson();

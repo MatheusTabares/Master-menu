@@ -13,6 +13,9 @@ INSERT INTO composition (name) VALUES ('batata palha');
 INSERT INTO composition (name) VALUES ('iscas de carne ao molho');
 SELECT * FROM composition;
 
+INSERT INTO categoria (nome) VALUES ('bebidas');
+INSERT INTO categoria (nome) VALUES ('comidas');
+
 
 INSERT INTO product (name, price, categoria_id) VALUES ("SUCO DE UVA", 3.50, 1);
 INSERT INTO product (name, price, categoria_id) VALUES ("SUCO DE LARANJA", 3.50, 1);
