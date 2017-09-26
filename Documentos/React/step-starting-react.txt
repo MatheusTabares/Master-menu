@@ -1,0 +1,8 @@
+Para abrir o menu de desenvolvedor no Expo app basta mecher o celular :D
+Tuotiral seguido: https://facebook.github.io/react-native/docs/getting-started.html
+
+Download Node.js: https://nodejs.org/en/download/
+
+Download Expo XDE: https://expo.io/tools
+
+Download sublime: https://www.sublimetext.com/3
