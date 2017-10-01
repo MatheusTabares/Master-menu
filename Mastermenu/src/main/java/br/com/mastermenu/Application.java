@@ -85,6 +85,18 @@ public class Application {
 				return "Categoria não encontrada!";
 			}
 		});
+		
+		delete(mastermenu + "/category", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			Optional<Categoria> categoryDeleted = categoryService.readById(id);
+			if(categoryDeleted.isPresent()) {
+				return categoryService.delete(categoryDeleted.get());
+			} else {
+				res.status(404);
+				return false;
+			}
+		});
+		
 		/**
 		 * TODO: CRUD SOLICITATION
 		 */

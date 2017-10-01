@@ -84,6 +84,22 @@ mastermenuControllers.controller('CategoryCtrl', [
   			$location.path('update/'+idCategory);
   		}
   		
+  		$scope.actionDelete = function(category) {
+  			$scope.categoryDelete = category;
+  		}
+  		
+  		$scope.deleteCategory = function() {
+  			alert("id:" + $scope.categoryDelete.id);
+  			$http.delete("mastermenu/v1/category?id="+$scope.categoryDelete.id).success(
+  					function(data) {
+  						 $scope.init();
+  					});
+  		}
+  		
+  		$scope.cancel = function() {
+  			delete $scope.categoryDelete;
+  		}
+  		
   		$scope.init();
   	} ]);
 
@@ -111,5 +127,6 @@ mastermenuControllers.controller('UpdateCtrl', [
 					$location.path('category');
 				});
  		}
+  		
   		$scope.init();
 } ]);
