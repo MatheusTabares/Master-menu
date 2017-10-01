@@ -10,6 +10,10 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Optional;
 import com.google.gson.Gson;
+
+import br.com.mastermenu.categoria.model.Categoria;
+import br.com.mastermenu.category.service.CategoryService;
+import br.com.mastermenu.category.service.ICategoryService;
 import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.composition.service.CompositionService;
 import br.com.mastermenu.composition.service.ICompositionService;
@@ -29,11 +33,58 @@ public class Application {
 		IProductService productService = new ProductService();
 		ICompositionService compositionService = new CompositionService();
 		ISolicitationService solicitationService = new SolicitationService();
+		ICategoryService categoryService = new CategoryService();
 		
 		Gson gson = new Gson();
 		
 		staticFileLocation("/public");
 		//URL DE ACESSO: http://localhost:4567/index.html
+		/**
+		 * TODO: CRUD CATEGORY
+		 */
+		
+		post(mastermenu + "/category", (req, res) -> {
+			String body = req.body();
+			Categoria category = parseCategoryFromBody(body); 
+			if(category != null) {
+				categoryService.create(category);
+				return gson.toJson("Categoria - " + category.getNome() +", adicionada a lista!");
+			}
+			res.status(404);
+			return "Categoria não inserido!";
+		});
+		
+		get(mastermenu + "/category", (req, res) -> {
+			String categories = gson.toJson(categoryService.read());
+			if(!categories.trim().equals(""))
+				return categories;
+			else
+				return "Sem produtos!";
+		});
+		
+		put(mastermenu + "/category/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Categoria> categoria = categoryService.readById(id);
+			if (categoria.isPresent()) {
+				String body = req.body();
+				categoryService.update(parseCategoryFromBody(body));
+				return gson.toJson("Categoria atualizada com sucesso!");
+			} else {
+				res.status(404);
+				return "Erro ao atualizar uma Categoria!";
+			}
+		});
+		
+		get(mastermenu + "/category/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Categoria> category = categoryService.readById(id);
+			if (category.isPresent()) {
+				return gson.toJson(category.get());
+			} else {
+				res.status(404);
+				return "Categoria não encontrada!";
+			}
+		});
 		/**
 		 * TODO: CRUD SOLICITATION
 		 */
@@ -106,7 +157,7 @@ public class Application {
 			int id = Integer.parseInt(req.params(":id"));
 			Optional<Product> product = productService.readById(id);
 			if (product.isPresent()) {
-				return gson.toJson(product);
+				return gson.toJson(product.get());
 			} else {
 				res.status(404);
 				return "Produto não encontrado!";
@@ -191,6 +242,10 @@ public class Application {
 		return false;
 	}
 	
+	private static boolean validationCategory(Categoria category, Optional<String> toUpdate) {
+		return true;
+	}
+	
 	private static boolean validationProduct(Product product, Optional<String> toUpdate) {
 		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
 			if(product.getId() != null && product.getName() != null && !product.getName().trim().equals("")
@@ -206,6 +261,12 @@ public class Application {
 			}
 		}
 		return false;
+	}
+	
+	private static Categoria parseCategoryFromBody(String body) {
+		//log.info(body);
+		Gson gson = new Gson();
+		return gson.fromJson(body, Categoria.class);
 	}
 
 	private static Solicitation parseSolicitationFromBody(String body) {

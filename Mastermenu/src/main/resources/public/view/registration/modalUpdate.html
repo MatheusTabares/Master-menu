@@ -1,0 +1,23 @@
+<div class="container-fluid">
+	<h1>Mater-Menu : Atualizar Categoria</h1>
+	<form  ng-submit="updateCategory(category)" name="form" novalidate>
+		<div class="form-group">
+			<label for="nameCategory">Nome:</label> <input
+				id="nameCategory" type="text" ng-model="category.nome"
+				name="cName" required="true" placeholder="*" class="form-control" />
+			<!-- <div ng-show="form.cName.$touched">
+				<div ng-show="form.cName.$error.required"
+					class="alert alert-danger">* Nome obrigatório!</div>
+			</div> -->   
+		</div>
+		<p>	
+			<span>Com * é obrigatório.</span>
+		</p>
+		<div id=button>
+			<input class="btn btn-danger" type="submit" value="Atualizar"
+				ng-disabled="form.$invalid" />
+		</div>
+
+	</form>
+	<a href="#/registration">Voltar</a>
+</div>

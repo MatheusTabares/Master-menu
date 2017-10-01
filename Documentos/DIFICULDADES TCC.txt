@@ -6,3 +6,6 @@ Product de dentro do objeto Categoria, deixei somente a propriedade categoria de
 
 
 *Manipulação de objetos entre páginas, solução: https://pt.stackoverflow.com/questions/30912/como-passar-um-objeto-para-outra-p%C3%A1gina-usando-angularjs
+
+
+*Biblioteca min do bootstrap sem alguns recursos

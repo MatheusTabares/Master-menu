@@ -1,0 +1,38 @@
+<div class="container-fluid">
+	<h1>Mater-Menu : Categoria</h1>
+	
+	<form  ng-submit="addCategory(category)" name="form" novalidate>
+		<div class="form-group">
+			<label for="nameCategory">Nome:</label> <input
+				id="nameCategory" type="text" ng-model="category.name"
+				name="cName" required="true" placeholder="*" class="form-control" />
+			<!-- <div ng-show="form.cName.$touched">
+				<div ng-show="form.cName.$error.required"
+					class="alert alert-danger">* Nome obrigatório!</div>
+			</div> -->   
+		</div>
+		<p>
+			<span>Com * é obrigatório.</span>
+		</p>
+		<div id=button>
+			<input class="btn btn-danger" type="submit" value="Salvar"
+				ng-disabled="form.$invalid" />
+		</div>
+
+	</form>
+	<div>
+		<h3>Lista de Categorias</h3>
+		<table class="table table-striped">
+			<tr>
+				<th>Nome</th>
+				<th>Opções</th>
+			</tr>
+			<tr ng-repeat="category in categories">
+				<td>{{category.nome}}</td>
+				<td><button type="button" class="btn btn-info" ng-click="actionUpdate(category)">Editar</button> </td>
+			</tr>
+		</table>
+	</div>
+</div>
+	<a	class="btn btn-danger" href="#/registration">Voltar</a>
+</div>
