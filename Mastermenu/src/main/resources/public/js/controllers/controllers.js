@@ -90,10 +90,10 @@ mastermenuControllers.controller('CategoryCtrl', [
   		
   		$scope.deleteCategory = function() {
   			alert("id:" + $scope.categoryDelete.id);
-  			$http.delete("mastermenu/v1/category?id="+$scope.categoryDelete.id).success(
+  			/*$http.delete("mastermenu/v1/category?id="+$scope.categoryDelete.id).success(
   					function(data) {
   						 $scope.init();
-  					});
+  					});*/
   		}
   		
   		$scope.cancel = function() {
@@ -127,6 +127,34 @@ mastermenuControllers.controller('UpdateCtrl', [
 					$location.path('category');
 				});
  		}
+  		
+  		$scope.init();
+} ]);
+
+mastermenuControllers.controller('ProductCtrl', [
+  	'$scope',
+  	'$http',
+  	'$location',
+  	'$routeParams',
+  	function($scope, $http, $location, $routeParams) {
+  		$scope.init = function() {
+  			$http.get("mastermenu/v1/category").success(
+  	 				function(data) {
+  	 					$scope.categories = data;
+  	 		});
+  			$http.get("mastermenu/v1/product").success(
+  	 				function(data) {
+  	 					$scope.products = data;
+  	 		});
+  		}
+  		
+  		$scope.addProduct = function(product) {
+  			$http.post("mastermenu/v1/product", product).success(
+  					function(data) {
+  						alert(data);
+  						$scope.init();
+  					});
+  		}
   		
   		$scope.init();
 } ]);
