@@ -152,6 +152,20 @@ mastermenuControllers.controller('ProductCtrl', [
   					$scope.selected.push(c);
   				}
   			}
+  			$scope.selectedOptions = [];
+  			
+  			$scope.existOptions = function(co) {
+  				return $scope.selectedOptions.indexOf(co) > -1;
+  			}
+  			
+  			$scope.toggleSelectionOptions = function(co) {
+  				var idx = $scope.selectedOptions.indexOf(co);
+  				if(idx > -1) {
+  					$scope.selectedOptions.splice(idx, 1);
+  				} else {
+  					$scope.selectedOptions.push(co);
+  				}
+  			}
   			$http.get("mastermenu/v1/category").success(
   	 				function(data) {
   	 					$scope.categories = data;
@@ -164,10 +178,15 @@ mastermenuControllers.controller('ProductCtrl', [
   	 				function(data) {
   	 					$scope.compositions = data;
   	 		});
+  			$http.get("mastermenu/v1/composition").success(
+  	 				function(data) {
+  	 					$scope.optionsComposition = data;
+  	 		});
   		}
   		
   		$scope.addProduct = function(product) {
   			product.compositions = $scope.selected;
+  			product.optionsComposition = $scope.selectedOptions;
   			$http.post("mastermenu/v1/product", product).success(
   					function(data) {
   						alert(data);
