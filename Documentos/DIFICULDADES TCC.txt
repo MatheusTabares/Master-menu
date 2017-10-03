@@ -9,3 +9,5 @@ Product de dentro do objeto Categoria, deixei somente a propriedade categoria de
 
 
 *Biblioteca min do bootstrap sem alguns recursos
+
+*Checklist com angularjs

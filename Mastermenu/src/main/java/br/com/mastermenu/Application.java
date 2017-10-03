@@ -267,8 +267,7 @@ public class Application {
 			}
 		} else {
 			if(product.getId() == null && product.getName() != null && !product.getName().trim().equals("")
-					&& product.getPrice() != 0.0 && product.getCompositions().size() != 0
-					&& product.getOptionsComposition().size() != 0) {
+					&& product.getPrice() != 0.0 && product.getCompositions() != null && product.getCompositions().size() != 0) {
 				return true;
 			}
 		}

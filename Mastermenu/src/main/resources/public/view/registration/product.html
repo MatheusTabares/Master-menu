@@ -27,14 +27,36 @@
 					
 					<div class="form-group">
 						<label for="categoryProduct">Categoria:</label>
-						<select id="categoryProduct" name="pCategory" ng-model="pCategory" ng-options="category.nome for category in categories" 
+						<select id="categoryProduct" name="pCategory" ng-model="product.categoria" ng-options="category.nome for category in categories" 
 							ng-init=" pCategory = categories[0].nome" required="true" class="form-control"><option value="">*</option></select>
 						
+					</div>
+					
+					<div class="form-group">
+						<table>
+							<thead>
+								<tr>
+									<th>Composição</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="c in compositions">
+									<td>{{c.name}}</td>
+									<td><input type="checkbox" name="" ng-model="selected" ng-checked="exist(c)"
+									ng-click="toggleSelection(c)"></td>
+								</tr>
+							</tbody>
+						</table>
+						<div>
+							<h3>Composições selecionadas</h3>
+							<p ng-repeat="s in selected">{{s.id}} : {{s.name}}</p>
+						</div>
 					</div>
 					
 					<p>
 						<span>Campos com * são obrigatórios.</span>
 					</p>
+					
 					<div id=button>
 						<input class="btn btn-danger" type="submit" value="Salvar"
 							ng-disabled="form.$invalid" />

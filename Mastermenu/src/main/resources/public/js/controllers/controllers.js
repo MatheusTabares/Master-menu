@@ -138,6 +138,20 @@ mastermenuControllers.controller('ProductCtrl', [
   	'$routeParams',
   	function($scope, $http, $location, $routeParams) {
   		$scope.init = function() {
+  			$scope.selected = [];
+  			
+  			$scope.exist = function(c) {
+  				return $scope.selected.indexOf(c) > -1;
+  			}
+  			
+  			$scope.toggleSelection = function(c) {
+  				var idx = $scope.selected.indexOf(c);
+  				if(idx > -1) {
+  					$scope.selected.splice(idx, 1);
+  				} else {
+  					$scope.selected.push(c);
+  				}
+  			}
   			$http.get("mastermenu/v1/category").success(
   	 				function(data) {
   	 					$scope.categories = data;
@@ -146,9 +160,14 @@ mastermenuControllers.controller('ProductCtrl', [
   	 				function(data) {
   	 					$scope.products = data;
   	 		});
+  			$http.get("mastermenu/v1/composition").success(
+  	 				function(data) {
+  	 					$scope.compositions = data;
+  	 		});
   		}
   		
   		$scope.addProduct = function(product) {
+  			product.compositions = $scope.selected;
   			$http.post("mastermenu/v1/product", product).success(
   					function(data) {
   						alert(data);
@@ -158,3 +177,19 @@ mastermenuControllers.controller('ProductCtrl', [
   		
   		$scope.init();
 } ]);
+
+mastermenuControllers.controller('MainCtrl', [
+ 	'$scope',
+ 	'$http',
+ 	'$location',
+ 	function($scope, $http, $location) {
+ 	
+ 	} ]);
+
+mastermenuControllers.controller('RegistrationCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	function($scope, $http, $location) {
+   	
+   	} ]);
