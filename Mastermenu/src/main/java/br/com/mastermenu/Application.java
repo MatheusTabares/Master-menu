@@ -159,7 +159,8 @@ public class Application {
 			int id = Integer.parseInt(req.queryParams("id"));
 			Optional<Product> productDeleted = productService.readById(id);
 			if(productDeleted.isPresent()) {
-				return productService.delete(productDeleted.get());
+				productService.delete(productDeleted.get());
+				return productDeleted.get().getName() + " excluído com sucesso!";
 			} else {
 				res.status(404);
 				return false;

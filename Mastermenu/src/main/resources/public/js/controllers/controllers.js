@@ -199,6 +199,17 @@ mastermenuControllers.controller('ProductCtrl', [
   			$location.path('updateProduct/'+idProduct);
   		}
   		
+  		$scope.actionDelete = function(productDeleted) {
+  			$scope.productDeleted = productDeleted;
+  		}
+  		
+  		$scope.deleteProduct = function() {
+  			$http.delete("mastermenu/v1/product?id="+$scope.productDeleted.id).success(
+  					function(data) {
+  						alert(data);
+  						$scope.init();
+  					});
+  		}
   		$scope.init();
 } ]);
 

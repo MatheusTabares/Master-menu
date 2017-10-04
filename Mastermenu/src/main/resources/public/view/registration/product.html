@@ -49,9 +49,9 @@
 						</table>
 					</div>
 					<div>
-						<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Composições Opcionais</button>
+						<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalOptionsComposition">Composições Opcionais</button>
 						 <!-- Modal -->
-						  <div class="modal fade" id="myModal" role="dialog">
+						  <div class="modal fade" id="modalOptionsComposition" role="dialog">
 						    <div class="modal-dialog">
 						    
 						      <!-- Modal content-->
@@ -95,30 +95,32 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Nome</th>
+				<th>Preço R$</th>
 				<th>Opções</th>
 			</tr>
 			<tr ng-repeat="product in products">
 				<td>{{product.name}}</td>
+				<td>{{product.price}}</td>
 				<td><button type="button" class="btn btn-info" ng-click="actionUpdate(product)">Editar</button>
-					<!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="actionDelete(category)">Excluir</button> --></td>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDeleteProduct" ng-click="actionDelete(product)">Excluir</button></td>
 			</tr>
 		</table>
 	</div>
 </div>
 	<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="modalDeleteProduct" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Exluir Categoria</h4>
+        <h4 class="modal-title">Exluir Produto</h4>
       </div>
       <div class="modal-body">
-        <p>Tem certeza que deseja excluir a Categoria: </p> <b>{{categoryDelete.nome}}</b>
+        <p>Tem certeza que deseja excluir o Produto: </p> <b>{{productDeleted.name}}</b>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteCategory()">Sim</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteProduct()">Sim</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Não</button>
       </div>
     </div>
