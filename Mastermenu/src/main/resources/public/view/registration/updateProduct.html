@@ -1,8 +1,7 @@
 <div class="container-fluid">
-	<h1>Mater-Menu : Produto</h1>
-	
-	<form  ng-submit="addProduct(product)" name="form" novalidate>
-					<div class="form-group">
+	<h1>Mater-Menu : Atualizar Produto</h1>
+	<form  ng-submit="updateProduct(product)" name="form" novalidate>
+		<div class="form-group">
 						<label for="nameProduct">Nome:</label> <input
 							id="nameProduct" type="text" ng-model="product.name"
 							name="pName" required="true" placeholder="*" class="form-control" />
@@ -28,7 +27,7 @@
 					<div class="form-group">
 						<label for="categoryProduct">Categoria:</label>
 						<select id="categoryProduct" name="pCategory" ng-model="product.categoria" ng-options="category.nome for category in categories" 
-							ng-init=" pCategory = categories[0].nome" required="true" class="form-control"><option value="">*</option></select>
+							ng-init=" pCategory = categories[0].nome" required="true" class="form-control"><option value="">{{product.categoria.nome}}</option></select>
 						
 					</div>
 					
@@ -78,52 +77,15 @@
 						    </div>
 						  </div>
 						</div>
-					<p>
-						<span>Campos com * são obrigatórios.</span>
-					</p>
-					
-					<div id=button>
-						<input class="btn btn-danger" type="submit" value="Salvar"
-							ng-disabled="form.$invalid" />
-						 <a	class="btn btn-danger" href="#/registration">Voltar</a>
-					</div>
-	
-				</form>
+		<p>	
+			<span>Com * é obrigatório.</span>
+		</p>
+		<div id=button>
+			<input class="btn btn-danger" type="submit" value="Atualizar"
+				ng-disabled="form.$invalid" />
 				
-				<div>
-		<h3>Lista de Produtos</h3>
-		<table class="table table-striped">
-			<tr>
-				<th>Nome</th>
-				<th>Opções</th>
-			</tr>
-			<tr ng-repeat="product in products">
-				<td>{{product.name}}</td>
-				<td><button type="button" class="btn btn-info" ng-click="actionUpdate(product)">Editar</button>
-					<!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="actionDelete(category)">Excluir</button> --></td>
-			</tr>
-		</table>
-	</div>
-</div>
-	<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+			<a href="#/product" class="btn btn-danger">Voltar</a>
+		</div>
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Exluir Categoria</h4>
-      </div>
-      <div class="modal-body">
-        <p>Tem certeza que deseja excluir a Categoria: </p> <b>{{categoryDelete.nome}}</b>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteCategory()">Sim</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Não</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-</div>
+	</form>
 </div>

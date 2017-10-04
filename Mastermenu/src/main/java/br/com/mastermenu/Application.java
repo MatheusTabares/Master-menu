@@ -142,15 +142,16 @@ public class Application {
 				return "Sem produtos!";
 		});
 		
-		put(mastermenu + "/product", (req, res) -> {
-			String body = req.body();
-			Product productValidated = parseProductFromBody(body);
-			if (validationProduct(productValidated, Optional.of("update")) == true) {
-				productService.update(productValidated);
-				return gson.toJson("Produto - " + productValidated.getName() + ", atualizado com sucesso!");
+		put(mastermenu + "/product/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Product> product = productService.readById(id);
+			if (product.isPresent()) {
+				String body = req.body();
+				productService.update(parseProductFromBody(body));
+				return gson.toJson("Produto atualizado com sucesso!");
 			} else {
 				res.status(404);
-				return "Produto não encontrado para atualizar!";
+				return "Erro ao atualizar um Produto!";
 			}
 		});
 		

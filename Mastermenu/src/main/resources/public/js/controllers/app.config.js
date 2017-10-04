@@ -1,6 +1,10 @@
 angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'mastermenuServices' ])
 		.config([ '$routeProvider', function($routeProvider) {
-			$routeProvider.when('/update/:idCategory', {
+			$routeProvider.when('/updateProduct/:idProduct', {
+				templateUrl : '../../view/registration/updateProduct.html',
+				controller : 'UpdateProductCtrl'
+			})
+			.when('/update/:idCategory', {
 				templateUrl : '../../view/registration/modalUpdate.html',
 				controller : 'UpdateCtrl'
 			})

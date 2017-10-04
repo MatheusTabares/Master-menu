@@ -118,10 +118,6 @@ mastermenuControllers.controller('UpdateCtrl', [
   		}
   		
   		$scope.updateCategory = function(category) {
- 			$scope.category = {
- 					"id" : null,
- 					"nome" : category.name,
- 			}
  			$http.put("mastermenu/v1/category/"+$scope.id, category).success(
 				function(data) {
 					$location.path('category');
@@ -198,6 +194,11 @@ mastermenuControllers.controller('ProductCtrl', [
   			$scope.selectedOptions = [];
   		}
   		
+  		$scope.actionUpdate = function(product) {
+  			var idProduct = product.id;
+  			$location.path('updateProduct/'+idProduct);
+  		}
+  		
   		$scope.init();
 } ]);
 
@@ -215,4 +216,35 @@ mastermenuControllers.controller('RegistrationCtrl', [
    	'$location',
    	function($scope, $http, $location) {
    	
+   	} ]);
+
+mastermenuControllers.controller('UpdateProductCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	'$routeParams',
+   	function($scope, $http, $location, $routeParams) {
+   		$scope.init = function() {
+  			$scope.id = $routeParams.idProduct;
+  			$http.get("mastermenu/v1/product/"+$scope.id).success(
+  	 				function(data) {
+  	 					$scope.product = data;
+  	 		});
+  			$http.get("mastermenu/v1/category").success(
+ 				function(data) {
+ 					for(var i = data.length; i--;){
+ 						if (data[i].nome === $scope.product.categoria.nome) data.splice(i, 1);
+ 					}
+ 					$scope.categories = data;
+ 			});
+  		}
+  		
+  		$scope.updateProduct = function(product) {
+ 			$http.put("mastermenu/v1/product/"+$scope.id, product).success(
+				function(data) {
+					$location.path('product');
+				});
+ 		}
+  		
+  		$scope.init();
    	} ]);
