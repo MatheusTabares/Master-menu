@@ -136,9 +136,12 @@ mastermenuControllers.controller('ProductCtrl', [
   	'$http',
   	'$location',
   	'$routeParams',
-  	function($scope, $http, $location, $routeParams) {
+  	'$route',
+  	'$window',
+  	function($scope, $http, $location, $routeParams, $route, $window) {
   		$scope.init = function() {
   			$scope.selected = [];
+  			$scope.selectedOptions = [];
   			
   			$scope.exist = function(c) {
   				return $scope.selected.indexOf(c) > -1;
@@ -152,7 +155,6 @@ mastermenuControllers.controller('ProductCtrl', [
   					$scope.selected.push(c);
   				}
   			}
-  			$scope.selectedOptions = [];
   			
   			$scope.existOptions = function(co) {
   				return $scope.selectedOptions.indexOf(co) > -1;
@@ -177,11 +179,9 @@ mastermenuControllers.controller('ProductCtrl', [
   			$http.get("mastermenu/v1/composition").success(
   	 				function(data) {
   	 					$scope.compositions = data;
-  	 		});
-  			$http.get("mastermenu/v1/composition").success(
-  	 				function(data) {
   	 					$scope.optionsComposition = data;
   	 		});
+  			
   		}
   		
   		$scope.addProduct = function(product) {
@@ -189,9 +189,13 @@ mastermenuControllers.controller('ProductCtrl', [
   			product.optionsComposition = $scope.selectedOptions;
   			$http.post("mastermenu/v1/product", product).success(
   					function(data) {
+  						$window.location.reload();
   						alert(data);
-  						$scope.init();
   					});
+  		}
+  		
+  		$scope.closeModalOptionsComposition = function() {
+  			$scope.selectedOptions = [];
   		}
   		
   		$scope.init();
