@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import br.com.mastermenu.categoria.model.Categoria;
 import br.com.mastermenu.composition.model.Composition;
+import br.com.mastermenu.model.House;
 
 @Entity(name = "product")
 public class Product {
@@ -38,6 +39,10 @@ public class Product {
 	@ManyToOne
     @JoinColumn(name="categoria_id")
     private Categoria categoria;
+	
+	@ManyToOne
+	@JoinColumn(name="house_id")
+	private House house;
 	
 	public Product() {}
 	
