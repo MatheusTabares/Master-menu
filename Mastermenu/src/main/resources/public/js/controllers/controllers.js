@@ -259,3 +259,18 @@ mastermenuControllers.controller('UpdateProductCtrl', [
   		
   		$scope.init();
    	} ]);
+
+mastermenuControllers.controller('HouseCtrl', [
+ 	'$scope',
+ 	'$http',
+ 	'$location',
+ 	'$window',
+ 	function($scope, $http, $location, $window) {
+ 		$scope.addHouse = function(house) {
+  			$http.post("mastermenu/v1/house", house).success(
+  					function(data) {
+  						$window.location.reload();
+  						alert(data);
+  					});
+  		}
+ 	} ]);

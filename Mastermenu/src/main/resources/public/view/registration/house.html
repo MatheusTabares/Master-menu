@@ -1,0 +1,26 @@
+<div class="container-fluid">
+	<h1>Mater-Menu : Estabelecimento</h1>
+	
+	<form  ng-submit="addHouse(house)" name="form" novalidate>
+		<div class="form-group">
+			<label for="nameHouse">Nome:</label> <input
+				id="nameHouse" type="text" ng-model="house.name"
+				name="hName" required="true" placeholder="*" class="form-control" />
+			<!-- <div ng-show="form.pName.$touched">
+				<div ng-show="form.pName.$error.required"
+					class="alert alert-danger">* Nome obrigatório!</div>
+			</div>   -->
+		</div>
+		<p>
+			<span>Campo com * são obrigatórios.</span>
+		</p>
+		
+		<div id=button>
+			<input class="btn btn-danger" type="submit" value="Salvar"
+				ng-disabled="form.$invalid" />
+			 <a	class="btn btn-danger" href="#/registration">Voltar</a>
+		</div>
+
+	</form>
+	
+</div>

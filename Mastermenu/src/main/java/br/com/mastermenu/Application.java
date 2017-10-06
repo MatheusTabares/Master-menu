@@ -17,6 +17,9 @@ import br.com.mastermenu.category.service.ICategoryService;
 import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.composition.service.CompositionService;
 import br.com.mastermenu.composition.service.ICompositionService;
+import br.com.mastermenu.house.service.HouseService;
+import br.com.mastermenu.house.service.IHouseService;
+import br.com.mastermenu.model.House;
 import br.com.mastermenu.product.model.Product;
 import br.com.mastermenu.product.service.IProductService;
 import br.com.mastermenu.product.service.ProductService;
@@ -34,11 +37,72 @@ public class Application {
 		ICompositionService compositionService = new CompositionService();
 		ISolicitationService solicitationService = new SolicitationService();
 		ICategoryService categoryService = new CategoryService();
+		IHouseService houseService = new HouseService();
 		
 		Gson gson = new Gson();
 		
 		staticFileLocation("/public");
 		//URL DE ACESSO: http://localhost:4567/index.html
+		
+		/**
+		 * TODO: CRUD PRODUCT
+		 */
+		
+		post(mastermenu + "/house", (req, res) -> {
+			String body = req.body();
+			House houseValidated = parseHouseFromBody(body);
+			if(validationHouse(houseValidated, Optional.empty()) == true) {
+				houseService.create(houseValidated);
+				return gson.toJson("Estabelecimento - " + houseValidated.getName() +", inserido com sucesso!");
+			}
+			res.status(404);
+			return "Estabelecimento não inserido!";
+		});
+		
+		get(mastermenu + "/house", (req, res) -> {
+			String houses = gson.toJson(houseService.read());
+			if(!houses.trim().equals(""))
+				return  houses;
+			else
+				return "Sem estabaelecimentos!";
+		});
+		
+		put(mastermenu + "/house/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<House> house = houseService.readById(id);
+			if (house.isPresent()) {
+				String body = req.body();
+				houseService.update(parseHouseFromBody(body));
+				return gson.toJson("Estabelecimento atualizado com sucesso!");
+			} else {
+				res.status(404);
+				return "Erro ao atualizar um Estabalecimento!";
+			}
+		});
+		
+		delete(mastermenu + "/house", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			Optional<House> houseDeleted = houseService.readById(id);
+			if(houseDeleted.isPresent()) {
+				houseService.delete(houseDeleted.get());
+				return houseDeleted.get().getName() + " excluído com sucesso!";
+			} else {
+				res.status(404);
+				return false;
+			}
+		});
+		
+		get(mastermenu + "/house/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<House> house = houseService.readById(id);
+			if (house.isPresent()) {
+				return gson.toJson(house.get());
+			} else {
+				res.status(404);
+				return "Estabelecimento não encontrado!";
+			}
+		});
+		
 		/**
 		 * TODO: CRUD CATEGORY
 		 */
@@ -260,6 +324,19 @@ public class Application {
 		return true;
 	}
 	
+	private static boolean validationHouse(House house, Optional<String> toUpdate) {
+		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
+			if(house.getId() != null && house.getName() != null && !house.getName().trim().equals("")) {
+				return true;
+			}
+		} else {
+			if(house.getId() == null && house.getName() != null && !house.getName().trim().equals("")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private static boolean validationProduct(Product product, Optional<String> toUpdate) {
 		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
 			if(product.getId() != null && product.getName() != null && !product.getName().trim().equals("")
@@ -286,6 +363,12 @@ public class Application {
 		//log.info(body);
 		Gson gson = new Gson();
 		return gson.fromJson(body, Solicitation.class);
+	}
+	
+	private static House parseHouseFromBody(String body) {
+		//log.info(body);
+		Gson gson = new Gson();
+		return gson.fromJson(body, House.class);
 	}
 	
 	private static Product parseProductFromBody(String body) {
