@@ -1,6 +1,14 @@
 angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'mastermenuServices' ])
 		.config([ '$routeProvider', function($routeProvider) {
-			$routeProvider.when('/updateHouse/:idHouse', {
+			$routeProvider.when('/customerPanel', {
+				templateUrl : '../../view/client/customerPanel.html',
+				controller : 'CustomerPanelCtrl'
+			})
+			.when('/officialPanel', {
+				templateUrl : '../../view/registration/officialPanel.html',
+				controller : 'OfficialPanelCtrl'
+			})
+			.when('/updateHouse/:idHouse', {
 				templateUrl : '../../view/registration/updateHouse.html',
 				controller : 'UpdateHouseCtrl'
 			})

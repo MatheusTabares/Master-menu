@@ -324,3 +324,19 @@ mastermenuControllers.controller('UpdateHouseCtrl', [
   		
   		$scope.init();
    	} ]);
+
+mastermenuControllers.controller('CustomerPanelCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	'$routeParams',
+   	function($scope, $http, $location, $routeParams) {
+   	} ]);
+
+mastermenuControllers.controller('OfficialPanelCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	'$routeParams',
+   	function($scope, $http, $location, $routeParams) {
+   	} ]);
