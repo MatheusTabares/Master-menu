@@ -273,4 +273,54 @@ mastermenuControllers.controller('HouseCtrl', [
   						alert(data);
   					});
   		}
+ 		
+ 		$scope.init = function() {
+ 			$http.get("mastermenu/v1/house").success(
+ 	 				function(data) {
+ 	 					$scope.houses = data;
+ 	 			});
+ 		}
+ 		
+ 		$scope.actionUpdate = function(house) {
+  			var idHouse = house.id;
+  			$location.path('updateHouse/'+idHouse);
+  		}
+ 		
+ 		$scope.actionDelete = function(houseDeleted) {
+  			$scope.houseDeleted = houseDeleted;
+  		}
+  		
+  		$scope.deleteHouse = function() {
+  			$http.delete("mastermenu/v1/house?id="+$scope.houseDeleted.id).success(
+  					function(data) {
+  						alert(data);
+  						$scope.init();
+  					});
+  		}
+  		
+ 		$scope.init();
  	} ]);
+
+mastermenuControllers.controller('UpdateHouseCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	'$routeParams',
+   	function($scope, $http, $location, $routeParams) {
+   		$scope.init = function() {
+  			$scope.id = $routeParams.idHouse;
+  			$http.get("mastermenu/v1/house/"+$scope.id).success(
+  	 				function(data) {
+  	 					$scope.house = data;
+  	 		});
+  		}
+  		
+  		$scope.updateHouse = function(house) {
+ 			$http.put("mastermenu/v1/house/"+$scope.id, house).success(
+				function(data) {
+					$location.path('house');
+				});
+ 		}
+  		
+  		$scope.init();
+   	} ]);
