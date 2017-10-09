@@ -28,8 +28,9 @@ public class ProductDAO implements IProductDAO{
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
-	public List<Product> read() {
-		return em.createQuery("FROM " + Product.class.getName()).getResultList();
+	public List<Product> read(int idHouse) {
+		return em.createQuery("FROM " + Product.class.getName())
+				.setParameter("house_id", idHouse).getResultList();
 	}
 
 	@Override
@@ -65,9 +66,10 @@ public class ProductDAO implements IProductDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> encontrarPorIdCategoria(int idCategoria) {
+	public List<Product> encontrarPorIdCategoria(int idCategoria, int idHouse) {
 		return em.createQuery("FROM " + Product.class.getName() + " WHERE categoria_id like :categoria_id")
-			   .setParameter("categoria_id", idCategoria).getResultList();
+			   .setParameter("categoria_id", idCategoria)
+			   .setParameter("house_id", idHouse).getResultList();
 		//return em.createQuery("FROM " + Product.class.getName() + "P WHERE P.categoria_id = " + idCategoria).getResultList();
 	}
 }

@@ -3,8 +3,11 @@ mastermenuControllers.controller('BebidasCtrl', [
 	'$scope',
 	'$http',
 	'$location',
-	function($scope, $http, $location) {
-		$http.get("mastermenu/v1/produtoPorCategoria/1").success(
+	'$routeParams',
+	function($scope, $http, $location, $routeParams) {
+		$scope.idHouse = $routeParams.idHouse;
+		
+		$http.get("mastermenu/v1/produtoPorCategoria/1/"+$scope.idHouse).success(
 				function(data) {
 					$scope.produtos = data;
 				});
@@ -136,6 +139,7 @@ mastermenuControllers.controller('ProductCtrl', [
   	'$window',
   	function($scope, $http, $location, $routeParams, $route, $window) {
   		$scope.init = function() {
+  			$scope.idHouse = $routeParams.idHouse;
   			$scope.selected = [];
   			$scope.selectedOptions = [];
   			
@@ -168,7 +172,7 @@ mastermenuControllers.controller('ProductCtrl', [
   	 				function(data) {
   	 					$scope.categories = data;
   	 		});
-  			$http.get("mastermenu/v1/product").success(
+  			$http.get("mastermenu/v1/product/"+$scope.idHouse).success(
   	 				function(data) {
   	 					$scope.products = data;
   	 		});
@@ -181,6 +185,7 @@ mastermenuControllers.controller('ProductCtrl', [
   		}
   		
   		$scope.addProduct = function(product) {
+  			product.house.id = $scope.idHouse;
   			product.compositions = $scope.selected;
   			product.optionsComposition = $scope.selectedOptions;
   			$http.post("mastermenu/v1/product", product).success(
@@ -218,7 +223,36 @@ mastermenuControllers.controller('MainCtrl', [
  	'$http',
  	'$location',
  	function($scope, $http, $location) {
- 	
+ 		$scope.init = function() {
+ 			$http.get("mastermenu/v1/house").success(
+ 	 				function(data) {
+ 	 					$scope.houses = data;
+ 	 			});
+ 		}
+ 		
+ 		/*$scope.actionCustomerPanel = function(house) {
+ 			var idHouse = house.id;
+  			$location.path('customerPanel/'+idHouse);
+ 		}*/
+ 		
+ 		
+ 		$scope.login = function() {
+ 			alert("E-mail: " + $scope.user.email + "- Senha: " + $scope.user.password);
+ 			$("#modalLogin").on('hidden.bs.modal', function () {
+ 			    $location.path("panel");
+ 			    $scope.$apply();
+ 			});
+ 			
+ 		}
+ 		
+ 		$scope.closeModal = function() {
+ 			$("[data-dismiss=modal]").trigger({ type: "click" });
+ 		}
+ 		
+ 		$scope.reload = function() {
+ 			$location.path('panel');
+ 		}
+ 		$scope.init();
  	} ]);
 
 mastermenuControllers.controller('RegistrationCtrl', [
@@ -260,7 +294,7 @@ mastermenuControllers.controller('UpdateProductCtrl', [
   		$scope.init();
    	} ]);
 
-mastermenuControllers.controller('HouseCtrl', [
+mastermenuControllers.controller('CreateHouseCtrl', [
  	'$scope',
  	'$http',
  	'$location',
@@ -298,6 +332,32 @@ mastermenuControllers.controller('HouseCtrl', [
   					});
   		}
   		
+  		$scope.moreOptions = function(house) {
+  			var idHouse = house.id;
+  			$location.path('house/'+idHouse);
+  		}
+  		
+ 		$scope.init();
+ 	} ]);
+
+mastermenuControllers.controller('HouseCtrl', [
+ 	'$scope',
+ 	'$http',
+ 	'$location',
+ 	'$window',
+ 	'$routeParams',
+ 	function($scope, $http, $location, $window, $routeParams) {
+ 		$scope.init = function() {
+ 			$scope.idHouse = $routeParams.idHouse;
+ 			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+  	 				function(data) {
+  	 					$scope.house = data;
+  	 		});
+ 		}
+ 		
+ 		$scope.actionProduct = function() {
+ 			$location.path('product/'+$scope.idHouse);
+ 		}
  		$scope.init();
  	} ]);
 
@@ -318,19 +378,31 @@ mastermenuControllers.controller('UpdateHouseCtrl', [
   		$scope.updateHouse = function(house) {
  			$http.put("mastermenu/v1/house/"+$scope.id, house).success(
 				function(data) {
-					$location.path('house');
+					$location.path('createHouse');
 				});
  		}
   		
   		$scope.init();
    	} ]);
 
-mastermenuControllers.controller('CustomerPanelCtrl', [
+mastermenuControllers.controller('PanelCtrl', [
    	'$scope',
    	'$http',
    	'$location',
    	'$routeParams',
    	function($scope, $http, $location, $routeParams) {
+   		$scope.init = function() {
+   			$http.get("mastermenu/v1/house").success(
+ 				function(data) {
+ 					$scope.houses = data;
+ 				});
+   		} 
+   		
+   		$scope.actionHouse = function(house) {
+   			$location.path('menu/'+house.idHouse);
+   		}
+   		
+   		$scope.init();
    	} ]);
 
 mastermenuControllers.controller('OfficialPanelCtrl', [
@@ -339,4 +411,22 @@ mastermenuControllers.controller('OfficialPanelCtrl', [
    	'$location',
    	'$routeParams',
    	function($scope, $http, $location, $routeParams) {
+   	} ]);
+
+mastermenuControllers.controller('MenuCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	'$routeParams',
+   	function($scope, $http, $location, $routeParams) {
+   		$scope.init = function() {
+  			$scope.idHouse = $routeParams.idHouse;
+  			
+  		} 
+   		
+   		$scope.actionDrink = function() {
+   			$location.path('bebidas/'+$scope.idHouse);
+   		}
+   		
+   		$scope.init();
    	} ]);

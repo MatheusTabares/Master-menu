@@ -7,7 +7,7 @@ import br.com.mastermenu.product.model.Product;
 public interface IProductService {
 	public void create(Product product);
 	
-	public List<Product> read();
+	public List<Product> read(int idHouse);
 	
 	public void update(Product productUpdated);
 	
@@ -15,5 +15,5 @@ public interface IProductService {
 	
 	public Optional<Product> readById(int id);
 	
-	public List<Product> encontrarPorIdCategoria(int idCategoria);
+	public List<Product> encontrarPorIdCategoria(int idCategoria, int idHouse);
 }

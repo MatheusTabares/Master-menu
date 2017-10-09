@@ -92,9 +92,9 @@ public class Application {
 			}
 		});
 		
-		get(mastermenu + "/house/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			Optional<House> house = houseService.readById(id);
+		get(mastermenu + "/house/:idHouse", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			Optional<House> house = houseService.readById(idHouse);
 			if (house.isPresent()) {
 				return gson.toJson(house.get());
 			} else {
@@ -198,8 +198,9 @@ public class Application {
 			return "Produto não inserido!";
 		});
 		
-		get(mastermenu + "/product", (req, res) -> {
-			String products = gson.toJson(productService.read());
+		get(mastermenu + "/product/:idHouse", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			String products = gson.toJson(productService.read(idHouse));
 			if(!products.trim().equals(""))
 				return  products;
 			else
@@ -242,9 +243,10 @@ public class Application {
 			}
 		});
 		
-		get(mastermenu + "/produtoPorCategoria/:idCategoria", (req, res) -> {
+		get(mastermenu + "/produtoPorCategoria/:idCategoria/:idHouse", (req, res) -> {
 			int idCategoria = Integer.parseInt(req.params(":idCategoria"));
-			String products = gson.toJson(productService.encontrarPorIdCategoria(idCategoria));
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			String products = gson.toJson(productService.encontrarPorIdCategoria(idCategoria, idHouse));
 			if(!products.trim().equals(""))
 				return  products;
 			else

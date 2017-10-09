@@ -1,8 +1,12 @@
 angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'mastermenuServices' ])
 		.config([ '$routeProvider', function($routeProvider) {
-			$routeProvider.when('/customerPanel', {
-				templateUrl : '../../view/client/customerPanel.html',
-				controller : 'CustomerPanelCtrl'
+			$routeProvider.when('/house/:idHouse', {
+				templateUrl : '../../view/registration/house.html',
+				controller : 'HouseCtrl'
+			})
+			.when('/panel', {
+				templateUrl : '../../view/client/panel.html',
+				controller : 'PanelCtrl'
 			})
 			.when('/officialPanel', {
 				templateUrl : '../../view/registration/officialPanel.html',
@@ -12,9 +16,9 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/updateHouse.html',
 				controller : 'UpdateHouseCtrl'
 			})
-			.when('/house', {
-				templateUrl : '../../view/registration/house.html',
-				controller : 'HouseCtrl'
+			.when('/createHouse', {
+				templateUrl : '../../view/registration/createHouse.html',
+				controller : 'CreateHouseCtrl'
 			})
 			.when('/updateProduct/:idProduct', {
 				templateUrl : '../../view/registration/updateProduct.html',
@@ -28,7 +32,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/category.html',
 				controller : 'CategoryCtrl'
 			})
-			.when('/product', {
+			.when('/product/:idHouse', {
 				templateUrl : '../../view/registration/product.html',
 				controller : 'ProductCtrl'
 			})
@@ -40,11 +44,11 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/client/listaDePedidos.html',
 				controller : 'ListaDePedidosCtrl'
 			})
-			.when('/menu', {
+			.when('/menu/:idHouse', {
 				templateUrl : '../../view/client/menu.html',
 				controller : 'MenuCtrl'
 			})
-			.when('/bebidas', {
+			.when('/bebidas/:idHouse', {
 				templateUrl : '../../view/client/bebidas.html',
 				controller : 'BebidasCtrl'
 			})

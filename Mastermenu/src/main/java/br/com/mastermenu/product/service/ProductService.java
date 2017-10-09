@@ -15,8 +15,8 @@ public class ProductService implements IProductService{
 	}
 
 	@Override
-	public List<Product> read() {
-		return productDAO.read();
+	public List<Product> read(int idHouse) {
+		return productDAO.read(idHouse);
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class ProductService implements IProductService{
 	}
 
 	@Override
-	public List<Product> encontrarPorIdCategoria(int idCategoria) {
-		return productDAO.encontrarPorIdCategoria(idCategoria);
+	public List<Product> encontrarPorIdCategoria(int idCategoria, int idHouse) {
+		return productDAO.encontrarPorIdCategoria(idCategoria, idHouse);
 	}
 		
 }

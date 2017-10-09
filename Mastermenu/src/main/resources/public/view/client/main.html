@@ -1,5 +1,52 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
 	<h1>Mater-Menu</h1>
 	<a href="#/customerPanel">Painel Cliente</a>
 	<a href="#/officialPanel">Painel Funcionário</a>
+	
+	<div>
+		<h3>Estabelecimentos</h3>
+		<table class="table table-striped">
+			<tr ng-repeat="house in houses">
+				<td><button type="button" class="btn btn-info" ng-click="actionCustomerPanel(house)">{{house.name}}</button></td>
+			</tr>
+		</table>
+	</div>
+</div> -->
+<div class="container-fluid">
+	<h1>Mater-Menu</h1>
+	
+	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalLogin" ng-click="login()">ENTRAR</button>
+	
+	<div>
+		<h3>Estabelecimentos</h3>
+		<table class="table table-striped">
+			<tr ng-repeat="house in houses">
+				<td><button type="button" class="btn btn-info" ng-click="actionCustomerPanel(house)">{{house.name}}</button></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="modalLogin" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">ENTRAR:</h4>
+	      </div>
+	      <div class="modal-body">
+	        <label for="email">E-mail:</label> 
+	        <input	id="email" type="text" ng-model="user.email"
+				name="uEmail" required="true" placeholder="*" class="form-control" />
+			
+			<label for="password">Senha:</label> 
+	        <input	id="password" type="password" ng-model="user.password"
+				name="uPassword" required="true" placeholder="*" class="form-control" />
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="login()">AGORA</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">CANCELAR</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
 </div>
