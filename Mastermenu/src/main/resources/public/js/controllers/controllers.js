@@ -185,6 +185,7 @@ mastermenuControllers.controller('ProductCtrl', [
   		}
   		
   		$scope.addProduct = function(product) {
+  			product.house = new Object();
   			product.house.id = $scope.idHouse;
   			product.compositions = $scope.selected;
   			product.optionsComposition = $scope.selectedOptions;
