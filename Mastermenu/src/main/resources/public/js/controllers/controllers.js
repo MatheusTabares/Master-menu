@@ -5,12 +5,15 @@ mastermenuControllers.controller('BebidasCtrl', [
 	'$location',
 	'$routeParams',
 	function($scope, $http, $location, $routeParams) {
-		$scope.idHouse = $routeParams.idHouse;
+		$scope.init = function() {
+			$scope.idHouse = $routeParams.idHouse;
+			
+			$http.get("mastermenu/v1/produtoPorCategoria/1/"+$scope.idHouse).success(
+					function(data) {
+						$scope.produtos = data;
+					});
+		}
 		
-		$http.get("mastermenu/v1/produtoPorCategoria/1/"+$scope.idHouse).success(
-				function(data) {
-					$scope.produtos = data;
-				});
 		$scope.adicionar = function(produto) {
  			$scope.solicitation = {
  					"id" : null,
@@ -21,17 +24,25 @@ mastermenuControllers.controller('BebidasCtrl', [
 					 alert(data);
 				});
  		}
+		
+		$scope.init();
 	} ]);
 
 mastermenuControllers.controller('ComidasCtrl', [
  	'$scope',
  	'$http',
  	'$location',
- 	function($scope, $http, $location) {
- 		$http.get("mastermenu/v1/produtoPorCategoria/2").success(
- 				function(data) {
- 					$scope.produtos = data;
- 				});
+ 	'$routeParams',
+ 	function($scope, $http, $location, $routeParams) {
+ 		$scope.init = function() {
+ 			$scope.idHouse = $routeParams.idHouse;
+ 			
+ 			$http.get("mastermenu/v1/produtoPorCategoria/2/"+$scope.idHouse).success(
+ 	 				function(data) {
+ 	 					$scope.produtos = data;
+ 	 				});
+ 		}
+ 		
  		$scope.adicionar = function(produto) {
  			$scope.solicitation = {
  					"id" : null,
@@ -42,6 +53,8 @@ mastermenuControllers.controller('ComidasCtrl', [
 					 alert(data);
 				});
  		}
+ 		
+ 		$scope.init();
  	} ]);
 
 mastermenuControllers.controller('ListaDePedidosCtrl', [
@@ -231,14 +244,7 @@ mastermenuControllers.controller('MainCtrl', [
  	 			});
  		}
  		
- 		/*$scope.actionCustomerPanel = function(house) {
- 			var idHouse = house.id;
-  			$location.path('customerPanel/'+idHouse);
- 		}*/
- 		
- 		
  		$scope.login = function() {
- 			alert("E-mail: " + $scope.user.email + "- Senha: " + $scope.user.password);
  			$("#modalLogin").on('hidden.bs.modal', function () {
  			    $location.path("panel");
  			    $scope.$apply();
@@ -400,7 +406,8 @@ mastermenuControllers.controller('PanelCtrl', [
    		} 
    		
    		$scope.actionHouse = function(house) {
-   			$location.path('menu/'+house.idHouse);
+   			$scope.idHouse = house.id;
+   			$location.path('menu/'+ $scope.idHouse);
    		}
    		
    		$scope.init();
@@ -422,11 +429,14 @@ mastermenuControllers.controller('MenuCtrl', [
    	function($scope, $http, $location, $routeParams) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
-  			
   		} 
    		
    		$scope.actionDrink = function() {
    			$location.path('bebidas/'+$scope.idHouse);
+   		}
+   		
+   		$scope.actionFood = function() {
+   			$location.path('comidas/'+$scope.idHouse);
    		}
    		
    		$scope.init();

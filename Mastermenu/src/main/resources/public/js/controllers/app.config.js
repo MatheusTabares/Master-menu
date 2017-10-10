@@ -52,7 +52,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/client/bebidas.html',
 				controller : 'BebidasCtrl'
 			})
-			.when('/comidas', {
+			.when('/comidas/:idHouse', {
 				templateUrl : '../../view/client/comidas.html',
 				controller : 'ComidasCtrl'
 			})
