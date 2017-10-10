@@ -1,6 +1,10 @@
 angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'mastermenuServices' ])
 		.config([ '$routeProvider', function($routeProvider) {
-			$routeProvider.when('/house/:idHouse', {
+			$routeProvider.when('/houseResource/:idHouse', {
+				templateUrl : '../../view/client/houseResource.html',
+				controller : 'HouseResourceCtrl'
+			})
+			.when('/house/:idHouse', {
 				templateUrl : '../../view/registration/house.html',
 				controller : 'HouseCtrl'
 			})
@@ -40,7 +44,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/registration.html',
 				controller : 'RegistrationCtrl'
 			})
-			.when('/listaDePedidos', {
+			.when('/listaDePedidos/:idHouse', {
 				templateUrl : '../../view/client/listaDePedidos.html',
 				controller : 'ListaDePedidosCtrl'
 			})

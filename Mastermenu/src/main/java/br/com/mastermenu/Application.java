@@ -176,7 +176,8 @@ public class Application {
 			return "Pedido não inserido!";
 		});
 		
-		get(mastermenu + "/solicitation", (req, res) -> {
+		get(mastermenu + "/solicitation/:idHouse", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
 			String solicitations = gson.toJson(solicitationService.read());
 			if(!solicitations.trim().equals(""))
 				return solicitations;

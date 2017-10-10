@@ -1,10 +1,29 @@
 var mastermenuControllers = angular.module('mastermenuControllers', []);
+mastermenuControllers.factory('Scopes', [
+	'$rootScope',
+	function ($rootScope) {
+	    var mem = {};
+	  
+	    return {
+	        store: function (key, value) {
+	            $rootScope.$emit('scope.stored', key);
+	            mem[key] = value;
+	        },
+	        get: function (key) {
+	            return mem[key];
+	        }
+	    };
+	} ]);
+
+
 mastermenuControllers.controller('BebidasCtrl', [
 	'$scope',
 	'$http',
 	'$location',
 	'$routeParams',
-	function($scope, $http, $location, $routeParams) {
+	'Scopes',
+	'$rootScope',
+	function($scope, $http, $location, $routeParams, Scopes, $rootScope) {
 		$scope.init = function() {
 			$scope.idHouse = $routeParams.idHouse;
 			
@@ -33,7 +52,11 @@ mastermenuControllers.controller('ComidasCtrl', [
  	'$http',
  	'$location',
  	'$routeParams',
- 	function($scope, $http, $location, $routeParams) {
+ 	'Scopes',
+ 	'$rootScope',
+ 	function($scope, $http, $location, $routeParams, Scopes, $rootScope) {
+ 		Scopes.store('ComidasCtrl', $scope);
+
  		$scope.init = function() {
  			$scope.idHouse = $routeParams.idHouse;
  			
@@ -42,8 +65,11 @@ mastermenuControllers.controller('ComidasCtrl', [
  	 					$scope.produtos = data;
  	 				});
  		}
- 		
  		$scope.adicionar = function(produto) {
+ 			$scope.products = produto;	
+ 		}
+ 		
+ 		/*$scope.adicionar = function(produto) {
  			$scope.solicitation = {
  					"id" : null,
  					"product" : produto,
@@ -52,7 +78,7 @@ mastermenuControllers.controller('ComidasCtrl', [
 				function(data) {
 					 alert(data);
 				});
- 		}
+ 		}*/
  		
  		$scope.init();
  	} ]);
@@ -61,12 +87,20 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   	'$scope',
   	'$http',
   	'$location',
-  	function($scope, $http, $location) {
-  		$scope.init = function(){                   
-  			$http.get("mastermenu/v1/solicitation").success(
+  	'$routeParams',
+  	'Scopes',
+  	'$rootScope',
+  	function($scope, $http, $location, $routeParams, Scopes, $rootScope) {
+  		$scope.init = function(){                  
+  			$scope.idHouse = $routeParams.idHouse;
+  			
+  			$scope.products = Scopes.get('ComidasCtrl').products;
+
+
+  			/*$http.get("mastermenu/v1/solicitation/"+$scope.idHouse).success(
   	 				function(data) {
   	 					$scope.solicitations = data;
-  	 				});
+  	 				});*/
         }
         $scope.init();
   	} ]);
@@ -407,7 +441,7 @@ mastermenuControllers.controller('PanelCtrl', [
    		
    		$scope.actionHouse = function(house) {
    			$scope.idHouse = house.id;
-   			$location.path('menu/'+ $scope.idHouse);
+   			$location.path('houseResource/'+ $scope.idHouse);
    		}
    		
    		$scope.init();
@@ -437,6 +471,32 @@ mastermenuControllers.controller('MenuCtrl', [
    		
    		$scope.actionFood = function() {
    			$location.path('comidas/'+$scope.idHouse);
+   		}
+   		
+   		$scope.init();
+   	} ]);
+
+mastermenuControllers.controller('HouseResourceCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	'$routeParams',
+   	function($scope, $http, $location, $routeParams) {
+   		$scope.init = function() {
+  			$scope.idHouse = $routeParams.idHouse;
+  			
+  			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+  	 				function(data) {
+  	 					$scope.house = data;
+  	 		});
+  		} 
+   		
+   		$scope.actionMenu = function() {
+   			$location.path('menu/'+$scope.idHouse);
+   		}
+   		
+   		$scope.actionShoppingList = function() {
+   			$location.path('listaDePedidos/'+$scope.idHouse);
    		}
    		
    		$scope.init();

@@ -6,11 +6,11 @@
 			<th>Nome</th>
 			<th>Preço R$</th>
 		</tr>
-		<tr ng-repeat="solicitation in solicitations">
-			<td>{{solicitation.product.name}}</td>
-			<td>{{solicitation.product.price}}</td>
+		<tr ng-repeat="product in products">
+			<td>{{product.name}}</td>
+			<td>{{product.price}}</td>
 		</tr>
 	</table>
 	
-	<a href="#/customerPanel">Voltar</a>
+	<a href="#/houseResource">Voltar</a>
 </div>

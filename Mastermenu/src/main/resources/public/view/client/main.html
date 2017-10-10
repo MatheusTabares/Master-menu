@@ -17,15 +17,6 @@
 	
 	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalLogin" ng-click="login()">ENTRAR</button>
 	
-	<div>
-		<h3>Estabelecimentos</h3>
-		<table class="table table-striped">
-			<tr ng-repeat="house in houses">
-				<td><button type="button" class="btn btn-info" ng-click="actionCustomerPanel(house)">{{house.name}}</button></td>
-			</tr>
-		</table>
-	</div>
-	
 	<div id="modalLogin" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
