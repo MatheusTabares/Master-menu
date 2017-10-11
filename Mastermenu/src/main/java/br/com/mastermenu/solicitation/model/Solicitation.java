@@ -5,8 +5,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import br.com.mastermenu.model.House;
 import br.com.mastermenu.product.model.Product;
 
 
@@ -21,6 +24,24 @@ public class Solicitation {
 	
 	private int quantity = 1;
 	
+	private int idClient;
+	
+	@ManyToOne
+	@JoinColumn(name="house_id")
+	private int houseId;
+	
+	public int getIdClient() {
+		return idClient;
+	}
+	public void setIdClient(int idClient) {
+		this.idClient = idClient;
+	}
+	public int getHouseId() {
+		return houseId;
+	}
+	public void setHouseId(int houseId) {
+		this.houseId = houseId;
+	}
 	public int getId() {
 		return id;
 	}

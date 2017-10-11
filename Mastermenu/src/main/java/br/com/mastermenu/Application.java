@@ -7,7 +7,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import com.google.gson.Gson;
 
@@ -26,7 +29,6 @@ import br.com.mastermenu.product.service.ProductService;
 import br.com.mastermenu.solicitation.model.Solicitation;
 import br.com.mastermenu.solicitation.service.ISolicitationService;
 import br.com.mastermenu.solicitation.service.SolicitationService;
-import spark.ModelAndView;
 
 public class Application {
 	
@@ -38,6 +40,7 @@ public class Application {
 		ISolicitationService solicitationService = new SolicitationService();
 		ICategoryService categoryService = new CategoryService();
 		IHouseService houseService = new HouseService();
+		List<Solicitation> solicitationsTemp = new ArrayList<>();
 		
 		Gson gson = new Gson();
 		
@@ -164,6 +167,34 @@ public class Application {
 		/**
 		 * TODO: CRUD SOLICITATION
 		 */
+		
+		post(mastermenu + "/solicitationTemp", (req, res) -> {
+			String body = req.body();
+			Solicitation solicitation = parseSolicitationFromBody(body); 
+			if(solicitation != null) {
+				Integer idClient = 1;
+				solicitationsTemp.add(solicitation);
+				return gson.toJson("Pedido - " + solicitation.getProduct().getName() +", adicionado a lista!");
+			}
+			res.status(404);
+			return "Pedido não inserido!";
+		});
+		
+		get(mastermenu + "/solicitationTemp/:idHouse/:idClient", (req, res) -> {
+			int idClient = Integer.parseInt(req.params(":idHouse"));
+			int idHouse = Integer.parseInt(req.params(":idClient"));
+			List<Solicitation> mySolicitations = new ArrayList<>();
+			for(Solicitation sol : solicitationsTemp) {
+				if(sol.getHouseId() == idHouse && sol.getIdClient() == idClient) {
+					mySolicitations.add(sol);
+				}
+			}
+			if(mySolicitations.size() != 0) {
+				return gson.toJson(mySolicitations);
+			} else {
+				return "Sem produtos!";
+			}
+		});
 		
 		post(mastermenu + "/solicitation", (req, res) -> {
 			String body = req.body();

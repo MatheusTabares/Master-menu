@@ -1,5 +1,5 @@
 var mastermenuControllers = angular.module('mastermenuControllers', []);
-mastermenuControllers.factory('Scopes', [
+/*mastermenuControllers.factory('Scopes', [
 	'$rootScope',
 	function ($rootScope) {
 	    var mem = {};
@@ -14,7 +14,7 @@ mastermenuControllers.factory('Scopes', [
 	        }
 	    };
 	} ]);
-
+*/
 
 mastermenuControllers.controller('BebidasCtrl', [
 	'$scope',
@@ -52,33 +52,29 @@ mastermenuControllers.controller('ComidasCtrl', [
  	'$http',
  	'$location',
  	'$routeParams',
- 	'Scopes',
- 	'$rootScope',
- 	function($scope, $http, $location, $routeParams, Scopes, $rootScope) {
- 		Scopes.store('ComidasCtrl', $scope);
-
+ 	function($scope, $http, $location, $routeParams) {
  		$scope.init = function() {
- 			$scope.idHouse = $routeParams.idHouse;
+ 		$scope.idHouse = $routeParams.idHouse;
  			
- 			$http.get("mastermenu/v1/produtoPorCategoria/2/"+$scope.idHouse).success(
- 	 				function(data) {
- 	 					$scope.produtos = data;
- 	 				});
- 		}
- 		$scope.adicionar = function(produto) {
- 			$scope.products = produto;	
+		$http.get("mastermenu/v1/produtoPorCategoria/2/"+$scope.idHouse).success(
+ 				function(data) {
+ 					$scope.produtos = data;
+ 				});
  		}
  		
- 		/*$scope.adicionar = function(produto) {
+ 		$scope.adicionar = function(produto) {
  			$scope.solicitation = {
  					"id" : null,
  					"product" : produto,
+ 					"quantity" : 1,
+ 					"idClient" : 1,
+ 					"house" : $scope.idHouse
  			}
- 			$http.post("mastermenu/v1/solicitation", $scope.solicitation).success(
-				function(data) {
-					 alert(data);
-				});
- 		}*/
+ 			$http.post("mastermenu/v1/solicitationTemp", $scope.solicitation).success(
+ 					function(data) {
+ 						alert(data);
+			});	
+ 		}
  		
  		$scope.init();
  	} ]);
@@ -88,19 +84,16 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   	'$http',
   	'$location',
   	'$routeParams',
-  	'Scopes',
-  	'$rootScope',
-  	function($scope, $http, $location, $routeParams, Scopes, $rootScope) {
+  	'ComidasCtrl',
+  	function($scope, $http, $location, $routeParams, ComidasCtrl) {
   		$scope.init = function(){                  
   			$scope.idHouse = $routeParams.idHouse;
+  			$scope.idClient = 1;
   			
-  			$scope.products = Scopes.get('ComidasCtrl').products;
-
-
-  			/*$http.get("mastermenu/v1/solicitation/"+$scope.idHouse).success(
-  	 				function(data) {
-  	 					$scope.solicitations = data;
-  	 				});*/
+  			$http.get("mastermenu/v1/solicitationTemp/"+$scope.idClient).success(
+ 				function(data) {
+ 					$scope.solicitationsTemp = data;
+ 				});
         }
         $scope.init();
   	} ]);
