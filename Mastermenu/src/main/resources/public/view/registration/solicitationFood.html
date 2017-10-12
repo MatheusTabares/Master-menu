@@ -1,0 +1,39 @@
+
+<div class="container-fluid">
+	<h1>Mater-Menu : Pedidos Cozinha</h1>
+	<table class="table table-striped">
+		<tr>
+			<th>Nome</th>
+			<th>Quantidade</th>
+			<th></th>
+		</tr>
+		<tr ng-repeat="solicitation in solicitations">
+			<td>{{solicitation.product.name}}</td>
+			<td>{{solicitation.quantity}}</td>
+			<td><button type="button" class="btn btn-info"  ng-click="closeSolicitation(solicitation)">PRONTO</button></td></td>
+		</tr>
+	</table>
+	
+	<a	class="btn btn-danger" href="" ng-click="back()" >Voltar</a>
+	
+	<!-- Modal -->
+	<div id="modalCloseProduct" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">ENCERRAR PEDIDO</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Você deseja encerrar o produto? </p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeSolicitation(solicitation)">Sim</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+	      </div>
+	    </div>
+	
+	  </div>
+</div>
+</div>

@@ -26,21 +26,37 @@ public class Solicitation {
 	
 	private int idClient;
 	
+	private String typeCategory;
+	
+	private String status;
 	@ManyToOne
 	@JoinColumn(name="house_id")
-	private int houseId;
+	private House house;
 	
+	
+	public String getTypeCategory() {
+		return typeCategory;
+	}
+	public void setTypeCategory(String typeCategory) {
+		this.typeCategory = typeCategory;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public int getIdClient() {
 		return idClient;
 	}
 	public void setIdClient(int idClient) {
 		this.idClient = idClient;
 	}
-	public int getHouseId() {
-		return houseId;
+	public House getHouse() {
+		return house;
 	}
-	public void setHouseId(int houseId) {
-		this.houseId = houseId;
+	public void setHouse(House house) {
+		this.house = house;
 	}
 	public int getId() {
 		return id;

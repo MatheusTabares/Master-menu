@@ -33,6 +33,7 @@ import br.com.mastermenu.solicitation.service.SolicitationService;
 public class Application {
 	
 	private static final String mastermenu = "mastermenu/v1";
+	private static final List<Solicitation> teste = new ArrayList<>();
 	
 	public static void main(String[] args) throws Exception {
 		IProductService productService = new ProductService();
@@ -40,7 +41,7 @@ public class Application {
 		ISolicitationService solicitationService = new SolicitationService();
 		ICategoryService categoryService = new CategoryService();
 		IHouseService houseService = new HouseService();
-		List<Solicitation> solicitationsTemp = new ArrayList<>();
+		
 		
 		Gson gson = new Gson();
 		
@@ -172,8 +173,7 @@ public class Application {
 			String body = req.body();
 			Solicitation solicitation = parseSolicitationFromBody(body); 
 			if(solicitation != null) {
-				Integer idClient = 1;
-				solicitationsTemp.add(solicitation);
+				teste.add(solicitation);
 				return gson.toJson("Pedido - " + solicitation.getProduct().getName() +", adicionado a lista!");
 			}
 			res.status(404);
@@ -181,11 +181,11 @@ public class Application {
 		});
 		
 		get(mastermenu + "/solicitationTemp/:idHouse/:idClient", (req, res) -> {
-			int idClient = Integer.parseInt(req.params(":idHouse"));
-			int idHouse = Integer.parseInt(req.params(":idClient"));
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			int idClient = Integer.parseInt(req.params(":idClient"));
 			List<Solicitation> mySolicitations = new ArrayList<>();
-			for(Solicitation sol : solicitationsTemp) {
-				if(sol.getHouseId() == idHouse && sol.getIdClient() == idClient) {
+			for(Solicitation sol : teste) {
+				if(sol.getHouse().getId() == idHouse && sol.getIdClient() == idClient) {
 					mySolicitations.add(sol);
 				}
 			}
@@ -200,6 +200,11 @@ public class Application {
 			String body = req.body();
 			Solicitation solicitation = parseSolicitationFromBody(body); 
 			if(solicitation != null) {
+				if(solicitation.getProduct().getCategoria().getId() == 1) {
+					solicitation.setTypeCategory("1");
+				} else {
+					solicitation.setTypeCategory("2");
+				}
 				solicitationService.create(solicitation);
 				return gson.toJson("Pedido - " + solicitation.getProduct().getName() +", adicionado a lista!");
 			}
@@ -209,11 +214,43 @@ public class Application {
 		
 		get(mastermenu + "/solicitation/:idHouse", (req, res) -> {
 			int idHouse = Integer.parseInt(req.params(":idHouse"));
-			String solicitations = gson.toJson(solicitationService.read());
+			String solicitations = gson.toJson(solicitationService.readByIdHouse(idHouse));
 			if(!solicitations.trim().equals(""))
 				return solicitations;
 			else
 				return "Sem produtos!";
+		});
+		
+		get(mastermenu + "/closedSolicitations/:idHouse", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			String solicitations = gson.toJson(solicitationService.readByIdHouseAndStatus(idHouse, "ENCERRADO"));
+			if(!solicitations.trim().equals(""))
+				return solicitations;
+			else
+				return "Erro ao encerrar o pedido!";
+		});
+		get(mastermenu + "/solicitationByIdCategoryAndNotClosed/:idHouse/:idCategoria", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			String idCategory = req.params(":idCategoria");
+			String solicitations = gson.toJson(solicitationService.readByIdHouseAndIdCategory(idHouse, idCategory));
+			if(!solicitations.trim().equals(""))
+				return solicitations;
+			else
+				return "Sem produtos!";
+		});
+		
+		put(mastermenu + "/solicitation/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Solicitation> solicitation = solicitationService.readById(id);
+			if (solicitation.isPresent()) {
+				String body = req.body();
+				solicitationService.update(parseSolicitationFromBody(body));
+				
+				return gson.toJson("Pedido Encerrado!");
+			} else {
+				res.status(404);
+				return "Erro ao encerrar o Pedido!";
+			}
 		});
 		/**
 		 * TODO: CRUD PRODUCT

@@ -29,14 +29,29 @@ public class SolicitationDAO implements ISolicitationDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Solicitation> read() {
-		return em.createQuery("FROM solicitation").getResultList();
+	public List<Solicitation> readByIdHouse(int idHouse) {
+		return em.createQuery("FROM " + Solicitation.class.getName() + " WHERE house_id = :house_id")
+				   .setParameter("house_id", idHouse).getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Solicitation> readByIdHouseAndIdCategory(int idHouse, String idCategory) {
+		return em.createQuery("FROM " + Solicitation.class.getName() + " WHERE typeCategory = :typeCategory AND house_id = :house_id AND status is null")
+				   .setParameter("typeCategory", idCategory)
+				   .setParameter("house_id", idHouse).getResultList();
 	}
 
 	@Override
 	public void update(Solicitation solicitationUpdated) {
-		// TODO Auto-generated method stub
-		
+		try {
+            em.getTransaction().begin();
+            em.merge(solicitationUpdated);
+            em.getTransaction().commit();
+	   } catch (Exception ex) {
+	            ex.printStackTrace();
+	            em.getTransaction().rollback();
+	   }
 	}
 
 	@Override
@@ -47,8 +62,15 @@ public class SolicitationDAO implements ISolicitationDAO{
 
 	@Override
 	public Optional<Solicitation> readById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.ofNullable(em.find(Solicitation.class, id));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Solicitation> readByIdHouseAndStatus(int idHouse, String status) {
+		return em.createQuery("FROM " + Solicitation.class.getName() + " WHERE house_id = :house_id AND status = :status")
+				   .setParameter("house_id", idHouse)
+				   .setParameter("status", status).getResultList();
 	}
 	
 }

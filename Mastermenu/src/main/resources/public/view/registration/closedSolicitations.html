@@ -1,0 +1,16 @@
+
+<div class="container-fluid">
+	<h1>Mater-Menu : Pedidos Encerrados</h1>
+	<table class="table table-striped">
+		<tr>
+			<th>Nome</th>
+			<th>Quantidade</th>
+		</tr>
+		<tr ng-repeat="solicitation in closedSolicitations">
+			<td>{{solicitation.product.name}}</td>
+			<td>{{solicitation.quantity}}</td>
+		</tr>
+	</table>
+	
+	<a	class="btn btn-danger" href="" ng-click="back()" >Voltar</a>
+</div>

@@ -16,14 +16,18 @@ public class SolicitationService implements ISolicitationService {
 	}
 
 	@Override
-	public List<Solicitation> read() {
-		return solicitationDAO.read();
+	public List<Solicitation> readByIdHouse(int idHouse) {
+		return solicitationDAO.readByIdHouse(idHouse);
 	}
 
 	@Override
+	public List<Solicitation> readByIdHouseAndIdCategory(int idHouse, String idCategory) {
+		return solicitationDAO.readByIdHouseAndIdCategory(idHouse, idCategory);
+	}
+	
+	@Override
 	public void update(Solicitation solicitationUpdated) {
-		// TODO Auto-generated method stub
-		
+		solicitationDAO.update(solicitationUpdated);
 	}
 
 	@Override
@@ -34,8 +38,12 @@ public class SolicitationService implements ISolicitationService {
 
 	@Override
 	public Optional<Solicitation> readById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return solicitationDAO.readById(id);
+	}
+
+	@Override
+	public List<Solicitation> readByIdHouseAndStatus(int idHouse, String status) {
+		return solicitationDAO.readByIdHouseAndStatus(idHouse, status);
 	}
 
 }

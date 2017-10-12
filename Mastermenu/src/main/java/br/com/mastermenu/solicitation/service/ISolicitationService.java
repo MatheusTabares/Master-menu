@@ -9,7 +9,11 @@ import br.com.mastermenu.solicitation.model.Solicitation;
 public interface ISolicitationService {
 	public void create(Solicitation solicitation);
 	
-	public List<Solicitation> read();
+	public List<Solicitation> readByIdHouse(int idHouse);
+	
+	public List<Solicitation> readByIdHouseAndIdCategory(int idHouse, String idCategory);
+	
+	public List<Solicitation> readByIdHouseAndStatus(int idHouse, String status);
 	
 	public void update(Solicitation solicitationUpdated);
 	
