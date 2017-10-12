@@ -252,6 +252,18 @@ public class Application {
 				return "Erro ao encerrar o Pedido!";
 			}
 		});
+		
+		delete(mastermenu + "/solicitationsTemp", (req, res) -> {
+			int idClient = Integer.parseInt(req.queryParams("idClient"));
+			for(int i = 0; i < teste.size(); i++) {
+				if(teste.get(i).getIdClient() == idClient) {
+					teste.remove(i);
+					i--;
+				}
+			}
+			return "Pedidos retirados da lista temporária com sucesso!";
+			
+		});
 		/**
 		 * TODO: CRUD PRODUCT
 		 */

@@ -4,17 +4,43 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import br.com.mastermenu.product.model.Product;
 import br.com.mastermenu.solicitation.model.Solicitation;
 import br.com.mastermenu.util.Connection;
 
 public class SolicitationDAO implements ISolicitationDAO{
-	private final EntityManager em;
+	private static SolicitationDAO instance;
+    private EntityManager em;
+    
+    public static SolicitationDAO getInstance(){
+              if (instance == null){
+                       instance = new SolicitationDAO();
+              }
+              
+              return instance;
+    }
+
+    public SolicitationDAO() {
+    	em = getEntityManager();
+    }
+
+    private EntityManager getEntityManager() {
+		  EntityManagerFactory factory = Persistence.createEntityManagerFactory("db_mastermenu");
+		  if (em == null) {
+		        em = factory.createEntityManager();
+		  }
+		
+          return em;
+    }
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	/*private final EntityManager em;
 	
 	public SolicitationDAO() {
 		this.em = Connection.connection();
-	}
+	}*/
 	@Override
 	public void create(Solicitation s) {
 		try {
@@ -48,7 +74,7 @@ public class SolicitationDAO implements ISolicitationDAO{
             em.getTransaction().begin();
             em.merge(solicitationUpdated);
             em.getTransaction().commit();
-	   } catch (Exception ex) {
+       } catch (Exception ex) {
 	            ex.printStackTrace();
 	            em.getTransaction().rollback();
 	   }

@@ -21,9 +21,8 @@ mastermenuControllers.controller('BebidasCtrl', [
 	'$http',
 	'$location',
 	'$routeParams',
-	'Scopes',
 	'$rootScope',
-	function($scope, $http, $location, $routeParams, Scopes, $rootScope) {
+	function($scope, $http, $location, $routeParams, $rootScope) {
 		$scope.init = function() {
 			$scope.idHouse = $routeParams.idHouse;
 			
@@ -42,6 +41,10 @@ mastermenuControllers.controller('BebidasCtrl', [
 				function(data) {
 					 alert(data);
 				});
+ 		}
+		
+		$scope.back = function() {
+ 			$location.path('menu/'+$scope.idHouse);
  		}
 		
 		$scope.init();
@@ -82,6 +85,10 @@ mastermenuControllers.controller('ComidasCtrl', [
 			});	
  		}
  		
+ 		$scope.back = function() {
+ 			$location.path('menu/'+$scope.idHouse);
+ 		}
+ 		
  		$scope.init();
  	} ]);
 
@@ -108,8 +115,14 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   				);
   			}
   			delete $scope.solicitationsTemp; 
+  			$http.delete("mastermenu/v1/solicitationsTemp?idClient="+$scope.idClient).success(
+  					function(data) {});
   			alert("Pedidos enviados para produção!");
   		}
+  		
+  		$scope.back = function() {
+ 			$location.path('houseResource/'+$scope.idHouse);
+ 		}
   		
         $scope.init();
   	} ]);
@@ -310,7 +323,37 @@ mastermenuControllers.controller('RegistrationCtrl', [
    	'$http',
    	'$location',
    	function($scope, $http, $location) {
-   	
+   		$scope.init = function() {
+ 			$http.get("mastermenu/v1/house").success(
+ 	 				function(data) {
+ 	 					$scope.houses = data;
+ 	 			});
+ 		}
+ 		
+ 		$scope.actionUpdate = function(house) {
+  			var idHouse = house.id;
+  			$location.path('updateHouse/'+idHouse);
+  		}
+ 		
+ 		$scope.actionDelete = function(houseDeleted) {
+  			$scope.houseDeleted = houseDeleted;
+  		}
+  		
+  		$scope.deleteHouse = function() {
+  			$http.delete("mastermenu/v1/house?id="+$scope.houseDeleted.id).success(
+  					function(data) {
+  						alert(data);
+  						$scope.init();
+  					});
+  		}
+  		
+  		$scope.moreOptions = function(house) {
+  			var idHouse = house.id;
+  			$location.path('house/'+idHouse);
+  		}
+  		
+  		$scope.init();
+  		
    	} ]);
 
 mastermenuControllers.controller('UpdateProductCtrl', [
@@ -353,41 +396,10 @@ mastermenuControllers.controller('CreateHouseCtrl', [
  		$scope.addHouse = function(house) {
   			$http.post("mastermenu/v1/house", house).success(
   					function(data) {
-  						$window.location.reload();
   						alert(data);
+  						$location.path("/registration");
   					});
   		}
- 		
- 		$scope.init = function() {
- 			$http.get("mastermenu/v1/house").success(
- 	 				function(data) {
- 	 					$scope.houses = data;
- 	 			});
- 		}
- 		
- 		$scope.actionUpdate = function(house) {
-  			var idHouse = house.id;
-  			$location.path('updateHouse/'+idHouse);
-  		}
- 		
- 		$scope.actionDelete = function(houseDeleted) {
-  			$scope.houseDeleted = houseDeleted;
-  		}
-  		
-  		$scope.deleteHouse = function() {
-  			$http.delete("mastermenu/v1/house?id="+$scope.houseDeleted.id).success(
-  					function(data) {
-  						alert(data);
-  						$scope.init();
-  					});
-  		}
-  		
-  		$scope.moreOptions = function(house) {
-  			var idHouse = house.id;
-  			$location.path('house/'+idHouse);
-  		}
-  		
- 		$scope.init();
  	} ]);
 
 mastermenuControllers.controller('HouseCtrl', [
@@ -490,6 +502,9 @@ mastermenuControllers.controller('MenuCtrl', [
    			$location.path('comidas/'+$scope.idHouse);
    		}
    		
+   		$scope.back = function() {
+   			$location.path('houseResource/'+$scope.idHouse);
+   		}
    		$scope.init();
    	} ]);
 
@@ -524,7 +539,8 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    	'$http',
    	'$location',
    	'$routeParams',
-   	function($scope, $http, $location, $routeParams) {
+   	'$window',
+   	function($scope, $http, $location, $routeParams, $window) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
   			
@@ -542,11 +558,9 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    		$scope.closeSolicitation = function(solicitation) {
    			solicitation.status = "ENCERRADO";
    			$http.put("mastermenu/v1/solicitation/"+solicitation.id, solicitation).success(
-   					function(data) {
-   						alert(data);
-   						
-   						$scope.init();
-   					});
+   					function(data) {});
+   			alert("Encerrado com sucesso!");
+   			$window.location.reload();
    		}
    		
    		$scope.init();

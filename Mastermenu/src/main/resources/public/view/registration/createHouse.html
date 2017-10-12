@@ -22,42 +22,5 @@
 		</div>
 
 	</form>
-	
-	<div>
-		<h3>Lista de Estabelecimentos</h3>
-		<table class="table table-striped">
-			<tr>
-				<th>Nome</th>
-				<th>Opções</th>
-			</tr>
-			<tr ng-repeat="house in houses">
-				<td>{{house.name}}</td>
-				<td><button type="button" class="btn btn-info" ng-click="actionUpdate(house)">Editar</button>
-					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDeleteProduct" ng-click="actionDelete(house)">Excluir</button>
-					<button type="button" class="btn btn-info" ng-click="moreOptions(house)">+</button></td>
-			</tr>
-		</table>
-	</div>
-	
-	<!-- Modal -->
-	<div id="modalDeleteProduct" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h4 class="modal-title">Exluir Estabelecimento</h4>
-	      </div>
-	      <div class="modal-body">
-	        <p>Tem certeza que deseja excluir o Estabelecimento: </p> <b>{{houseDeleted.name}}</b>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteHouse()">Sim</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Não</button>
-	      </div>
-	    </div>
-	
-	  </div>
-	</div>
 		
 </div>
