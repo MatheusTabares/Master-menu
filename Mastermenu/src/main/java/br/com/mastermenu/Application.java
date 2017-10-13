@@ -17,6 +17,9 @@ import com.google.gson.Gson;
 import br.com.mastermenu.categoria.model.Categoria;
 import br.com.mastermenu.category.service.CategoryService;
 import br.com.mastermenu.category.service.ICategoryService;
+import br.com.mastermenu.commands.model.Commands;
+import br.com.mastermenu.commands.service.CommandsService;
+import br.com.mastermenu.commands.service.ICommandsService;
 import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.composition.service.CompositionService;
 import br.com.mastermenu.composition.service.ICompositionService;
@@ -41,13 +44,62 @@ public class Application {
 		ISolicitationService solicitationService = new SolicitationService();
 		ICategoryService categoryService = new CategoryService();
 		IHouseService houseService = new HouseService();
+		ICommandsService commandsService = new CommandsService();
 		
 		
 		Gson gson = new Gson();
 		
 		staticFileLocation("/public");
 		//URL DE ACESSO: http://localhost:4567/index.html
+		/**
+		 * TODO: CRUD COMMANDS
+		 */
 		
+		post(mastermenu + "/commands", (req, res) -> {
+			String body = req.body();
+			Commands c = parseCommandsFromBody(body); 
+			if(c != null) {
+				commandsService.create(c);
+				return gson.toJson("Comanda adicionada a lista!");
+			}
+			res.status(404);
+			return "Comanda não inserida!";
+		});
+		
+		put(mastermenu + "/commands/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Commands> c = commandsService.readById(id);
+			if (c.isPresent()) {
+				String body = req.body();
+				commandsService.update(parseCommandsFromBody(body));
+				return gson.toJson("Comanda atualizada com sucesso!");
+			} else {
+				res.status(404);
+				return "Erro ao atualizar uma Comanda!";
+			}
+		});
+		
+		get(mastermenu + "/commands/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<Commands> c = commandsService.readById(id);
+			if (c.isPresent()) {
+				return gson.toJson(c.get());
+			} else {
+				res.status(404);
+				return "Comanda não encontrada!";
+			}
+		});
+		
+		delete(mastermenu + "/commands", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			Optional<Commands> c = commandsService.readById(id);
+			if(c.isPresent()) {
+				return commandsService.delete(c.get());
+			} else {
+				res.status(404);
+				return false;
+			}
+		});
 		/**
 		 * TODO: CRUD PRODUCT
 		 */
@@ -434,6 +486,12 @@ public class Application {
 			}
 		}
 		return false;
+	}
+	
+	private static Commands parseCommandsFromBody(String body) {
+		//log.info(body);
+		Gson gson = new Gson();
+		return gson.fromJson(body, Commands.class);
 	}
 	
 	private static Categoria parseCategoryFromBody(String body) {

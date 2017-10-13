@@ -35,13 +35,8 @@ public class SolicitationDAO implements ISolicitationDAO{
 		
           return em;
     }
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	/*private final EntityManager em;
-	
-	public SolicitationDAO() {
-		this.em = Connection.connection();
-	}*/
-	@Override
+
+    @Override
 	public void create(Solicitation s) {
 		try {
 			em.getTransaction().begin();

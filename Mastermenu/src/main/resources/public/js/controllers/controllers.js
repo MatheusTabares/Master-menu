@@ -106,6 +106,19 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   						function(data) {}
   				);
   			}
+  			
+  			$scope.commands = {
+ 					"id" : null,
+ 					"idClient" : $scope.idClient,
+ 					"idHouse" : $scope.idHouse,
+ 					"mesa" : 1,
+ 					"solicitation" : $scope.solicitationsTemp
+ 			}
+  			
+  			$http.post("mastermenu/v1/commands", $scope.commands).success(
+  					function(data) {
+  					});
+  			
   			delete $scope.solicitationsTemp; 
   			$http.delete("mastermenu/v1/solicitationsTemp?idClient="+$scope.idClient).success(
   					function(data) {});
@@ -425,6 +438,10 @@ mastermenuControllers.controller('HouseCtrl', [
  			$location.path('solicitationDrink/'+$scope.idHouse);
  		}
  		
+ 		$scope.actionCallCommands = function() {
+ 			$location.path('commands/'+$scope.idHouse);
+ 		}
+ 		
  		$scope.init();
  	} ]);
 
@@ -627,3 +644,35 @@ mastermenuControllers.controller('ClosedSolicitationsCtrl', [
    		
    		$scope.init();
    	} ]);
+
+mastermenuControllers.controller('CommandsCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	'$routeParams',
+   	function($scope, $http, $location, $routeParams) {
+   		$scope.init = function() {
+  			$scope.idHouse = $routeParams.idHouse;
+  			
+  			$http.get("mastermenu/v1/commands/"+$scope.idHouse).success(
+  	 				function(data) {
+  	 					$scope.commands = data;
+  	 		});
+  		} 
+   		
+   		
+   		$scope.back = function() {
+   			$location.path('house/'+$scope.idHouse);
+   		}
+   		
+   		$scope.closeCommands = function(c) {
+   			c.status = "ENCERRADO";
+   			$http.put("mastermenu/v1/commands/"+$scope.id, c).success(
+   					function(data) {
+   						alert(data);
+   					});
+   		}
+   		
+   		$scope.init();
+   	} ]);
+
