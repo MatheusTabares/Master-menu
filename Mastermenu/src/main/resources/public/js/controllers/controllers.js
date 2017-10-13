@@ -1,20 +1,4 @@
 var mastermenuControllers = angular.module('mastermenuControllers', []);
-/*mastermenuControllers.factory('Scopes', [
-	'$rootScope',
-	function ($rootScope) {
-	    var mem = {};
-	  
-	    return {
-	        store: function (key, value) {
-	            $rootScope.$emit('scope.stored', key);
-	            mem[key] = value;
-	        },
-	        get: function (key) {
-	            return mem[key];
-	        }
-	    };
-	} ]);
-*/
 
 mastermenuControllers.controller('BebidasCtrl', [
 	'$scope',
@@ -26,6 +10,11 @@ mastermenuControllers.controller('BebidasCtrl', [
 		$scope.init = function() {
 			$scope.idHouse = $routeParams.idHouse;
 			
+			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+	 				function(data) {
+	 					$scope.house = data;
+	 				});
+			
 			$http.get("mastermenu/v1/produtoPorCategoria/1/"+$scope.idHouse).success(
 					function(data) {
 						$scope.produtos = data;
@@ -36,11 +25,14 @@ mastermenuControllers.controller('BebidasCtrl', [
  			$scope.solicitation = {
  					"id" : null,
  					"product" : produto,
+ 					"quantity" : 1,
+ 					"idClient" : 1,
+ 					"house" : $scope.house
  			}
- 			$http.post("mastermenu/v1/solicitation", $scope.solicitation).success(
-				function(data) {
-					 alert(data);
-				});
+ 			$http.post("mastermenu/v1/solicitationTemp", $scope.solicitation).success(
+ 					function(data) {
+ 						alert(data);
+			});	
  		}
 		
 		$scope.back = function() {
@@ -428,6 +420,11 @@ mastermenuControllers.controller('HouseCtrl', [
  		$scope.actionCallClosedSolicitations = function() {
  			$location.path('closedSolicitations/'+$scope.idHouse);
  		}
+ 		
+ 		$scope.actionCallSolicitationDrink = function() {
+ 			$location.path('solicitationDrink/'+$scope.idHouse);
+ 		}
+ 		
  		$scope.init();
  	} ]);
 
@@ -565,6 +562,40 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    		
    		$scope.init();
    	} ]);
+
+
+mastermenuControllers.controller('SolicitationDrinkCtrl', [
+   	'$scope',
+   	'$http',
+   	'$location',
+   	'$routeParams',
+   	'$window',
+   	function($scope, $http, $location, $routeParams, $window) {
+   		$scope.init = function() {
+  			$scope.idHouse = $routeParams.idHouse;
+  			
+  			$http.get("mastermenu/v1/solicitationByIdCategoryAndNotClosed/"+$scope.idHouse+"/1").success(
+  	 				function(data) {
+  	 					$scope.solicitations = data;
+  	 		});
+  		} 
+   		
+   		
+   		$scope.back = function() {
+   			$location.path('house/'+$scope.idHouse);
+   		}
+   		
+   		$scope.closeSolicitation = function(solicitation) {
+   			solicitation.status = "ENCERRADO";
+   			$http.put("mastermenu/v1/solicitation/"+solicitation.id, solicitation).success(
+   					function(data) {});
+   			alert("Encerrado com sucesso!");
+   			$window.location.reload();
+   		}
+   		
+   		$scope.init();
+   	} ]);
+
 
 mastermenuControllers.controller('ClosedSolicitationsCtrl', [
    	'$scope',
