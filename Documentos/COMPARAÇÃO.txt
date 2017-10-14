@@ -32,6 +32,7 @@ NEGATIVOS {
 	*NÃO FAZ PEDIDO ONLINE
 	*OPÇÃO HAPPY HOUR
 	*FIDELIZAÇÃO
+	*APENAS WINDOWS
 }
 
 =======================ECOMANDA: 
@@ -46,7 +47,6 @@ NEGATIVOS {
 	-LAYOUT
 	*NÃO TEM RESERVA
 	*NÃO EXISTE MAPA PARA PROCURAR MAIS PROXIMOS DE MIM	
-	*NÃO FAZ PEDIDO ONLINE
 	*OPÇÃO HAPPY HOUR
 	*FIDELIZAÇÃO
 }
@@ -97,6 +97,7 @@ SEGURANÇA:
 	*Cliente poderá solicitar pedido apenas se estiver dentro da loja(token de segurança)
 	*Backup de dados
 	*Reserva de mesa apenas com pagamento antecipado
+
 
 	
 	
