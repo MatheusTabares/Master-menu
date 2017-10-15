@@ -462,7 +462,7 @@ mastermenuControllers.controller('UpdateHouseCtrl', [
   		$scope.updateHouse = function(house) {
  			$http.put("mastermenu/v1/house/"+$scope.id, house).success(
 				function(data) {
-					$location.path('createHouse');
+					$location.path('registration');
 				});
  		}
   		

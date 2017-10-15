@@ -1,18 +1,31 @@
 
 <div class="container-fluid">
 	<h1>Mater-Menu : Comandas</h1>
-	<table class="table table-striped">
-		<tr>
-			<th>Nome Cliente</th>
-			<th>Total</th>
-			<th></th>
-		</tr>
-		<tr ng-repeat="c in commands">
-			<td>{{c.idClient}}</td>
-			<td><button type="button" class="btn btn-info" 
-			 ng-click="closeCommands(c)">ENCERRAR</button></td></td>
-		</tr>
-	</table>
-	
+
+	<ul ng-repeat="c in commands">
+  <li >
+      <b>Id do Cliente</b> :{{c.idClient}}
+  </li>
+  <ul>
+  	<b>Seus pedidos</b>
+    <li ng-repeat="sol in c.solicitations">
+		{{sol.product.name}}
+    </li>
+  </ul>
+</ul>
+<!-- 	  <table class="table table-striped">
+		 	<tr>
+				<th>Id Cliente</th>
+				<th>Pedidos</th>
+				<th>Opções</th>
+			</tr>
+			<tr ng-repeat="c in commands">
+				<td>{{c.idClient}}</td>
+				<td ng-repeat="sol in c.solicitations">{{sol.product.name}}</td>
+				<td><button type="button" class="btn btn-info" 
+			 ng-click="closeCommands(c)">ENCERRAR</button></td>
+			</tr>
+			
+    </table> -->
 	<a	class="btn btn-danger" href="" ng-click="back()" >Voltar</a>
 </div>

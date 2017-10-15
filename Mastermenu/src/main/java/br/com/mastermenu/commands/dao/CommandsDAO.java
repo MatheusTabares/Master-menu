@@ -49,7 +49,7 @@ public class CommandsDAO implements ICommandsDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Commands> read(int idHouse) {
-		return em.createQuery("FROM " + Commands.class.getName() + " WHERE house_id = :house_id")
+		return em.createQuery("FROM " + Commands.class.getName() + " WHERE idHouse = :house_id")
 				.setParameter("house_id", idHouse).getResultList();
 	
 	}

@@ -81,9 +81,9 @@ public class Application {
 		
 		get(mastermenu + "/commands/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			Optional<Commands> c = commandsService.readById(id);
-			if (c.isPresent()) {
-				return gson.toJson(c.get());
+			List<Commands> c = commandsService.read(id);
+			if (c.size() != 0) {
+				return gson.toJson(c);
 			} else {
 				res.status(404);
 				return "Comanda não encontrada!";
