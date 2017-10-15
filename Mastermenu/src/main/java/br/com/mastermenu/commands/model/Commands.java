@@ -2,6 +2,7 @@ package br.com.mastermenu.commands.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ public class Commands {
 	
 	private int mesa;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="commands_has_solicitations")
 	private List<Solicitation> solicitations;
 	

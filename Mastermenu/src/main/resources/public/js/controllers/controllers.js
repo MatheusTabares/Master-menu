@@ -112,7 +112,7 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
  					"idClient" : $scope.idClient,
  					"idHouse" : $scope.idHouse,
  					"mesa" : 1,
- 					"solicitation" : $scope.solicitationsTemp
+ 					"solicitations" : $scope.solicitationsTemp
  			}
   			
   			$http.post("mastermenu/v1/commands", $scope.commands).success(

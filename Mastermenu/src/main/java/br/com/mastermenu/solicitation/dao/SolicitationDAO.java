@@ -42,6 +42,7 @@ public class SolicitationDAO implements ISolicitationDAO{
 			em.getTransaction().begin();
 			em.persist(s);
 			em.getTransaction().commit();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
