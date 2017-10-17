@@ -98,6 +98,12 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
  				function(data) {
  					$scope.solicitationsTemp = data;
  				});
+  			
+  			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+  	 				function(data) {
+  	 					$scope.house = data;
+  	 				});
+  	 		
         }
   		
   		$scope.solicitationOrders = function() {
@@ -506,6 +512,10 @@ mastermenuControllers.controller('MenuCtrl', [
    	function($scope, $http, $location, $routeParams) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
+  			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+  	 				function(data) {
+  	 					$scope.house = data;
+  	 		});
   		} 
    		
    		$scope.actionDrink = function() {

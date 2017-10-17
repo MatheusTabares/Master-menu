@@ -46,12 +46,40 @@
               <a class="nav-link js-scroll-trigger" href="#about">Sobre</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Faça seu login</a>
+              <a class="nav-link js-scroll-trigger" href="#/registration">Cadastre-se</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="" data-toggle="modal" data-target="#modalLogin">Login</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    
+    <!-- MODAL BOOSTRAP -->
+    <div id="modalLogin" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">LOGIN</h4>
+	      </div>
+	      <div class="modal-body">
+	        <label for="email">E-mail:</label> 
+	        <input	id="email" type="email" ng-model="user.email"
+				name="uEmail" required="true" placeholder="*" class="form-control" />
+			
+			<label for="password">Senha:</label> 
+	        <input	id="password" type="password" ng-model="user.password"
+				name="uPassword" required="true" placeholder="*" class="form-control" />
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success btn-lg" data-dismiss="modal" ng-click="login()">AGORA</button>
+	        <button type="button" class="btn btn-success btn-lg" data-dismiss="modal" ng-click="cancel()">CANCELAR</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
 
     <!-- Header -->
     <header class="masthead">
@@ -144,7 +172,7 @@
             <p>Seu início em um trabalho do Intituto Federal do Estado do Rio Grande do Sul - Campus Restinga. Tem como objetivo oferecer uma nova forma de realizar pedidos em bares e restaurantes.</p>
           </div>
           <div class="col-lg-4 mr-auto">
-            <p>O que você acha de gerenciar seus pedidos, ou quem sabe personalizá-los do jeito que você quer. O <u>Mastermenu</u> oferece isso pra você, sem precisar instalar nada em seu aparelho. Apenas acesse e se divirta. O login fica logo aqui em baixo :D</p>
+            <p>O que você acha de gerenciar seus pedidos, ou quem sabe personalizá-los do jeito que você quer. O <u>Mastermenu</u> oferece isso pra você, sem precisar instalar nada em seu aparelho. Apenas acesse e se divirta.</p>
           </div>
         </div>
       </div>
@@ -153,7 +181,7 @@
     <!-- Contact Section -->
     <section id="contact">
       <div class="container">
-        <h2 class="text-center">ENTRAR</h2>
+        <h2 class="text-center">CADASTRO</h2>
         <hr class="star-primary">
         <div class="row">
           <div class="col-lg-8 mx-auto">
@@ -174,10 +202,17 @@
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                  <label>Confirmar Senha</label>
+                  <input class="form-control" id="phone" type="tel" placeholder="Confirmar Senha" required data-validation-required-message="Por favor confirme senha.">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
               <br>
               <div id="success"></div>
               <div class="form-group">
-                <button type="submit" class="btn btn-success btn-lg" id="sendMessageButton">ENTRAR</button>
+                <button type="submit" class="btn btn-success btn-lg" id="sendMessageButton">SALVAR</button>
               </div>
             </form>
           </div>

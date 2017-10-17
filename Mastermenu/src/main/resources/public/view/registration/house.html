@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
 	<h1>Master-Menu : {{house.name}}</h1>
 	<a href="" ng-click="actionProduct()">Produtos</a></br>
 	<a href="" ng-click="actionCategory()">Categorias</a></br>
@@ -9,4 +9,56 @@
 	
 	<br/>
 	<a href="#/registration">Voltar</a>
+</div> -->
+<div class="container-fluid">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Mastermenu</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Histórico</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#/registration">Cadastros
+              	<span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sair</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header>
+    <h1>{{house.name}}</h1>
+	<a href="" ng-click="actionProduct()">Produtos</a></br>
+	<a href="" ng-click="actionCategory()">Categorias</a></br>
+	<a href="" ng-click="actionCallSolicitationFood()">Pedidos Cozinha</a></br>
+	<a href="" ng-click="actionCallSolicitationDrink()">Pedidos Bar</a></br>
+	<a href="" ng-click="actionCallClosedSolicitations()">Pedidos Encerrados</a></br>
+	<a href="" ng-click="actionCallCommands()">Comandas</a>
+	
+	<br/>
+	<a href="#/registration">Voltar</a>
+    </header>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
 </div>
