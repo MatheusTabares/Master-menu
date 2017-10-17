@@ -40,15 +40,15 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/createHouse.html',
 				controller : 'CreateHouseCtrl'
 			})
-			.when('/updateProduct/:idProduct', {
+			.when('/updateProduct/:idProduct/:idHouse', {
 				templateUrl : '../../view/registration/updateProduct.html',
 				controller : 'UpdateProductCtrl'
 			})
-			.when('/update/:idCategory', {
+			.when('/update/:idCategory/:idHouse', {
 				templateUrl : '../../view/registration/modalUpdate.html',
 				controller : 'UpdateCtrl'
 			})
-			.when('/category', {
+			.when('/category/:idHouse', {
 				templateUrl : '../../view/registration/category.html',
 				controller : 'CategoryCtrl'
 			})

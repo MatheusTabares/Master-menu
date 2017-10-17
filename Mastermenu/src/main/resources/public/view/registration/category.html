@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
 	<h1>Mater-Menu : Categoria</h1>
 	
 	<form  ng-submit="addCategory(category)" name="form" novalidate>
@@ -6,10 +6,10 @@
 			<label for="nameCategory">Nome:</label> <input
 				id="nameCategory" type="text" ng-model="category.name"
 				name="cName" required="true" placeholder="*" class="form-control" />
-			<!-- <div ng-show="form.cName.$touched">
+			<div ng-show="form.cName.$touched">
 				<div ng-show="form.cName.$error.required"
 					class="alert alert-danger">* Nome obrigatório!</div>
-			</div> -->   
+			</div>   
 		</div>
 		<p>
 			<span>Com * é obrigatório.</span>
@@ -17,7 +17,7 @@
 		<div id=button>
 			<input class="btn btn-danger" type="submit" value="Salvar"
 				ng-disabled="form.$invalid" />
-			<a	class="btn btn-danger" class="btn btn-danger" href="#/registration">Voltar</a>
+			<a	class="btn btn-danger" class="btn btn-danger" href="" ng-click="back()">Voltar</a>
 		</div>
 
 	</form>
@@ -31,16 +31,16 @@
 			<tr ng-repeat="category in categories">
 				<td>{{category.nome}}</td>
 				<td><button type="button" class="btn btn-info" ng-click="actionUpdate(category)">Editar</button>
-					<!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="actionDelete(category)">Excluir</button> --></td>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="actionDelete(category)">Excluir</button></td>
 			</tr>
 		</table>
 	</div>
 </div>
-	<!-- Modal -->
+	Modal
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
+    Modal content
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Exluir Categoria</h4>
@@ -56,4 +56,101 @@
 
   </div>
 </div>
+</div> -->
+<div class="container-fluid">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#/panel">Mastermenu</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#/panel">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Histórico</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#/registration">Cadastros
+              	<span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#/main">Sair</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header>
+    <h1>{{house.name}} : 	Nova Categoria</h1>
+	
+	<form  ng-submit="addCategory(category)" name="form" novalidate>
+		<div class="form-group">
+			<label for="nameCategory">Nome:</label> <input
+				id="nameCategory" type="text" ng-model="category.name"
+				name="cName" required="true" placeholder="*" class="form-control" />
+			<div ng-show="form.cName.$touched">
+				<div ng-show="form.cName.$error.required"
+					class="alert alert-danger">* Nome obrigatório!</div>
+			</div>   
+		</div>
+		<p>
+			<span>Com * é obrigatório.</span>
+		</p>
+		<div id=button>
+			<input class="btn btn-danger" type="submit" value="Salvar"
+				ng-disabled="form.$invalid" />
+			<a	class="btn btn-danger" class="btn btn-danger" href="" ng-click="back()">Voltar</a>
+		</div>
+
+	</form>
+	<div>
+		<h3>Lista de Categorias</h3>
+		<table class="table table-striped">
+			<tr>
+				<th>Nome</th>
+				<th>Opções</th>
+			</tr>
+			<tr ng-repeat="category in categories">
+				<td>{{category.nome}}</td>
+				<td><button type="button" class="btn btn-info" ng-click="actionUpdate(category)">Editar</button>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="actionDelete(category)">Excluir</button></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Exluir Categoria</h4>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir a Categoria: </p> <b>{{categoryDelete.nome}}</b>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteCategory()">Sim</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Não</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    </header>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
 </div>

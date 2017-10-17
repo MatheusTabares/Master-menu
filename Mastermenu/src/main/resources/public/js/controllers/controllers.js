@@ -142,8 +142,16 @@ mastermenuControllers.controller('CategoryCtrl', [
   	'$scope',
   	'$http',
   	'$location',
-  	function($scope, $http, $location) {
+  	'$routeParams',
+  	function($scope, $http, $location, $routeParams) {
   		$scope.init = function() {
+  			$scope.idHouse = $routeParams.idHouse;
+  			
+  			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+  					function(data) {
+  						$scope.house = data;
+			});
+	
 	  		$http.get("mastermenu/v1/category").success(
 	 				function(data) {
 	 					delete $scope.categories;
@@ -164,7 +172,7 @@ mastermenuControllers.controller('CategoryCtrl', [
   		
   		$scope.actionUpdate = function(category) {
   			var idCategory = category.id;
-  			$location.path('update/'+idCategory);
+  			$location.path('update/'+idCategory+'/'+$scope.idHouse);
   		}
   		
   		$scope.actionDelete = function(category) {
@@ -183,6 +191,10 @@ mastermenuControllers.controller('CategoryCtrl', [
   			delete $scope.categoryDelete;
   		}
   		
+  		$scope.back = function() {
+  			$location.path('house/'+$scope.idHouse);
+  		}
+  		
   		$scope.init();
   	} ]);
 
@@ -194,10 +206,17 @@ mastermenuControllers.controller('UpdateCtrl', [
   	function($scope, $http, $location, $routeParams) {
   		$scope.init = function() {
   			$scope.id = $routeParams.idCategory;
+  			$scope.idHouse = $routeParams.idHouse;
+  			
   			$http.get("mastermenu/v1/category/"+$scope.id).success(
   	 				function(data) {
   	 					$scope.category = data;
   	 		});
+  			
+  			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+  					function(data) {
+  						$scope.house = data;
+			});
   		}
   		
   		$scope.updateCategory = function(category) {
@@ -206,6 +225,10 @@ mastermenuControllers.controller('UpdateCtrl', [
 					$location.path('category');
 				});
  		}
+  		
+  		$scope.back = function() {
+  			$location.path('category/'+$scope.idHouse);
+  		}
   		
   		$scope.init();
 } ]);
@@ -222,6 +245,12 @@ mastermenuControllers.controller('ProductCtrl', [
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.selected = [];
   			$scope.selectedOptions = [];
+  			
+  			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+  					function(data) {
+  						$scope.house = data;
+			});
+	
   			
   			$scope.exist = function(c) {
   				return $scope.selected.indexOf(c) > -1;
@@ -264,6 +293,10 @@ mastermenuControllers.controller('ProductCtrl', [
   			
   		}
   		
+  		$scope.back = function() {
+			$location.path('house/'+$scope.idHouse);
+		}
+  		
   		$scope.addProduct = function(product) {
   			product.house = new Object();
   			product.house.id = $scope.idHouse;
@@ -282,7 +315,7 @@ mastermenuControllers.controller('ProductCtrl', [
   		
   		$scope.actionUpdate = function(product) {
   			var idProduct = product.id;
-  			$location.path('updateProduct/'+idProduct);
+  			$location.path('updateProduct/'+idProduct+'/'+$scope.idHouse);
   		}
   		
   		$scope.actionDelete = function(productDeleted) {
@@ -375,6 +408,8 @@ mastermenuControllers.controller('UpdateProductCtrl', [
    	function($scope, $http, $location, $routeParams) {
    		$scope.init = function() {
   			$scope.id = $routeParams.idProduct;
+  			$scope.idHouse = $routeParams.idHouse;
+  			
   			$http.get("mastermenu/v1/product/"+$scope.id).success(
   	 				function(data) {
   	 					$scope.product = data;
@@ -394,6 +429,10 @@ mastermenuControllers.controller('UpdateProductCtrl', [
 					$location.path('product');
 				});
  		}
+  		
+  		$scope.back = function() {
+			$location.path('product/'+$scope.idHouse);
+		}
   		
   		$scope.init();
    	} ]);
@@ -430,6 +469,10 @@ mastermenuControllers.controller('HouseCtrl', [
  		
  		$scope.actionProduct = function() {
  			$location.path('product/'+$scope.idHouse);
+ 		}
+ 		
+ 		$scope.actionCategory = function() {
+ 			$location.path('category/'+$scope.idHouse);
  		}
  		
  		$scope.actionCallSolicitationFood = function() {

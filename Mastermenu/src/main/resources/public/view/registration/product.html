@@ -128,20 +128,20 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Mastermenu</a>
+        <a class="navbar-brand" href="#/panel">Mastermenu</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
+              <a class="nav-link" href="#/panel">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Perfil</a>
+              <a class="nav-link" href="">Perfil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Histórico</a>
+              <a class="nav-link" href="">Histórico</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#/registration">Cadastros
@@ -149,7 +149,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Sair</a>
+              <a class="nav-link" href="#/main">Sair</a>
             </li>
           </ul>
         </div>
@@ -157,7 +157,7 @@
     </nav>
 
     <header>
-    <h1>Mater-Menu : Produto</h1>
+    <h1>{{house.name}}: Novo Produto</h1>
 	
 	<form  ng-submit="addProduct(product)" name="form" novalidate>
 					<div class="form-group">
@@ -238,7 +238,7 @@
 					<div id=button>
 						<input class="btn btn-danger" type="submit" value="Salvar"
 							ng-disabled="form.$invalid" />
-						 <a	class="btn btn-danger" href="#/registration">Voltar</a>
+						 <a	class="btn btn-danger" href="" ng-click="back()">Voltar</a>
 					</div>
 	
 				</form>
