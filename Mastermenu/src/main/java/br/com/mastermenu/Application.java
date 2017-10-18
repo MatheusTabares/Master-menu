@@ -365,7 +365,7 @@ public class Application {
 			}
 		});
 		
-		get(mastermenu + "/product/:id", (req, res) -> {
+		get(mastermenu + "/productById/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
 			Optional<Product> product = productService.readById(id);
 			if (product.isPresent()) {

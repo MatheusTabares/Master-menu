@@ -146,6 +146,24 @@
 
   </div>
 </div>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Exluir Categoria</h4>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir a Categoria: </p> <b>{{categoryDelete.nome}}</b>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteCategory()">Sim</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Não</button>
+      </div>
+    </div>
+  </div>
+ </div>
+
     </header>
 
     <!-- Bootstrap core JavaScript -->
