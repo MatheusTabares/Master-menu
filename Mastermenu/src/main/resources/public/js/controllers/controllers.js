@@ -357,6 +357,18 @@ mastermenuControllers.controller('MainCtrl', [
  		$scope.reload = function() {
  			$location.path('panel');
  		}
+ 		
+ 		$scope.save = function() {
+ 			if($scope.user.password != $scope.confirmPassword) {
+ 				alert("Por favor, confirme a senha correta.")
+ 			} else {
+ 				$http.post("mastermenu/v1/user", $scope.user).success(
+ 	  					function(data) {
+ 	  						$location.path("/panel");
+ 	  					});
+ 			}
+ 		}
+ 		
  		$scope.init();
  	} ]);
 

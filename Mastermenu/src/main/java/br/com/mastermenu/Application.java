@@ -526,7 +526,6 @@ public class Application {
 	
 	private static boolean validationUser(User u, Optional<String> toUpdate) {
 		if(u.getEmail() != null && !u.getEmail().trim().equals("") 
-					&& u.getName() != null && !u.getName().trim().equals("")
 					&& u.getPassword() != null && !u.getPassword().trim().equals("")) {
 			if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
 				if(u.getId() != null) {

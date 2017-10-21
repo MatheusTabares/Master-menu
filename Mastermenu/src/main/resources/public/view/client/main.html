@@ -158,25 +158,25 @@
           <div class="col-lg-8 mx-auto">
             <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
             <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-            <form name="sentMessage" id="contactForm" novalidate>
+            <form name="sentMessage" id="contactForm" novalidate ng-submit="save()">
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>E-mail</label>
-                  <input class="form-control" id="email" type="email" placeholder="E-mail" required data-validation-required-message="Por favor insira o e-mail válido.">
+                  <input class="form-control" id="email" type="email" placeholder="E-mail" required data-validation-required-message="Por favor insira o e-mail válido." ng-model="user.email">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Senha</label>
-                  <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor insira senha.">
+                  <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor insira senha." ng-model="user.password">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Confirmar Senha</label>
-                  <input class="form-control" id="phone" type="password" placeholder="Confirmar Senha" required data-validation-required-message="Por favor confirme senha.">
+                  <input class="form-control" id="phone" type="password" placeholder="Confirmar Senha" required data-validation-required-message="Por favor confirme senha." ng-model="confirmPassword">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
