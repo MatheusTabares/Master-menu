@@ -32,6 +32,9 @@ import br.com.mastermenu.product.service.ProductService;
 import br.com.mastermenu.solicitation.model.Solicitation;
 import br.com.mastermenu.solicitation.service.ISolicitationService;
 import br.com.mastermenu.solicitation.service.SolicitationService;
+import br.com.mastermenu.user.model.User;
+import br.com.mastermenu.user.service.IUserService;
+import br.com.mastermenu.user.service.UserService;
 
 public class Application {
 	
@@ -45,12 +48,74 @@ public class Application {
 		ICategoryService categoryService = new CategoryService();
 		IHouseService houseService = new HouseService();
 		ICommandsService commandsService = new CommandsService();
+		IUserService userService = new UserService();
 		
 		
 		Gson gson = new Gson();
 		
 		staticFileLocation("/public");
 		//URL DE ACESSO: http://localhost:4567/index.html
+		/**
+		 * TODO: CRUD USER
+		 */
+		
+		post(mastermenu + "/user", (req, res) -> {
+			String body = req.body();
+			User u = parseUserFromBody(body);
+			if(validationUser(u, Optional.empty()) == true) {
+				userService.create(u);
+				return gson.toJson("Usuário - " + u.getName() +", inserido com sucesso!");
+			}
+			res.status(404);
+			return "Problemas ao inserir usuário!";
+		});
+		
+		post(mastermenu + "/authenticate", (req, res) -> {
+			User u = parseUserFromBody(req.body());
+			Optional<User> uReturn = userService.findByEmail(u.getEmail());
+			if(uReturn.isPresent() && uReturn.get().getPassword().equals(u.getPassword())) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+		
+		put(mastermenu + "/house/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<House> house = houseService.readById(id);
+			if (house.isPresent()) {
+				String body = req.body();
+				houseService.update(parseHouseFromBody(body));
+				return gson.toJson("Estabelecimento atualizado com sucesso!");
+			} else {
+				res.status(404);
+				return "Erro ao atualizar um Estabalecimento!";
+			}
+		});
+		
+		delete(mastermenu + "/house", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			Optional<House> houseDeleted = houseService.readById(id);
+			if(houseDeleted.isPresent()) {
+				houseService.delete(houseDeleted.get());
+				return houseDeleted.get().getName() + " excluído com sucesso!";
+			} else {
+				res.status(404);
+				return false;
+			}
+		});
+		
+		get(mastermenu + "/house/:idHouse", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			Optional<House> house = houseService.readById(idHouse);
+			if (house.isPresent()) {
+				return gson.toJson(house.get());
+			} else {
+				res.status(404);
+				return "Estabelecimento não encontrado!";
+			}
+		});
+
 		/**
 		 * TODO: CRUD COMMANDS
 		 */
@@ -459,6 +524,23 @@ public class Application {
 		return true;
 	}
 	
+	private static boolean validationUser(User u, Optional<String> toUpdate) {
+		if(u.getEmail() != null && !u.getEmail().trim().equals("") 
+					&& u.getName() != null && !u.getName().trim().equals("")
+					&& u.getPassword() != null && !u.getPassword().trim().equals("")) {
+			if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
+				if(u.getId() != null) {
+					return true;
+				}
+			} else {
+				if(u.getId() == null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	private static boolean validationHouse(House house, Optional<String> toUpdate) {
 		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
 			if(house.getId() != null && house.getName() != null && !house.getName().trim().equals("")) {
@@ -504,6 +586,12 @@ public class Application {
 		//log.info(body);
 		Gson gson = new Gson();
 		return gson.fromJson(body, Solicitation.class);
+	}
+	
+	private static User parseUserFromBody(String body) {
+		//log.info(body);
+		Gson gson = new Gson();
+		return gson.fromJson(body, User.class);
 	}
 	
 	private static House parseHouseFromBody(String body) {
