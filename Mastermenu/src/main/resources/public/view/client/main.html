@@ -35,17 +35,29 @@
 	        <h4 class="modal-title">LOGIN</h4>
 	      </div>
 	      <div class="modal-body">
-	        <label for="email">E-mail:</label> 
-	        <input	id="email" type="email" ng-model="user.email"
-				name="uEmail" required="true" placeholder="*" class="form-control" />
-			
-			<label for="password">Senha:</label> 
-	        <input	id="password" type="password" ng-model="user.password"
-				name="uPassword" required="true" placeholder="*" class="form-control" />
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-success btn-lg" data-dismiss="modal" ng-click="login()">AGORA</button>
-	        <button type="button" class="btn btn-success btn-lg" data-dismiss="modal" ng-click="cancel()">CANCELAR</button>
+	      	<form  name="form" novalidate>
+					<div class="form-group">
+						<label for="email">E-mail:</label> <input
+							id="email" type="text" ng-model="user.email"
+							name="email" required="true" placeholder="*" class="form-control" />
+						<div ng-show="form.email.$touched">
+							<div ng-show="form.email.$error.required"
+								class="alert alert-danger">Campo obrigatório.</div>
+						</div>  
+						<label for="senha">Senha:</label> <input
+							id="senha" type="password" ng-model="user.password"
+							name="senha" required="true" placeholder="*" class="form-control" />
+						<div ng-show="form.senha.$touched">
+							<div ng-show="form.senha.$error.required"
+								class="alert alert-danger">Campo obrigatório.</div>
+						</div>  
+					</div>
+					<div id=button>
+						<input class="btn btn-danger" type="submit" value="Entrar"
+							ng-disabled="form.$invalid" ng-click="longin()"/>
+						 <input	class="btn btn-danger" type="button" data-dismiss="modal" id="closeModal" value="Voltar" />
+					</div>
+				</form>
 	      </div>
 	    </div>
 	

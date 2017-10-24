@@ -343,11 +343,15 @@ mastermenuControllers.controller('MainCtrl', [
  		}
  		
  		$scope.login = function() {
- 			$("#modalLogin").on('hidden.bs.modal', function () {
- 			    $location.path("panel");
- 			    $scope.$apply();
- 			});
- 			
+ 			/*$http.post("mastermenu/v1/authenticate", $scope.user).success(
+				function(data) {
+					if(data) {
+			*/			$("[data-dismiss='modal']").trigger({ type: "click" });
+			/*		} else {
+						alert(data);
+					}
+				});
+ 			*/
  		}
  		
  		$scope.closeModal = function() {
@@ -360,10 +364,12 @@ mastermenuControllers.controller('MainCtrl', [
  		
  		$scope.save = function() {
  			if($scope.user.password != $scope.confirmPassword) {
- 				alert("Por favor, confirme a senha correta.")
+ 				alert("Por favor, confirme a senha correta.");
+ 				$scope.confirmPassword = "";
  			} else {
  				$http.post("mastermenu/v1/user", $scope.user).success(
  	  					function(data) {
+ 	  						delete $scope.user;
  	  						$location.path("/panel");
  	  					});
  			}

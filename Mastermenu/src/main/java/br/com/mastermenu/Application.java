@@ -73,11 +73,16 @@ public class Application {
 		post(mastermenu + "/authenticate", (req, res) -> {
 			User u = parseUserFromBody(req.body());
 			Optional<User> uReturn = userService.findByEmail(u.getEmail());
-			if(uReturn.isPresent() && uReturn.get().getPassword().equals(u.getPassword())) {
-				return true;
-			} else {
-				return false;
+			if(uReturn.isPresent()) {
+				if(uReturn.get().getPassword().equals(u.getPassword())) {
+					return true;
+				} else {
+					return "Senha inválida";
+				}
 			}
+			return "Email inválido";
+			
+			
 		});
 		
 		put(mastermenu + "/house/:id", (req, res) -> {
