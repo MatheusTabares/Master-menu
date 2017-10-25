@@ -33,7 +33,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Optional<User> findByEmail(String email) {
+	public User findByEmail(String email) {
 		return userDAO.findByEmail(email);
 	}
 

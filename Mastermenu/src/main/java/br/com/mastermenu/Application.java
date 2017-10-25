@@ -72,9 +72,9 @@ public class Application {
 		
 		post(mastermenu + "/authenticate", (req, res) -> {
 			User u = parseUserFromBody(req.body());
-			Optional<User> uReturn = userService.findByEmail(u.getEmail());
-			if(uReturn.isPresent()) {
-				if(uReturn.get().getPassword().equals(u.getPassword())) {
+			User uReturn = userService.findByEmail(u.getEmail());
+			if(uReturn != null) {
+				if(uReturn.getPassword().equals(u.getPassword())) {
 					return true;
 				} else {
 					return "Senha inválida";

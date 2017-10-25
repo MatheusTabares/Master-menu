@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 import br.com.mastermenu.solicitation.dao.SolicitationDAO;
@@ -75,10 +76,15 @@ public class UserDAO implements IUserDAO{
 
 	@SuppressWarnings("static-access")
 	@Override
-	public Optional<User> findByEmail(String email) {
-		return Optional.ofNullable((User)(em.createQuery("FROM user u WHERE u.email = :email")
-				   .setParameter("email", email).getSingleResult()));
+	public User findByEmail(String email) {
+		try {
+			return (User)em.createQuery("FROM user u WHERE u.email = :email")
+				   .setParameter("email", email).getSingleResult();
+		} catch(NoResultException nre) {
+			return null;
+		}
 	}
+		
 
 	@SuppressWarnings("unchecked")
 	@Override

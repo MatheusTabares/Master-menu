@@ -14,7 +14,7 @@ public interface IUserDAO {
 	
 	public Optional<User> findById(int id);
 	
-	public Optional<User> findByEmail(String email);
+	public User findByEmail(String email);
 	
 	public List<User> findByIdHouse(int idHouse);
 }

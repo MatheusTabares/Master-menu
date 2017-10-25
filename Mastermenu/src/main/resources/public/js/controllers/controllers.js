@@ -343,15 +343,16 @@ mastermenuControllers.controller('MainCtrl', [
  		}
  		
  		$scope.login = function() {
- 			/*$http.post("mastermenu/v1/authenticate", $scope.user).success(
+ 			$http.post("mastermenu/v1/authenticate", $scope.user).success(
 				function(data) {
-					if(data) {
-			*/			$("[data-dismiss='modal']").trigger({ type: "click" });
-			/*		} else {
+					if(data === "true") {
+						$('#modalLogin').modal('toggle');
+						$('.modal-backdrop').remove();
+						$location.path('panel');
+					} else {
 						alert(data);
 					}
 				});
- 			*/
  		}
  		
  		$scope.closeModal = function() {
