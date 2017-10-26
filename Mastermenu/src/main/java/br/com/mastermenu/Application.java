@@ -26,6 +26,9 @@ import br.com.mastermenu.composition.service.ICompositionService;
 import br.com.mastermenu.house.service.HouseService;
 import br.com.mastermenu.house.service.IHouseService;
 import br.com.mastermenu.model.House;
+import br.com.mastermenu.passwordSecurity.model.PasswordSecurity;
+import br.com.mastermenu.passwordSecurity.service.IPasswordSecurityService;
+import br.com.mastermenu.passwordSecurity.service.PasswordSecurityService;
 import br.com.mastermenu.product.model.Product;
 import br.com.mastermenu.product.service.IProductService;
 import br.com.mastermenu.product.service.ProductService;
@@ -35,6 +38,7 @@ import br.com.mastermenu.solicitation.service.SolicitationService;
 import br.com.mastermenu.user.model.User;
 import br.com.mastermenu.user.service.IUserService;
 import br.com.mastermenu.user.service.UserService;
+import br.com.mastermenu.util.HashUtil;
 
 public class Application {
 	
@@ -49,7 +53,7 @@ public class Application {
 		IHouseService houseService = new HouseService();
 		ICommandsService commandsService = new CommandsService();
 		IUserService userService = new UserService();
-		
+		IPasswordSecurityService psService = new PasswordSecurityService();
 		
 		Gson gson = new Gson();
 		
@@ -62,8 +66,17 @@ public class Application {
 		post(mastermenu + "/user", (req, res) -> {
 			String body = req.body();
 			User u = parseUserFromBody(body);
+			User uReturn = userService.findByEmail(u.getEmail());
+			if(uReturn != null) {
+				return "E-mail já cadastrado!";
+			}
 			if(validationUser(u, Optional.empty()) == true) {
+				PasswordSecurity ps = new PasswordSecurity();
+				u.setPassword(HashUtil.generateHash(u.getPassword(), ps.getSALT()));
 				userService.create(u);
+				ps.setUser(u);
+				psService.create(ps);
+				
 				return gson.toJson("Usuário - " + u.getName() +", inserido com sucesso!");
 			}
 			res.status(404);
@@ -73,15 +86,20 @@ public class Application {
 		post(mastermenu + "/authenticate", (req, res) -> {
 			User u = parseUserFromBody(req.body());
 			User uReturn = userService.findByEmail(u.getEmail());
+			String password = "";
 			if(uReturn != null) {
-				if(uReturn.getPassword().equals(u.getPassword())) {
+				Optional<PasswordSecurity> ps;
+				ps = psService.readByIdUser(uReturn.getId());
+				if(ps.isPresent()) {
+					password = HashUtil.generateHash(u.getPassword(), ps.get().getSALT());
+				}
+				if(password.equals(uReturn.getPassword())) {
 					return true;
 				} else {
 					return "Senha inválida";
 				}
 			}
 			return "Email inválido";
-			
 			
 		});
 		

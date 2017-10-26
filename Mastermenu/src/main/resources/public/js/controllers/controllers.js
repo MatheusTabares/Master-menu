@@ -369,10 +369,16 @@ mastermenuControllers.controller('MainCtrl', [
  				$scope.confirmPassword = "";
  			} else {
  				$http.post("mastermenu/v1/user", $scope.user).success(
- 	  					function(data) {
- 	  						delete $scope.user;
- 	  						$location.path("/panel");
- 	  					});
+  					function(data) {
+  						if(data === "E-mail já cadastrado!") {
+  							delete $scope.user.email;
+  		 					alert(data);
+  		 				} else {
+  		 					delete $scope.user;
+  	  						delete $scope.confirmPassword;
+  		 					$location.path("/panel");
+  		 				}
+  					});
  			}
  		}
  		
