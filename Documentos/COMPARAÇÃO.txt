@@ -85,7 +85,9 @@ PARA CLIENTE:
 	*Reservar mesa
 	*Mapear estabelecimentos
 	*Avaliar estabelecimentos
-	
+	*Ou, realizar o pagamento de seus pedidos, antes de solicitá-los, 
+	também será outra forma de conseguir efetuar a solicitação
+	de seus pedidos para a produção do estabelecimento.
 PARA ESTABELECIMENTO:
 	*Visibilidade de sua loja
 	*Diferencial
