@@ -345,10 +345,10 @@ mastermenuControllers.controller('MainCtrl', [
  		$scope.login = function() {
  			$http.post("mastermenu/v1/authenticate", $scope.user).success(
 				function(data) {
-					if(data === "true") {
+					if(data.id != undefined) {
 						$('#modalLogin').modal('toggle');
 						$('.modal-backdrop').remove();
-						$location.path('panel');
+						$location.path('panel/'+data.id);
 					} else {
 						alert(data);
 					}
@@ -389,9 +389,11 @@ mastermenuControllers.controller('RegistrationCtrl', [
    	'$scope',
    	'$http',
    	'$location',
-   	function($scope, $http, $location) {
+   	'$routeParams',
+   	function($scope, $http, $location, $routeParams) {
    		$scope.init = function() {
- 			$http.get("mastermenu/v1/house").success(
+   			$scope.idUser = $routeParams.idUser;
+ 			$http.get("mastermenu/v1/house/"+$scope.idUser+"/user").success(
  	 				function(data) {
  	 					$scope.houses = data;
  	 			});
@@ -419,6 +421,9 @@ mastermenuControllers.controller('RegistrationCtrl', [
   			$location.path('house/'+idHouse);
   		}
   		
+  		$scope.callCreateHouse = function() {
+  			$location.path('createHouse/'+$scope.idUser);
+  		}
   		$scope.init();
   		
    	} ]);
@@ -465,13 +470,21 @@ mastermenuControllers.controller('CreateHouseCtrl', [
  	'$http',
  	'$location',
  	'$window',
- 	function($scope, $http, $location, $window) {
+ 	'$routeParams',
+ 	function($scope, $http, $location, $window, $routeParams) {
+ 		$scope.init = function() {
+ 			$scope.idUser = $routeParams.idUser;
+ 		}
+ 		
  		$scope.addHouse = function(house) {
+ 			house.idUser = $scope.idUser;
   			$http.post("mastermenu/v1/house", house).success(
   					function(data) {
   						$location.path("/registration");
   					});
   		}
+ 		
+ 		$scope.init();
  	} ]);
 
 mastermenuControllers.controller('HouseCtrl', [
@@ -547,6 +560,7 @@ mastermenuControllers.controller('PanelCtrl', [
    	'$routeParams',
    	function($scope, $http, $location, $routeParams) {
    		$scope.init = function() {
+   			$scope.idUser = $routeParams.idUser;
    			$http.get("mastermenu/v1/house").success(
  				function(data) {
  					$scope.houses = data;
@@ -556,6 +570,10 @@ mastermenuControllers.controller('PanelCtrl', [
    		$scope.actionHouse = function(house) {
    			$scope.idHouse = house.id;
    			$location.path('houseResource/'+ $scope.idHouse);
+   		}
+   		
+   		$scope.callRegistration = function() {
+   			$location.path('registration/'+$scope.idUser);
    		}
    		
    		$scope.init();

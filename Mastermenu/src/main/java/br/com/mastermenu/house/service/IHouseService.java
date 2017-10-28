@@ -14,4 +14,6 @@ public void create(House house);
 	public boolean delete(House house);
 	
 	public Optional<House> readById(int id);
+	
+	public List<House> readByIdUser(int id);
 }

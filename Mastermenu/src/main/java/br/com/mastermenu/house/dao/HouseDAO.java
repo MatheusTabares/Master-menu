@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 
 import br.com.mastermenu.model.House;
 import br.com.mastermenu.product.model.Product;
+import br.com.mastermenu.solicitation.model.Solicitation;
 import br.com.mastermenu.util.Connection;
 
 public class HouseDAO implements IHouseDAO{
@@ -64,6 +65,13 @@ private final EntityManager em;
 	@Override
 	public Optional<House> readById(int id) {
 		return Optional.ofNullable(em.find(House.class, id));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<House> readByIdUser(int idUser) {
+		return em.createQuery("FROM house WHERE idUser = :idUser")
+				   .setParameter("idUser", idUser).getResultList();
 	}
 	
 }

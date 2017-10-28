@@ -94,7 +94,7 @@ public class Application {
 					password = HashUtil.generateHash(u.getPassword(), ps.get().getSALT());
 				}
 				if(password.equals(uReturn.getPassword())) {
-					return true;
+					return gson.toJson(uReturn);
 				} else {
 					return "Senha inválida";
 				}
@@ -103,43 +103,7 @@ public class Application {
 			
 		});
 		
-		put(mastermenu + "/house/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			Optional<House> house = houseService.readById(id);
-			if (house.isPresent()) {
-				String body = req.body();
-				houseService.update(parseHouseFromBody(body));
-				return gson.toJson("Estabelecimento atualizado com sucesso!");
-			} else {
-				res.status(404);
-				return "Erro ao atualizar um Estabalecimento!";
-			}
-		});
-		
-		delete(mastermenu + "/house", (req, res) -> {
-			int id = Integer.parseInt(req.queryParams("id"));
-			Optional<House> houseDeleted = houseService.readById(id);
-			if(houseDeleted.isPresent()) {
-				houseService.delete(houseDeleted.get());
-				return houseDeleted.get().getName() + " excluído com sucesso!";
-			} else {
-				res.status(404);
-				return false;
-			}
-		});
-		
-		get(mastermenu + "/house/:idHouse", (req, res) -> {
-			int idHouse = Integer.parseInt(req.params(":idHouse"));
-			Optional<House> house = houseService.readById(idHouse);
-			if (house.isPresent()) {
-				return gson.toJson(house.get());
-			} else {
-				res.status(404);
-				return "Estabelecimento não encontrado!";
-			}
-		});
-
-		/**
+				/**
 		 * TODO: CRUD COMMANDS
 		 */
 		
@@ -203,8 +167,9 @@ public class Application {
 			return "Estabelecimento não inserido!";
 		});
 		
-		get(mastermenu + "/house", (req, res) -> {
-			String houses = gson.toJson(houseService.read());
+		get(mastermenu + "/house/:idUser/user", (req, res) -> {
+			int idUser = Integer.parseInt(req.params(":idUser"));
+			String houses = gson.toJson(houseService.readByIdUser(idUser));
 			if(!houses.trim().equals(""))
 				return  houses;
 			else

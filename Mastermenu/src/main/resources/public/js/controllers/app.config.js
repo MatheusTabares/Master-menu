@@ -24,7 +24,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/house.html',
 				controller : 'HouseCtrl'
 			})
-			.when('/panel', {
+			.when('/panel/:idUser', {
 				templateUrl : '../../view/client/panel.html',
 				controller : 'PanelCtrl'
 			})
@@ -36,7 +36,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/updateHouse.html',
 				controller : 'UpdateHouseCtrl'
 			})
-			.when('/createHouse', {
+			.when('/createHouse/:idUser', {
 				templateUrl : '../../view/registration/createHouse.html',
 				controller : 'CreateHouseCtrl'
 			})
@@ -56,7 +56,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/product.html',
 				controller : 'ProductCtrl'
 			})
-			.when('/registration', {
+			.when('/registration/:idUser', {
 				templateUrl : '../../view/registration/registration.html',
 				controller : 'RegistrationCtrl'
 			})

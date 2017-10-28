@@ -15,4 +15,6 @@ public interface IHouseDAO {
 	
 	public Optional<House> readById(int id);
 	
+	public List<House> readByIdUser(int id);
+	
 }

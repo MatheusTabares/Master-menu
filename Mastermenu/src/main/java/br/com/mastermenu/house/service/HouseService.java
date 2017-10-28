@@ -38,4 +38,9 @@ public class HouseService implements IHouseService {
 		return houseDAO.readById(id);
 	}
 
+	@Override
+	public List<House> readByIdUser(int idUser) {
+		return houseDAO.readByIdUser(idUser);
+	}
+
 }

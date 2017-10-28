@@ -11,8 +11,14 @@ public class House {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	private int idUser;
 	
-	
+	public int getIdUser() {
+		return idUser;
+	}
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
+	}
 	public Integer getId() {
 		return id;
 	}
