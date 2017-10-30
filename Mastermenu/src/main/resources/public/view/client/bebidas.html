@@ -1,21 +1,3 @@
-<!-- <div class="container-fluid">
-	<h1>Mater-Menu : Bebidas</h1>
-	<table class="table table-striped">
-		<tr>
-			<th>Nome</th>
-			<th>Preço R$</th>
-			<th>Adicionar a Lista</th>
-		</tr>
-		<tr ng-repeat="produto in produtos">
-			<td>{{produto.name}}</td>
-			<td>{{produto.price}}</td>
-			<td><button ng-click="adicionar(produto)">Add</button></td>
-		</tr>
-	</table>
-	
-	
-	<a href="" ng-click="back()">Voltar</a>
-</div> -->
 <div class="container-fluid">
 
     <!-- Navigation -->
@@ -60,7 +42,7 @@
 		<tr ng-repeat="produto in produtos">
 			<td>{{produto.name}}</td>
 			<td>{{produto.price}}</td>
-			<td><button ng-click="adicionar(produto)">Add</button></td>
+			<td><button class="btn btn-info" ng-click="adicionar(produto)">Add</button></td>
 		</tr>
 	</table>
 	

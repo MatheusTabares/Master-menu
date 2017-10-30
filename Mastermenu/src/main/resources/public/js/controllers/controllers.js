@@ -336,7 +336,8 @@ mastermenuControllers.controller('MainCtrl', [
  	'$scope',
  	'$http',
  	'$location',
- 	function($scope, $http, $location) {
+ 	'$rootScope',
+ 	function($scope, $http, $location, $rootScope) {
  		$scope.init = function() {
  			$http.get("mastermenu/v1/house").success(
  	 				function(data) {
@@ -350,6 +351,8 @@ mastermenuControllers.controller('MainCtrl', [
 					if(data.id != undefined) {
 						$('#modalLogin').modal('toggle');
 						$('.modal-backdrop').remove();
+						delete $scope.user.password;
+						$rootScope.userLogged = $scope.user;
 						$location.path('panel/'+data.id);
 					} else {
 						alert(data);
@@ -426,6 +429,11 @@ mastermenuControllers.controller('RegistrationCtrl', [
   		$scope.callCreateHouse = function() {
   			$location.path('createHouse/'+$scope.idUser);
   		}
+  		
+  		$scope.back = function() {
+  			$location.path('panel/'+$scope.idUser);
+  		}
+  		
   		$scope.init();
   		
    	} ]);
@@ -788,4 +796,33 @@ mastermenuControllers.controller('CommandsCtrl', [
    		
    		$scope.init();
    	} ]);
+
+mastermenuControllers.run(['$rootScope', '$location',
+                           function ($rootScope, $location) {
+	 
+	  //Rotas que necessitam do login
+	  var rotasBloqueadasUsuariosNaoLogados = ['/panel', '/registration', '/bebidas', '/comidas', '/houseResource', '/listaDePedidos', '/main', '/menu', '/panel',
+	                                           	'/category', '/closedSolicitations', '/commands', '/createHouse', '/house', '/modalUpdate', '/officialPanel', '/product', '/registration', 
+	                                           		'/solicitationDrink', '/solicitationFood', '/updateHouse', '/updateProduct'];
+	  $rootScope.$on('$locationChangeStart', function () { //iremos chamar essa função sempre que o endereço for alterado
+	 
+	      /*  podemos inserir a logica que quisermos para dar ou não permissão ao usuário.
+	          Neste caso, vamos usar uma lógica simples. Iremos analisar se o link que o usuário está tentando acessar (location.path())
+	          está no Array (rotasBloqueadasUsuariosNaoLogados) caso o usuário não esteja logado. Se o usuário estiver logado, iremos
+	          validar se ele possui permissão para acessar os links no Array de strings 'rotasBloqueadasUsuariosComuns'
+	      */
+		  var path = $location.path();
+		  path = path.substring(1, path.length);
+		  console.log("path: " + path.substring(0, path.indexOf("/")));
+	      if($rootScope.userLogged === undefined && rotasBloqueadasUsuariosNaoLogados.indexOf(path.substring(0, path.indexOf("/")))){
+	          $location.path('/main');
+	 
+	      }/*else
+	          if($rootScope.usuarioLogado != null &&
+	               rotasBloqueadasUsuariosComuns.indexOf($location.path()) != -1 &&
+	               $rootScope.usuarioLogado.admin == false){
+	          $location.path('/acessoNegado')
+	      }*/
+	  });
+	}]);
 
