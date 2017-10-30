@@ -192,7 +192,7 @@ mastermenuControllers.controller('CategoryCtrl', [
   		}
   		
   		$scope.back = function() {
-  			$location.path('house/'+$scope.idHouse);
+  			$location.path('house/'+$scope.idHouse+'/'+$scope.idUser);
   		}
   		
   		$scope.init();
@@ -207,6 +207,7 @@ mastermenuControllers.controller('UpdateCtrl', [
   		$scope.init = function() {
   			$scope.id = $routeParams.idCategory;
   			$scope.idHouse = $routeParams.idHouse;
+  			$scope.idUser = $routeParams.idUser;
   			
   			$http.get("mastermenu/v1/category/"+$scope.id).success(
   	 				function(data) {
@@ -222,12 +223,12 @@ mastermenuControllers.controller('UpdateCtrl', [
   		$scope.updateCategory = function(category) {
  			$http.put("mastermenu/v1/category/"+$scope.id, category).success(
 				function(data) {
-					$location.path('category/'+$scope.idHouse);
+					$scope.back();
 				});
  		}
   		
   		$scope.back = function() {
-  			$location.path('category/'+$scope.idHouse);
+  			$location.path('category/'+$scope.idHouse+'/'+$scope.idUser);
   		}
   		
   		$scope.init();
@@ -242,6 +243,7 @@ mastermenuControllers.controller('ProductCtrl', [
   	'$window',
   	function($scope, $http, $location, $routeParams, $route, $window) {
   		$scope.init = function() {
+  			$scope.idUser = $routeParams.idUser;
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.selected = [];
   			$scope.selectedOptions = [];
@@ -294,7 +296,7 @@ mastermenuControllers.controller('ProductCtrl', [
   		}
   		
   		$scope.back = function() {
-			$location.path('house/'+$scope.idHouse);
+			$location.path('house/'+$scope.idHouse+'/'+$scope.idUser);
 		}
   		
   		$scope.addProduct = function(product) {
@@ -401,7 +403,7 @@ mastermenuControllers.controller('RegistrationCtrl', [
  		
  		$scope.actionUpdate = function(house) {
   			var idHouse = house.id;
-  			$location.path('updateHouse/'+idHouse);
+  			$location.path('updateHouse/'+idHouse+'/'+$scope.idUser);
   		}
  		
  		$scope.actionDelete = function(houseDeleted) {
@@ -418,7 +420,7 @@ mastermenuControllers.controller('RegistrationCtrl', [
   		
   		$scope.moreOptions = function(house) {
   			var idHouse = house.id;
-  			$location.path('house/'+idHouse);
+  			$location.path('house/'+idHouse+'/'+$scope.idUser);
   		}
   		
   		$scope.callCreateHouse = function() {
@@ -437,6 +439,7 @@ mastermenuControllers.controller('UpdateProductCtrl', [
    		$scope.init = function() {
   			$scope.id = $routeParams.idProduct;
   			$scope.idHouse = $routeParams.idHouse;
+  			$scope.idUser = $routeParams.idUser;
   			
   			$http.get("mastermenu/v1/productById/"+$scope.id).success(
   	 				function(data) {
@@ -454,12 +457,12 @@ mastermenuControllers.controller('UpdateProductCtrl', [
   		$scope.updateProduct = function(product) {
  			$http.put("mastermenu/v1/product/"+$scope.id, product).success(
 				function(data) {
-					$location.path('product/'+$scope.idHouse);
+					$scope.back();
 				});
  		}
   		
   		$scope.back = function() {
-			$location.path('product/'+$scope.idHouse);
+			$location.path('product/'+$scope.idHouse+'/'+$scope.idUser);
 		}
   		
   		$scope.init();
@@ -480,9 +483,13 @@ mastermenuControllers.controller('CreateHouseCtrl', [
  			house.idUser = $scope.idUser;
   			$http.post("mastermenu/v1/house", house).success(
   					function(data) {
-  						$location.path("/registration");
+  						$scope.back();
   					});
   		}
+ 		
+ 		$scope.back = function() {
+ 			$location.path("registration/"+$scope.idUser);
+ 		}
  		
  		$scope.init();
  	} ]);
@@ -495,6 +502,7 @@ mastermenuControllers.controller('HouseCtrl', [
  	'$routeParams',
  	function($scope, $http, $location, $window, $routeParams) {
  		$scope.init = function() {
+ 			$scope.idUser = $routeParams.idUser;
  			$scope.idHouse = $routeParams.idHouse;
  			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
   	 				function(data) {
@@ -503,29 +511,32 @@ mastermenuControllers.controller('HouseCtrl', [
  		}
  		
  		$scope.actionProduct = function() {
- 			$location.path('product/'+$scope.idHouse);
+ 			$location.path('product/'+$scope.idHouse+'/'+$scope.idUser);
  		}
  		
  		$scope.actionCategory = function() {
- 			$location.path('category/'+$scope.idHouse);
+ 			$location.path('category/'+$scope.idHouse+'/'+$scope.idUser);
  		}
  		
  		$scope.actionCallSolicitationFood = function() {
- 			$location.path('solicitationFood/'+$scope.idHouse);
+ 			$location.path('solicitationFood/'+$scope.idHouse+'/'+$scope.idUser);
  		}
  		
  		$scope.actionCallClosedSolicitations = function() {
- 			$location.path('closedSolicitations/'+$scope.idHouse);
+ 			$location.path('closedSolicitations/'+$scope.idHouse+'/'+$scope.idUser);
  		}
  		
  		$scope.actionCallSolicitationDrink = function() {
- 			$location.path('solicitationDrink/'+$scope.idHouse);
+ 			$location.path('solicitationDrink/'+$scope.idHouse+'/'+$scope.idUser);
  		}
  		
  		$scope.actionCallCommands = function() {
- 			$location.path('commands/'+$scope.idHouse);
+ 			$location.path('commands/'+$scope.idHouse+'/'+$scope.idUser);
  		}
  		
+ 		$scope.back = function() {
+ 			$location.path('registration/'+$scope.idUser);
+ 		}
  		$scope.init();
  	} ]);
 
@@ -537,6 +548,7 @@ mastermenuControllers.controller('UpdateHouseCtrl', [
    	function($scope, $http, $location, $routeParams) {
    		$scope.init = function() {
   			$scope.id = $routeParams.idHouse;
+  			$scope.idUser = $routeParams.idUser;
   			$http.get("mastermenu/v1/house/"+$scope.id).success(
   	 				function(data) {
   	 					$scope.house = data;
@@ -546,9 +558,13 @@ mastermenuControllers.controller('UpdateHouseCtrl', [
   		$scope.updateHouse = function(house) {
  			$http.put("mastermenu/v1/house/"+$scope.id, house).success(
 				function(data) {
-					$location.path('registration');
+					$scope.back();
 				});
  		}
+  		
+  		$scope.back = function() {
+  			$location.path('registration/'+$scope.idUser);
+  		}
   		
   		$scope.init();
    	} ]);
@@ -650,6 +666,7 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    	function($scope, $http, $location, $routeParams, $window) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
+  			$scope.idUser = $routeParams.idUser;
   			
   			$http.get("mastermenu/v1/solicitationByIdCategoryAndNotClosed/"+$scope.idHouse+"/2").success(
   	 				function(data) {
@@ -659,7 +676,7 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    		
    		
    		$scope.back = function() {
-   			$location.path('house/'+$scope.idHouse);
+   			$location.path('house/'+$scope.idHouse+'/'+$scope.idUser);
    		}
    		
    		$scope.closeSolicitation = function(solicitation) {
@@ -683,6 +700,7 @@ mastermenuControllers.controller('SolicitationDrinkCtrl', [
    	function($scope, $http, $location, $routeParams, $window) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
+  			$scope.idUser = $routeParams.idUser;
   			
   			$http.get("mastermenu/v1/solicitationByIdCategoryAndNotClosed/"+$scope.idHouse+"/1").success(
   	 				function(data) {
@@ -692,7 +710,7 @@ mastermenuControllers.controller('SolicitationDrinkCtrl', [
    		
    		
    		$scope.back = function() {
-   			$location.path('house/'+$scope.idHouse);
+   			$location.path('house/'+$scope.idHouse+'/'+$scope.idUser);
    		}
    		
    		$scope.closeSolicitation = function(solicitation) {
@@ -715,6 +733,7 @@ mastermenuControllers.controller('ClosedSolicitationsCtrl', [
    	function($scope, $http, $location, $routeParams) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
+  			$scope.idUser = $routeParams.idUser;
   			
   			$http.get("mastermenu/v1/closedSolicitations/"+$scope.idHouse).success(
   	 				function(data) {
@@ -724,7 +743,7 @@ mastermenuControllers.controller('ClosedSolicitationsCtrl', [
    		
    		
    		$scope.back = function() {
-   			$location.path('house/'+$scope.idHouse);
+   			$location.path('house/'+$scope.idHouse+'/'+$scope.idUser);
    		}
    		
    		$scope.closeSolicitation = function(solicitation) {
@@ -746,6 +765,7 @@ mastermenuControllers.controller('CommandsCtrl', [
    	function($scope, $http, $location, $routeParams) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
+  			$scope.idUser = $routeParams.idUser;
   			
   			$http.get("mastermenu/v1/commands/"+$scope.idHouse).success(
   	 				function(data) {
@@ -755,7 +775,7 @@ mastermenuControllers.controller('CommandsCtrl', [
    		
    		
    		$scope.back = function() {
-   			$location.path('house/'+$scope.idHouse);
+   			$location.path('house/'+$scope.idHouse+'/'+$scope.idUser);
    		}
    		
    		$scope.closeCommands = function(c) {

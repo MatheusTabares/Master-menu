@@ -1,18 +1,18 @@
 angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'mastermenuServices' ])
 		.config([ '$routeProvider', function($routeProvider) {
-			$routeProvider.when('/commands/:idHouse', {
+			$routeProvider.when('/commands/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/commands.html',
 				controller : 'CommandsCtrl'
 			})
-			.when('/solicitationDrink/:idHouse', {
+			.when('/solicitationDrink/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/solicitationDrink.html',
 				controller : 'SolicitationDrinkCtrl'
 			})
-			.when('/closedSolicitations/:idHouse', {
+			.when('/closedSolicitations/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/closedSolicitations.html',
 				controller : 'ClosedSolicitationsCtrl'
 			})
-			.when('/solicitationFood/:idHouse', {
+			.when('/solicitationFood/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/solicitationFood.html',
 				controller : 'SolicitationFoodCtrl'
 			})
@@ -20,7 +20,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/client/houseResource.html',
 				controller : 'HouseResourceCtrl'
 			})
-			.when('/house/:idHouse', {
+			.when('/house/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/house.html',
 				controller : 'HouseCtrl'
 			})
@@ -32,7 +32,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/officialPanel.html',
 				controller : 'OfficialPanelCtrl'
 			})
-			.when('/updateHouse/:idHouse', {
+			.when('/updateHouse/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/updateHouse.html',
 				controller : 'UpdateHouseCtrl'
 			})
@@ -48,11 +48,11 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/modalUpdate.html',
 				controller : 'UpdateCtrl'
 			})
-			.when('/category/:idHouse', {
+			.when('/category/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/category.html',
 				controller : 'CategoryCtrl'
 			})
-			.when('/product/:idHouse', {
+			.when('/product/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/product.html',
 				controller : 'ProductCtrl'
 			})

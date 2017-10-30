@@ -212,6 +212,16 @@ public class Application {
 			}
 		});
 		
+		get(mastermenu + "/house", (req, res) -> {
+			List<House> houses = houseService.read();
+			if (houses.size() != 0) {
+				return gson.toJson(houses);
+			} else {
+				res.status(404);
+				return "Estabelecimento não encontrado!";
+			}
+		});
+		
 		/**
 		 * TODO: CRUD CATEGORY
 		 */
