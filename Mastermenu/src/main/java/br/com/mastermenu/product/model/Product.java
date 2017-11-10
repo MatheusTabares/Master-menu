@@ -57,7 +57,17 @@ public class Product {
 	public String getName() {
 		return name;
 	}
+	
+	
 
+
+	public House getHouse() {
+		return house;
+	}
+
+	public void setHouse(House house) {
+		this.house = house;
+	}
 
 	public void setName(String name) {
 		this.name = name;

@@ -46,4 +46,9 @@ public class SolicitationService implements ISolicitationService {
 		return solicitationDAO.readByIdHouseAndStatus(idHouse, status);
 	}
 
+	@Override
+	public List<Solicitation> readByIdHouseAndIdUser(int idHouse, int idUser) {
+		return solicitationDAO.readByIdHouseAndIdUser(idHouse, idUser);
+	}
+
 }

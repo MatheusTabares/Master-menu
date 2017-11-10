@@ -13,6 +13,8 @@ public interface ISolicitationService {
 	
 	public List<Solicitation> readByIdHouseAndIdCategory(int idHouse, String idCategory);
 	
+	public List<Solicitation> readByIdHouseAndIdUser(int idHouse, int idUser);
+	
 	public List<Solicitation> readByIdHouseAndStatus(int idHouse, String status);
 	
 	public void update(Solicitation solicitationUpdated);

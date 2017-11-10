@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -320,6 +321,9 @@ public class Application {
 				} else {
 					solicitation.setTypeCategory("2");
 				}
+				solicitation.setCurrentDate(LocalDateTime.now());
+				solicitation.setEstimatedDate(solicitation.getCurrentDate());
+				estimateTime(solicitation);
 				solicitationService.create(solicitation);
 				return gson.toJson("Pedido - " + solicitation.getProduct().getName() +", adicionado a lista!");
 			}
@@ -329,11 +333,34 @@ public class Application {
 		
 		get(mastermenu + "/solicitation/:idHouse", (req, res) -> {
 			int idHouse = Integer.parseInt(req.params(":idHouse"));
-			String solicitations = gson.toJson(solicitationService.readByIdHouse(idHouse));
-			if(!solicitations.trim().equals(""))
-				return solicitations;
-			else
+			List<Solicitation> solicitations = solicitationService.readByIdHouse(idHouse);
+			List<Solicitation> solList = new ArrayList<>();
+			if(solicitations.size() != 0) {
+				for(Solicitation s : solicitations) {
+					if(s.getCurrentDate() != null && s.getEstimatedDate() != null) {
+						solList.add(s);
+					}
+				}
+				return gson.toJson(solList);
+			} else {
 				return "Sem produtos!";
+			}
+		});
+		get(mastermenu + "/solicitation/:idHouse/house/:idUser/user", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			int idUser = Integer.parseInt(req.params(":idUser"));
+			List<Solicitation> solicitations = solicitationService.readByIdHouseAndIdUser(idHouse, idUser);
+			List<Solicitation> solList = new ArrayList<>();
+			if(solicitations.size() != 0) {
+				for(Solicitation s : solicitations) {
+					if(s.getCurrentDate() != null && s.getEstimatedDate() != null) {
+						solList.add(s);
+					}
+				}
+				return gson.toJson(solList);
+			} else {
+				return "Sem produtos!";
+			}
 		});
 		
 		get(mastermenu + "/closedSolicitations/:idHouse", (req, res) -> {
@@ -516,6 +543,21 @@ public class Application {
 			}
 		}
 		return false;
+	}
+	
+	private static void estimateTime(Solicitation sol) {
+		List<Solicitation> solicitations = new ArrayList<>();
+		ISolicitationService solService = new SolicitationService();
+		solicitations = solService.readByIdHouseAndIdCategory(
+				sol.getHouse().getId(), sol.getProduct().getCategoria().getId().toString());
+		if(solicitations.size() == 0) {
+			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(7));
+		} else if(solicitations.size() >= 3) {
+			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(25));
+		}
+		else {
+			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(7 * (solicitations.size() + 1)));
+		}
 	}
 	
 	private static boolean validationCategory(Categoria category, Optional<String> toUpdate) {

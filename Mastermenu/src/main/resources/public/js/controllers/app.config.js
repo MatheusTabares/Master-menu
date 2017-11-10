@@ -16,7 +16,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/solicitationFood.html',
 				controller : 'SolicitationFoodCtrl'
 			})
-			.when('/houseResource/:idHouse', {
+			.when('/houseResource/:idHouse/:idUser', {
 				templateUrl : '../../view/client/houseResource.html',
 				controller : 'HouseResourceCtrl'
 			})
@@ -60,19 +60,19 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/registration.html',
 				controller : 'RegistrationCtrl'
 			})
-			.when('/listaDePedidos/:idHouse', {
+			.when('/listaDePedidos/:idHouse/:idUser', {
 				templateUrl : '../../view/client/listaDePedidos.html',
 				controller : 'ListaDePedidosCtrl'
 			})
-			.when('/menu/:idHouse', {
+			.when('/menu/:idHouse/:idUser', {
 				templateUrl : '../../view/client/menu.html',
 				controller : 'MenuCtrl'
 			})
-			.when('/bebidas/:idHouse', {
+			.when('/bebidas/:idHouse/:idUser', {
 				templateUrl : '../../view/client/bebidas.html',
 				controller : 'BebidasCtrl'
 			})
-			.when('/comidas/:idHouse', {
+			.when('/comidas/:idHouse/:idUser', {
 				templateUrl : '../../view/client/comidas.html',
 				controller : 'ComidasCtrl'
 			})

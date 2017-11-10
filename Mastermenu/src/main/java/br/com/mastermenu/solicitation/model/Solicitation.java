@@ -1,5 +1,9 @@
 package br.com.mastermenu.solicitation.model;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,6 +26,8 @@ public class Solicitation {
 	@OneToOne(fetch = FetchType.EAGER)
 	private Product product;
 	
+	private String selectedCompositions;
+	
 	private int quantity = 1;
 	
 	private int idClient;
@@ -33,7 +39,28 @@ public class Solicitation {
 	@JoinColumn(name="house_id")
 	private House house;
 	
+	private LocalDateTime currentDate;
 	
+	private LocalDateTime estimatedDate;
+	
+	public String getSelectedCompositions() {
+		return selectedCompositions;
+	}
+	public void setSelectedCompositions(String selectedCompositions) {
+		this.selectedCompositions = selectedCompositions;
+	}
+	public LocalDateTime getCurrentDate() {
+		return currentDate;
+	}
+	public void setCurrentDate(LocalDateTime currentDate) {
+		this.currentDate = currentDate;
+	}
+	public LocalDateTime getEstimatedDate() {
+		return estimatedDate;
+	}
+	public void setEstimatedDate(LocalDateTime estimatedDate) {
+		this.estimatedDate = estimatedDate;
+	}
 	public String getTypeCategory() {
 		return typeCategory;
 	}

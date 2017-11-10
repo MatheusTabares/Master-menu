@@ -1,5 +1,6 @@
 package br.com.mastermenu.solicitation.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,60 +40,143 @@ public class SolicitationDAO implements ISolicitationDAO{
     @Override
 	public void create(Solicitation s) {
 		try {
+			if(em == null) {
+				em = getEntityManager();
+			}
 			em.getTransaction().begin();
 			em.persist(s);
 			em.getTransaction().commit();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
+		} finally {
+			em = null;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Solicitation> readByIdHouse(int idHouse) {
-		return em.createQuery("FROM " + Solicitation.class.getName() + " WHERE house_id = :house_id")
-				   .setParameter("house_id", idHouse).getResultList();
+		List<Solicitation> list = new ArrayList<>();
+		try {
+			if(em == null) {
+				em = getEntityManager();
+			}
+			list = em.createQuery("FROM " + Solicitation.class.getName() + " WHERE house_id = :house_id")
+					   .setParameter("house_id", idHouse).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em = null;
+		}
+		return list;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Solicitation> readByIdHouseAndIdCategory(int idHouse, String idCategory) {
-		return em.createQuery("FROM " + Solicitation.class.getName() + " WHERE typeCategory = :typeCategory AND house_id = :house_id AND status is null")
-				   .setParameter("typeCategory", idCategory)
-				   .setParameter("house_id", idHouse).getResultList();
+		List<Solicitation> list = new ArrayList<>();
+		try {
+			if(em == null) {
+				em = getEntityManager();
+			}
+			list = em.createQuery("FROM " + Solicitation.class.getName() + " WHERE typeCategory = :typeCategory AND house_id = :house_id AND status is null")
+					   .setParameter("typeCategory", idCategory)
+					   .setParameter("house_id", idHouse).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em = null;
+		}
+		return list;
 	}
 
 	@Override
 	public void update(Solicitation solicitationUpdated) {
 		try {
-            em.getTransaction().begin();
+			if(em == null) {
+				em = getEntityManager();
+			}
+			em.getTransaction().begin();
             em.merge(solicitationUpdated);
             em.getTransaction().commit();
        } catch (Exception ex) {
 	            ex.printStackTrace();
 	            em.getTransaction().rollback();
+	   } finally {
+		   em = null;
 	   }
 	}
 
 	@Override
 	public boolean delete(Solicitation solicitation) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			if(em == null) {
+				em = getEntityManager();
+			}
+			em.getTransaction().begin();
+			em.remove(solicitation);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em = null;
+		}
+		return true;
 	}
 
 	@Override
 	public Optional<Solicitation> readById(int id) {
-		return Optional.ofNullable(em.find(Solicitation.class, id));
+		Optional<Solicitation> s = Optional.empty();
+		try {
+			if(em == null) {
+				em = getEntityManager();
+			}
+			s = Optional.ofNullable(em.find(Solicitation.class, id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em = null;
+		}
+		return s;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Solicitation> readByIdHouseAndStatus(int idHouse, String status) {
-		return em.createQuery("FROM " + Solicitation.class.getName() + " WHERE house_id = :house_id AND status = :status")
-				   .setParameter("house_id", idHouse)
-				   .setParameter("status", status).getResultList();
+		List<Solicitation> list = new ArrayList<>();
+		try {
+			if(em == null) {
+				em = getEntityManager();
+			}
+			list = em.createQuery("FROM " + Solicitation.class.getName() + " WHERE house_id = :house_id AND status = :status")
+					   .setParameter("house_id", idHouse)
+					   .setParameter("status", status).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em = null;
+		}
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Solicitation> readByIdHouseAndIdUser(int idHouse, int idUser) {
+		List<Solicitation> list = new ArrayList<>();
+		try {
+			if(em == null) {
+				em = getEntityManager();
+			}
+			list = em.createQuery("FROM " + Solicitation.class.getName() + " WHERE house_id = :house_id AND idClient = :idUser AND status is null")
+					   .setParameter("house_id", idHouse)
+					   .setParameter("idUser", idUser).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em = null;
+		}
+		return list;
 	}
 	
 }
