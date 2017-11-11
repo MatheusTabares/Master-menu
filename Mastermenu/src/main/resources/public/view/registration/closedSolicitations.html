@@ -38,14 +38,19 @@
 	<table class="table table-striped">
 		<tr>
 			<th>Nome</th>
-			<th>Quantidade</th>
+			<th>Hora do envio</th>
+			<th>Prazo estimado</th>
+			<th>Finalizado</th>
+			<th>Tempo de produção</th>
 		</tr>
-		<tr ng-repeat="solicitation in closedSolicitations">
-			<td>{{solicitation.product.name}}</td>
-			<td>{{solicitation.quantity}}</td>
+		<tr ng-repeat="s in closedSolicitations">
+			<td>{{s.product.name}}</td>
+			<td>{{s.currentDate.time.hour}}:{{s.currentDate.time.minute}}hs</td>
+			<td>{{s.estimatedDate.time.hour}}:{{s.estimatedDate.time.minute}}hs</td>
+			<td>{{s.finalized.time.hour}}:{{s.finalized.time.minute}}hs</td>
+			<td>{{s.productionTime}}min</td> 
 		</tr>
 	</table>
-	
 	<a	class="btn btn-danger" href="" ng-click="back()" >Voltar</a>
 </div>
     </header>

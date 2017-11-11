@@ -43,6 +43,22 @@ public class Solicitation {
 	
 	private LocalDateTime estimatedDate;
 	
+	private LocalDateTime finalized;
+	
+	private long productionTime;
+	
+	public long getProductionTime() {
+		return productionTime;
+	}
+	public void setProductionTime(long productionTime) {
+		this.productionTime = productionTime;
+	}
+	public LocalDateTime getFinalized() {
+		return finalized;
+	}
+	public void setFinalized(LocalDateTime finalized) {
+		this.finalized = finalized;
+	}
 	public String getSelectedCompositions() {
 		return selectedCompositions;
 	}

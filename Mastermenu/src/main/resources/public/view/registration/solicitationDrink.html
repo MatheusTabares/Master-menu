@@ -38,14 +38,16 @@
 	<table class="table table-striped">
 		<tr>
 			<th>Nome</th>
-			<th>Quantidade</th>
+			<th>Hora de envio</th>
+			<th>Prazo estimado</th>
 			<th></th>
 		</tr>
-		<tr ng-repeat="solicitation in solicitations">
-			<td>{{solicitation.product.name}}</td>
-			<td>{{solicitation.quantity}}</td>
+		<tr ng-repeat="s in solicitations">
+			<td>{{s.product.name}}</td>
+			<td>{{s.currentDate.time.hour}}:{{s.currentDate.time.minute}}hs</td>
+			<td>{{s.estimatedDate.time.hour}}:{{s.estimatedDate.time.minute}}hs</td>
 			<td><button type="button" class="btn btn-info" 
-			 ng-click="closeSolicitation(solicitation)">PRONTO</button></td></td>
+			 ng-click="closeSolicitation(s)">PRONTO</button></td></td>
 		</tr>
 	</table>
 	

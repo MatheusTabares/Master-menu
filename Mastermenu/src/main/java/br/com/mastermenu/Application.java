@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -385,8 +386,11 @@ public class Application {
 			int id = Integer.parseInt(req.params(":id"));
 			Optional<Solicitation> solicitation = solicitationService.readById(id);
 			if (solicitation.isPresent()) {
-				String body = req.body();
-				solicitationService.update(parseSolicitationFromBody(body));
+				String body = req.body();	
+				Solicitation s = parseSolicitationFromBody(body);
+				s.setFinalized(LocalDateTime.now());
+				s.setProductionTime(ChronoUnit.MINUTES.between(s.getCurrentDate(), s.getFinalized()));
+				solicitationService.update(s);
 				
 				return gson.toJson("Pedido Encerrado!");
 			} else {
@@ -546,17 +550,22 @@ public class Application {
 	}
 	
 	private static void estimateTime(Solicitation sol) {
+		int time = 0;
+		if(sol.getTypeCategory().equals("1"))
+			time = 4;
+		else 
+			time = 7;
 		List<Solicitation> solicitations = new ArrayList<>();
 		ISolicitationService solService = new SolicitationService();
 		solicitations = solService.readByIdHouseAndIdCategory(
 				sol.getHouse().getId(), sol.getProduct().getCategoria().getId().toString());
 		if(solicitations.size() == 0) {
-			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(7));
+			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(time));
 		} else if(solicitations.size() >= 3) {
-			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(25));
+			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(time * 4));
 		}
 		else {
-			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(7 * (solicitations.size() + 1)));
+			sol.setEstimatedDate(sol.getCurrentDate().plusMinutes(time * (solicitations.size() + 1)));
 		}
 	}
 	

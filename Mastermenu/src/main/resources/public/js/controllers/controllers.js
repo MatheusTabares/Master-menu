@@ -685,7 +685,8 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    	'$location',
    	'$routeParams',
    	'$window',
-   	function($scope, $http, $location, $routeParams, $window) {
+   	'$interval',
+   	function($scope, $http, $location, $routeParams, $window, $interval) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idUser = $routeParams.idUser;
@@ -708,6 +709,21 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    			alert("Encerrado com sucesso!");
    			$window.location.reload();
    		}
+   		
+   		$scope.customStyle = {};
+   		$interval(function (){
+   	   		var today = new Date();
+	   		for (var i = 0; i < $scope.solicitations.length; i++) { 
+					if(today.getHours() >= $scope.solicitations[i].estimatedDate.time.hour &&
+							today.getMinutes() >= $scope.solicitations[i].estimatedDate.time.minute) {
+						$scope.customStyle.style = {"color":"red"};
+					}
+			}
+   		
+   			
+   		}, 2000);
+   		
+   		
    		
    		$scope.init();
    	} ]);
@@ -752,7 +768,8 @@ mastermenuControllers.controller('ClosedSolicitationsCtrl', [
    	'$http',
    	'$location',
    	'$routeParams',
-   	function($scope, $http, $location, $routeParams) {
+   	'$interval',
+   	function($scope, $http, $location, $routeParams, $interval) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idUser = $routeParams.idUser;
@@ -777,6 +794,7 @@ mastermenuControllers.controller('ClosedSolicitationsCtrl', [
    		}
    		
    		$scope.init();
+   		
    	} ]);
 
 mastermenuControllers.controller('CommandsCtrl', [
