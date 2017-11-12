@@ -712,10 +712,10 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    		
    		$scope.customStyle = {};
    		$interval(function (){
-   	   		var today = new Date();
+   	   		var today = new Date;
 	   		for (var i = 0; i < $scope.solicitations.length; i++) { 
-					if(today.getHours() >= $scope.solicitations[i].estimatedDate.time.hour &&
-							today.getMinutes() >= $scope.solicitations[i].estimatedDate.time.minute) {
+					if(today.toString() >= $scope.solicitations[i].estimatedDate) {
+						$scope.solicitations[i].visibility = false;
 						$scope.customStyle.style = {"color":"red"};
 					}
 			}

@@ -47,6 +47,14 @@ public class Solicitation {
 	
 	private long productionTime;
 	
+	private boolean visibility = true;
+	
+	public boolean isVisibility() {
+		return visibility;
+	}
+	public void setVisibility(boolean visibility) {
+		this.visibility = visibility;
+	}
 	public long getProductionTime() {
 		return productionTime;
 	}

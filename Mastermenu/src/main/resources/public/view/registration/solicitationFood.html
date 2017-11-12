@@ -43,7 +43,7 @@
 		<tr ng-repeat="s in solicitations">
 			<td>{{s.product.name}}</td>
 			<td>{{s.currentDate.time.hour}}:{{s.currentDate.time.minute}}hs</td>
-			<td ng-style="customStyle.style">{{s.estimatedDate.time.hour}}:{{s.estimatedDate.time.minute}}hs</td>
+			<td ng-style"{ 'customStyle.style' : s.visibility === false }">{{s.estimatedDate.time.hour}}:{{s.estimatedDate.time.minute}}hs</td>
 			<td><button type="button" class="btn btn-info" 
 			 ng-click="closeSolicitation(s)">PRONTO</button></td></td>
 		</tr>
