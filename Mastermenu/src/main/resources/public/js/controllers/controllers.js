@@ -91,7 +91,8 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   	'$http',
   	'$location',
   	'$routeParams',
-  	function($scope, $http, $location, $routeParams) {
+  	'$route',
+  	function($scope, $http, $location, $routeParams, $route) {
   		$scope.init = function(){                  
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idClient = $routeParams.idUser;
@@ -134,6 +135,7 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   			$http.delete("mastermenu/v1/solicitationsTemp?idClient="+$scope.idClient).success(
   					function(data) {});
   			alert("Pedidos enviados para produção!");
+  			$route.reload();
   		}
   		
   		$scope.findOrders = function() {
@@ -690,7 +692,8 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    	'$routeParams',
    	'$window',
    	'$interval',
-   	function($scope, $http, $location, $routeParams, $window, $interval) {
+   	'$route',
+   	function($scope, $http, $location, $routeParams, $window, $interval, $route) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idUser = $routeParams.idUser;
@@ -711,13 +714,14 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    			$http.put("mastermenu/v1/solicitation/"+solicitation.id, solicitation).success(
    					function(data) {});
    			alert("Encerrado com sucesso!");
-   			$window.location.reload();
+   			$scope.init();
+   			$route.reload();
    		}
    		
    		$scope.customStyle = {};
    		$interval(function (){
    			$scope.checkDate();
-   		}, 20000);
+   		}, 30000);
    		
    		$scope.checkDate = function() {
    			$http.get("mastermenu/v1/solicitationByIdCategoryAndNotClosed/"+$scope.idHouse+"/2").success(
