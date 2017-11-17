@@ -676,6 +676,10 @@ mastermenuControllers.controller('HouseResourceCtrl', [
    			$location.path('listaDePedidos/'+$scope.idHouse+'/'+$scope.idUser);
    		}
    		
+   		$scope.back = function() {
+   			$location.path('panel/'+$scope.idUser);
+   		}
+   		
    		$scope.init();
    	} ]);
 
@@ -712,18 +716,15 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
    		
    		$scope.customStyle = {};
    		$interval(function (){
-   	   		var today = new Date;
-	   		for (var i = 0; i < $scope.solicitations.length; i++) { 
-					if(today.toString() >= $scope.solicitations[i].estimatedDate) {
-						$scope.solicitations[i].visibility = false;
-						$scope.customStyle.style = {"color":"red"};
-					}
-			}
+   			$scope.checkDate();
+   		}, 20000);
    		
-   			
-   		}, 2000);
-   		
-   		
+   		$scope.checkDate = function() {
+   			$http.get("mastermenu/v1/solicitationByIdCategoryAndNotClosed/"+$scope.idHouse+"/2").success(
+  	 				function(data) {
+  	 					$scope.solicitations = data;
+  	 		});
+   		}
    		
    		$scope.init();
    	} ]);

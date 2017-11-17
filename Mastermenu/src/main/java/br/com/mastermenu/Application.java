@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -377,10 +378,13 @@ public class Application {
 			int idHouse = Integer.parseInt(req.params(":idHouse"));
 			String idCategory = req.params(":idCategoria");
 			List<Solicitation> solicitations = solicitationService.readByIdHouseAndIdCategory(idHouse, idCategory);
+			LocalDateTime date = LocalDateTime.now();
 			if(solicitations != null) {
-				/*for(Solicitation s : solicitations) {
-					s.getEstimatedDate().atZone(ZoneOffset.UTC);
-				}*/
+				for(Solicitation s : solicitations) {
+					if(date.isAfter(s.getEstimatedDate())) {
+						s.setVisibility(false);
+					}
+				}
 				return gson.toJson(solicitations);
 			} else 
 				return "Sem produtos!";
