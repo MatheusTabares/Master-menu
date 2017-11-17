@@ -27,6 +27,9 @@ import br.com.mastermenu.commands.service.ICommandsService;
 import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.composition.service.CompositionService;
 import br.com.mastermenu.composition.service.ICompositionService;
+import br.com.mastermenu.diningTable.model.DiningTable;
+import br.com.mastermenu.diningTable.service.DiningTableService;
+import br.com.mastermenu.diningTable.service.IDiningTableService;
 import br.com.mastermenu.house.service.HouseService;
 import br.com.mastermenu.house.service.IHouseService;
 import br.com.mastermenu.model.House;
@@ -58,11 +61,94 @@ public class Application {
 		ICommandsService commandsService = new CommandsService();
 		IUserService userService = new UserService();
 		IPasswordSecurityService psService = new PasswordSecurityService();
+		IDiningTableService dtService = new DiningTableService();
 		
 		Gson gson = new Gson();
 		
 		staticFileLocation("/public");
 		//URL DE ACESSO: http://localhost:4567/index.html
+		/**
+		 * TODO: CRUD DINNING TABLE
+		 */
+		post(mastermenu + "/diningTable", (req, res) -> {
+			String body = req.body();
+			DiningTable dt = parseDiningTableFromBody(body); 
+			if(dt != null) {
+				dtService.create(dt);
+				return gson.toJson("Mesa criada com sucesso.");
+			}
+			res.status(404);
+			return "Erro ao criar uma mesa.";
+		});
+		
+		get(mastermenu + "/diningTable/:id", (req, res) -> {
+			int id= Integer.parseInt(req.params(":id"));
+			Optional<DiningTable> dt = dtService.readById(id);
+			if(dt.isPresent()) {
+				return gson.toJson(dt);
+			} else {
+				return "Mesa não encontrada.";
+			}
+		});
+		
+		get(mastermenu + "/diningTable/:idHouse/house", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			List<DiningTable> dt = dtService.readByIdHouse(idHouse);
+			if(dt.size() != 0) {
+				return gson.toJson(dt);
+			} else {
+				return "Mesas não encontradas por estabelecimento.";
+			}
+		});
+		
+		get(mastermenu + "/diningTable/:idHouse/house/:idUser/user", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			int idUser = Integer.parseInt(req.params(":idUser"));
+			List<DiningTable> dt = dtService.readByIdHouseAndIdUser(idHouse, idUser);
+			if(dt.size() != 0) {
+				return gson.toJson(dt);
+			} else {
+				return "Mesas não encontradas.";
+			}
+		});
+		
+		get(mastermenu + "/diningTable/:idHouse/house/notReserved", (req, res) -> {
+			int idHouse = Integer.parseInt(req.params(":idHouse"));
+			List<DiningTable> dt = dtService.readAllNotReservedByIdHouse(idHouse);
+			if(dt.size() != 0) {
+				return gson.toJson(dt);
+			} else {
+				return "Todas mesas reservadas.";
+			}
+		});
+		
+		put(mastermenu + "/diningTable/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<DiningTable> dtBase = dtService.readById(id);
+			if (dtBase.isPresent()) {
+				String body = req.body();	
+				DiningTable dt = parseDiningTableFromBody(body);
+				dtService.update(dt);
+				
+				return gson.toJson("Mesa atualizada.");
+			} else {
+				res.status(404);
+				return "Erro ao atualizar uma mesa.";
+			}
+		});
+		
+		delete(mastermenu + "/diningTable", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			Optional<DiningTable> dt = dtService.readById(id);
+			if(dt.isPresent()) {
+				boolean response = dtService.delete(dt.get());
+				if(response) {
+					return "Mesa excluída com sucesso.";
+				}
+			}
+			return "Erro ao excluir uma mesa.";
+			
+		});
 		/**
 		 * TODO: CRUD USER
 		 */
@@ -637,7 +723,13 @@ public class Application {
 		Gson gson = new Gson();
 		return gson.fromJson(body, Categoria.class);
 	}
-
+	
+	private static DiningTable parseDiningTableFromBody(String body) {
+		//log.info(body);
+		Gson gson = new Gson();
+		return gson.fromJson(body, DiningTable.class);
+	}
+	
 	private static Solicitation parseSolicitationFromBody(String body) {
 		//log.info(body);
 		Gson gson = new Gson();
