@@ -556,6 +556,10 @@ mastermenuControllers.controller('HouseCtrl', [
  			$location.path('commands/'+$scope.idHouse+'/'+$scope.idUser);
  		}
  		
+ 		$scope.actionCallDiningTable = function() {
+ 			$location.path('diningTable/'+$scope.idHouse+'/'+$scope.idUser);
+ 		}
+ 		
  		$scope.back = function() {
  			$location.path('registration/'+$scope.idUser);
  		}
@@ -833,6 +837,73 @@ mastermenuControllers.controller('CommandsCtrl', [
    		
    		$scope.init();
    	} ]);
+
+mastermenuControllers.controller('DiningTableCtrl', [
+ 	'$scope',
+ 	'$http',
+ 	'$location',
+ 	'$routeParams',
+ 	'$route',
+ 	function($scope, $http, $location, $routeParams, $route) {
+ 		$scope.button = 'Criar';
+ 		$scope.init = function() {
+			$scope.idHouse = $routeParams.idHouse;
+			$scope.idUser = $routeParams.idUser;
+			
+			$http.get("mastermenu/v1/diningTable/"+$scope.idHouse+"/house").success(
+	 				function(data) {
+	 					$scope.diningTables = data;
+	 		});
+			
+			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
+	 				function(data) {
+	 					$scope.house = data;
+	 				});
+		}
+ 		
+ 		$scope.checkReserve = function(reserve) {
+ 			if(reserve) {
+ 				return 'SIM';
+ 			} else {
+ 				return 'NÃO';
+ 			}
+ 		}
+ 		
+ 		$scope.edit = function(dts) {
+ 			delete $scope.dt;
+ 			$scope.dt = dts;
+ 			$scope.button = 'Editar';
+ 		}
+ 		
+ 		$scope.back = function() {
+ 			$location.path('house/'+$scope.idHouse+'/'+$scope.idUser);
+ 		}
+ 		
+ 		$scope.addDiningTable = function(dt) {
+ 			if($scope.button === 'Criar') {
+	 			$scope.dt = {
+	 					"id":null,
+	 					"number":dt.number,
+	 					"idHouse":$scope.idHouse,
+	 					"idClient":$scope.idUser,
+	 					"reserved":null
+	 			}
+	 			$http.post("mastermenu/v1/diningTable", $scope.dt).success(
+	 					function(data) {
+	 						alert(data);
+	 						$route.reload();
+				});
+ 			} else {
+ 				$http.put("mastermenu/v1/diningTable/"+$scope.dt.id, $scope.dt).success(
+ 						function(data) {
+ 							alert(data);
+ 							$route.reload();
+ 						});
+ 			}
+ 		}
+ 		
+ 		$scope.init();
+ 	} ]);
 
 mastermenuControllers.run(['$rootScope', '$location',
                            function ($rootScope, $location) {
