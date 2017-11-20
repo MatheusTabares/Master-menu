@@ -41,10 +41,24 @@
 
     <header>
       <div class="container-fluid">
-			<h1><b>{{house.name}}</b></h1>
-			<a href="" ng-click="actionMenu()">Nosso Cardápio</a></br>
-			<a href="" ng-click="actionShoppingList()">Sua Lista de Solicitações</a><br/>
-			<a href="" ng-click="actionReserveDiningTable()">Reservar mesa</a><br/>
+      		<h1>Reservar</h1>
+			<table class="table table-striped">
+				<tr>
+					<th>Número da mesa</th>
+					<th>Reservar</th>
+				</tr>
+				<tr ng-repeat="dts in diningTables">
+					<td>{{dts.number}}</td>
+					<td>
+			        <div ng-show="!dts.reserved">
+			            <button type="button" class="btn btn-info"  ng-click="reserve(dts)">RESERVAR</button>
+			        </div>
+			        <div ng-show="dts.reserved">
+			            {{dts.reserved}}
+			        </div>
+			        </td>
+				</tr>
+			</table>
 			<a href="" ng-click="back()">Voltar</a>
 		</div>
     </header>

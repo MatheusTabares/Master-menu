@@ -682,6 +682,10 @@ mastermenuControllers.controller('HouseResourceCtrl', [
    			$location.path('listaDePedidos/'+$scope.idHouse+'/'+$scope.idUser);
    		}
    		
+   		$scope.actionReserveDiningTable = function() {
+   			$location.path('reserveDiningTable/'+$scope.idHouse+'/'+$scope.idUser);
+   		}
+   		
    		$scope.back = function() {
    			$location.path('panel/'+$scope.idUser);
    		}
@@ -902,6 +906,45 @@ mastermenuControllers.controller('DiningTableCtrl', [
  			}
  		}
  		
+ 		$scope.init();
+ 	} ]);
+
+mastermenuControllers.controller('ReserveDiningTable', [
+ 	'$scope',
+ 	'$http',
+ 	'$location',
+ 	'$routeParams',
+ 	'$window',
+ 	'$interval',
+ 	'$route',
+ 	function($scope, $http, $location, $routeParams, $window, $interval, $route) {
+ 		$scope.init = function() {
+			$scope.idHouse = $routeParams.idHouse;
+			$scope.idUser = $routeParams.idUser;
+			
+			$http.get("mastermenu/v1//diningTable/"+$scope.idHouse+"/house").success(
+	 				function(data) {
+	 					$scope.diningTables = data;
+	 					for (var i = 0; i < $scope.diningTables.length; i++) { 
+	 		  				if($scope.diningTables[i].reserved === true) {
+	 		  					$scope.diningTables[i].reserved = 'RESERVADO';
+	 		  				}
+	 		  			}
+	 		});
+		} 
+ 		
+ 		$scope.reserve = function(dts) {
+ 			dts.reserved = true;
+ 			$http.put("mastermenu/v1/diningTable/"+dts.id, dts).success(
+ 					function(data) {
+ 						$scope.init();
+ 					});
+ 		}
+ 		
+ 		$scope.back = function() {
+ 			$location.path('houseResource/'+$scope.idHouse+'/'+$scope.idUser);
+ 		}
+ 		 		
  		$scope.init();
  	} ]);
 
