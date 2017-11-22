@@ -42,33 +42,50 @@
     <header>
       <div class="container-fluid">
       		<h1>Reservar</h1>
-			<!-- <table class="table table-striped">
-				<tr>
-					<th>Número da mesa</th>
-					<th>Reservar</th>
-				</tr>
-				<tr ng-repeat="dts in diningTables">
-					<td>{{dts.number}}</td>
-					<td>
-			        <div ng-show="!dts.reserved">
-			            <button type="button" class="btn btn-info"  ng-click="reserve(dts)">RESERVAR</button>
-			        </div>
-			        <div ng-show="dts.reserved">
-			            {{dts.reserved}}
-			        </div>
-			        </td>
-				</tr>
-			</table> -->
 			<div class="row">
 			<div class="card col-md-4" ng-repeat="dts in diningTables">
 			  <div class="card-block">
 			    <h4 class="card-title">{{dts.number}}</h4>
 			    <div ng-show="!dts.reserved">
-		            <button type="button" class="btn btn-info"  ng-click="reserve(dts)">RESERVAR</button>
+		            <!-- <button type="button" class="btn btn-info"  ng-click="reserve(dts)">RESERVAR</button> -->
+		            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalReserve" ng-click="actionReserve(dts)">RESERVAR</button>
 		        </div>
 		        <div ng-show="dts.reserved">
 		            {{dts.reserved}}
 		        </div>
+			  </div>
+			</div>
+			</div>
+			<div id="modalReserve" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+			
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title">Reservar Mesa</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group">
+						<label for="reservePeopleNumber">N° de pessoas:</label>
+						<input id="reservePeopleNumber" type="number"
+							ng-model="reserve.peopleNumber" class="form-control" /></input>
+					</div>
+					<div class="form-group">
+						<label for="reserveDate">Data:</label>
+						<input id="reserveDate" type="date"
+							ng-model="reserve.date" class="form-control" /></input>
+					</div>
+					<div class="form-group">
+						<label for="reserveTime">Horário:</label>
+						<input id="reserveTime" type="time"
+							ng-model="reserve.time" class="form-control" /></input>
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reserveDiningTable(reserve)">Confirmar</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve()">Cancelar</button>
+			      </div>
+			    </div>
+			
 			  </div>
 			</div>
 			</div>

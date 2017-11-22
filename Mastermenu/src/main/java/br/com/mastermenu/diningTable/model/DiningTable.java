@@ -1,5 +1,8 @@
 package br.com.mastermenu.diningTable.model;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +21,36 @@ public class DiningTable {
 	private int idClient;
 	
 	private boolean reserved = false;
+
+	private int peopleNumber;
+	
+	private String date;
+	
+	private String time;
+	
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public int getPeopleNumber() {
+		return peopleNumber;
+	}
+
+	public void setPeopleNumber(int peopleNumber) {
+		this.peopleNumber = peopleNumber;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	public int getId() {
 		return id;
