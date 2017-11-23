@@ -53,13 +53,16 @@
 		        <div ng-show="dts.reserved">
 		            {{dts.reserved}}
 		        </div>
+		        <div ng-show="dts.idClient == idUser">
+		        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalReserve" ng-click="actionReserve(dts)">Mais...</button>
+		        </div>
 			  </div>
 			</div>
 			</div>
 			<div id="modalReserve" class="modal fade" role="dialog">
 			  <div class="modal-dialog">
-			
 			    <div class="modal-content">
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>	
 			      <div class="modal-header">
 			        <h4 class="modal-title">Reservar Mesa</h4>
 			      </div>
@@ -82,7 +85,7 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reserveDiningTable(reserve)">Confirmar</button>
-			        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve()">Cancelar</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve(reserve)">Cancelar</button>
 			      </div>
 			    </div>
 			

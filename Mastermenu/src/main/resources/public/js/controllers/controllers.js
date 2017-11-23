@@ -934,17 +934,26 @@ mastermenuControllers.controller('ReserveDiningTable', [
 		} 
  		
  		$scope.reserveDiningTable = function(reserve) {
- 			reserve.reserved = true;
  			reserve.date = reserve.date.getDate() + "/" + (reserve.date.getMonth() + 1);
- 			reserve.time = reserve.time.getHours() + ":" + reserve.date.getMinutes();
+ 			reserve.time = reserve.time.getHours() + ":" + reserve.time.getMinutes();
+ 			reserve.reserved = true;
  			$http.put("mastermenu/v1/diningTable/"+reserve.id, reserve).success(
  					function(data) {
  						$scope.init();
  					});
  		}
  		
- 		$scope.cancelReserve = function() {
- 			delete $scope.reserve;
+ 		$scope.cancelReserve = function(reserve) {
+ 			if(reserve.reserved) {
+ 				reserve.reserved = false;
+ 				$http.put("mastermenu/v1/diningTable/"+reserve.id, reserve).success(
+ 	 					function(data) {
+ 	 					});
+ 				delete reserve;
+ 				$scope.init();
+ 			} else {
+ 				delete reserve;
+ 			}
  			
  		}
  		
