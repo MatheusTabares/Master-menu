@@ -1,5 +1,7 @@
 package br.com.mastermenu.diningTable.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -26,14 +28,12 @@ public class DiningTable {
 	
 	private String date;
 	
-	private String time;
-	
-	public String getTime() {
-		return time;
+	public String getDate() {
+		return date;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public int getPeopleNumber() {
@@ -42,14 +42,6 @@ public class DiningTable {
 
 	public void setPeopleNumber(int peopleNumber) {
 		this.peopleNumber = peopleNumber;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
 	}
 
 	public int getId() {

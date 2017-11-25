@@ -320,7 +320,7 @@ mastermenuControllers.controller('ProductCtrl', [
   			product.optionsComposition = $scope.selectedOptions;
   			$http.post("mastermenu/v1/product", product).success(
   					function(data) {
-  						$window.location.reload();
+  						$route.reload();
   					});
   		}
   		
@@ -926,7 +926,7 @@ mastermenuControllers.controller('ReserveDiningTable', [
 	 				function(data) {
 	 					$scope.diningTables = data;
 	 					for (var i = 0; i < $scope.diningTables.length; i++) { 
-	 		  				if($scope.diningTables[i].reserved === true) {
+	 						if($scope.diningTables[i].reserved === true) {
 	 		  					$scope.diningTables[i].reserved = 'RESERVADO';
 	 		  				}
 	 		  			}
@@ -934,9 +934,26 @@ mastermenuControllers.controller('ReserveDiningTable', [
 		} 
  		
  		$scope.reserveDiningTable = function(reserve) {
- 			reserve.date = reserve.date.getDate() + "/" + (reserve.date.getMonth() + 1);
- 			reserve.time = reserve.time.getHours() + ":" + reserve.time.getMinutes();
+ 			var month = (reserve.date.getMonth() + 1).toString();
+ 			var day = reserve.date.getDate().toString();
+ 			var hours = reserve.date.getHours().toString();
+ 			var minutes = reserve.date.getMinutes().toString();
+ 			
  			reserve.reserved = true;
+ 			reserve.idClient = parseInt($scope.idUser);
+ 			if(month.length === 1) {
+ 				month = "0"+month;
+ 			} 
+ 			if(day.length === 1) {
+ 				day = "0"+day;
+ 			} 
+ 			if(hours.length === 1) {
+ 				hours = "0"+hours;
+ 			} 
+ 			if(minutes.length === 1) {
+ 				minutes = "0"+minutes;
+ 			}
+ 			reserve.date = reserve.date.getFullYear()+"-"+month+"-"+day+"T"+hours+":"+minutes;
  			$http.put("mastermenu/v1/diningTable/"+reserve.id, reserve).success(
  					function(data) {
  						$scope.init();
@@ -946,11 +963,15 @@ mastermenuControllers.controller('ReserveDiningTable', [
  		$scope.cancelReserve = function(reserve) {
  			if(reserve.reserved) {
  				reserve.reserved = false;
+ 				reserve.time = "";
+ 				reserve.date = "";
+ 				reserve.peopleNumber = 0;
+ 				reserve.idClient = 0;
  				$http.put("mastermenu/v1/diningTable/"+reserve.id, reserve).success(
  	 					function(data) {
  	 					});
  				delete reserve;
- 				$scope.init();
+ 				$route.reload();
  			} else {
  				delete reserve;
  			}
@@ -959,6 +980,7 @@ mastermenuControllers.controller('ReserveDiningTable', [
  		
  		$scope.actionReserve = function(reserve) {
  			$scope.reserve = reserve;
+ 			document.getElementById('reserveDate').value = reserve.date;
  		}
  		
  		$scope.back = function() {

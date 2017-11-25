@@ -53,7 +53,7 @@
 		        <div ng-show="dts.reserved">
 		            {{dts.reserved}}
 		        </div>
-		        <div ng-show="dts.idClient == idUser">
+		        <div ng-show="dts.idClient == idUser && dts.reserved">
 		        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalReserve" ng-click="actionReserve(dts)">Mais...</button>
 		        </div>
 			  </div>
@@ -62,30 +62,29 @@
 			<div id="modalReserve" class="modal fade" role="dialog">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
-			    	<button type="button" class="close" data-dismiss="modal">&times;</button>	
 			      <div class="modal-header">
-			        <h4 class="modal-title">Reservar Mesa</h4>
+			        <h4 class="modal-title">Reserva Mesa {{reserve.number}}</h4>
 			      </div>
 			      <div class="modal-body">
-			        <div class="form-group">
+			      	 <div class="form-group">
 						<label for="reservePeopleNumber">N° de pessoas:</label>
 						<input id="reservePeopleNumber" type="number"
-							ng-model="reserve.peopleNumber" class="form-control" /></input>
+							ng-model="reserve.peopleNumber" class="form-control" required/>
 					</div>
 					<div class="form-group">
-						<label for="reserveDate">Data:</label>
-						<input id="reserveDate" type="date"
-							ng-model="reserve.date" class="form-control" /></input>
-					</div>
-					<div class="form-group">
-						<label for="reserveTime">Horário:</label>
-						<input id="reserveTime" type="time"
-							ng-model="reserve.time" class="form-control" /></input>
+						<label for="reserveDate">Data e hora:</label>
+						<input id="reserveDate" type="datetime-local"
+							 ng-model="reserve.date" class="form-control" value="" required/>
 					</div>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reserveDiningTable(reserve)">Confirmar</button>
-			        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve(reserve)">Cancelar</button>
+			      	<div ng-show="!reserve.reserved">
+			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reserveDiningTable(reserve)">Confirmar</button>
+			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve(reserve)">Cancelar</button>
+			        </div>
+			        <div ng-show="reserve.reserved">
+			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve(reserve)">Cancelar Reserva</button>
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
 			      </div>
 			    </div>
 			
