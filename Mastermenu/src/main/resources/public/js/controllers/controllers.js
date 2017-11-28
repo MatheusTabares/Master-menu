@@ -343,6 +343,18 @@ mastermenuControllers.controller('ProductCtrl', [
   						$scope.init();
   					});
   		}
+  		
+  		$scope.actionHappyHour = function(product) {
+  			$scope.productHappyHour = product;
+  		}
+  		
+  		$scope.checkHappyHour = function() {
+  			$http.put("mastermenu/v1/product/"+$scope.productHappyHour.id, $scope.productHappyHour).success(
+  					function(data) {
+  						$scope.init();
+  					});
+  		}
+  		
   		$scope.init();
 } ]);
 

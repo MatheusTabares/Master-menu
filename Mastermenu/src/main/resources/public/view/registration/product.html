@@ -130,7 +130,8 @@
 				<td>{{product.name}}</td>
 				<td>{{product.price}}</td>
 				<td><button type="button" class="btn btn-info" ng-click="actionUpdate(product)">Editar</button>
-					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDeleteProduct" ng-click="actionDelete(product)">Excluir</button></td>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDeleteProduct" ng-click="actionDelete(product)">Excluir</button>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalHappyHour" ng-click="actionHappyHour(product)">Happy Hour</button></td>
 			</tr>
 		</table>
 	</div>
@@ -146,14 +147,43 @@
         <p>Tem certeza que deseja excluir o Produto: </p> <b>{{productDeleted.name}}</b>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteProduct()">Sim</button>
+      	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteProduct()">Sim</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Não</button>
       </div>
     </div>
 
   </div>
 </div>
+<div id="modalHappyHour" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Happy Hour</h4>
+      </div>
+      <div class="modal-body">
+      	<p>Destinado a promoções para datas específicos.</b>
+        <label for="happyHour">Início:</label>
+		<input id="happyHour" type="datetime-local"
+			 ng-model="productHappyHour.happyInit" class="form-control" value="" required/>
+			 
+		<label for="happyHour">Fim:</label>
+		<input id="happyHour" type="datetime-local"
+			 ng-model="productHappyHour.happyEnd" class="form-control" value="" required/>
+			 
+		<label for="happyHour">Dias da semana:</label>
+		<label for="happyHour">Todos os dias:</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="checkHappyHour()">Confirmar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Cancelar</button>
+      </div>
+    </div>
+
+  </div>
 </div>
+</div>
+
     </header>
 
     <!-- Bootstrap core JavaScript -->

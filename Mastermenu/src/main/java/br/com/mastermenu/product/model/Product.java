@@ -1,5 +1,7 @@
 package br.com.mastermenu.product.model;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,6 +46,37 @@ public class Product {
 	@JoinColumn(name="house_id")
 	private House house;
 	
+	private LocalDateTime happyInit;
+	
+	private LocalDateTime happyEnd;
+	
+	private LocalDateTime happyWeek;
+	
+	
+	public LocalDateTime getHappyInit() {
+		return happyInit;
+	}
+
+	public void setHappyInit(LocalDateTime happyInit) {
+		this.happyInit = happyInit;
+	}
+
+	public LocalDateTime getHappyEnd() {
+		return happyEnd;
+	}
+
+	public void setHappyEnd(LocalDateTime happyEnd) {
+		this.happyEnd = happyEnd;
+	}
+
+	public LocalDateTime getHappyWeek() {
+		return happyWeek;
+	}
+
+	public void setHappyWeek(LocalDateTime happyWeek) {
+		this.happyWeek = happyWeek;
+	}
+
 	public Product() {}
 	
 	public Integer getId() {
