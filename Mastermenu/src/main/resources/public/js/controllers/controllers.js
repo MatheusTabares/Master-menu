@@ -349,6 +349,10 @@ mastermenuControllers.controller('ProductCtrl', [
   		}
   		
   		$scope.checkHappyHour = function() {
+  			$scope.productHappyHour.happyInit = $scope.productHappyHour.happyInit.getTime();
+  			$scope.productHappyHour.happyEnd = $scope.productHappyHour.happyEnd.getTime();
+  			console.log("happy init: " + $scope.productHappyHour.happyInit);
+  			console.log("happy end: " + $scope.productHappyHour.happyEnd);
   			$http.put("mastermenu/v1/product/"+$scope.productHappyHour.id, $scope.productHappyHour).success(
   					function(data) {
   						$scope.init();

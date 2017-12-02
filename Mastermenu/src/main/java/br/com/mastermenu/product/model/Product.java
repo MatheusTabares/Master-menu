@@ -52,7 +52,16 @@ public class Product {
 	
 	private LocalDateTime happyWeek;
 	
+	private boolean menu;
 	
+	public boolean isMenu() {
+		return menu;
+	}
+
+	public void setMenu(boolean menu) {
+		this.menu = menu;
+	}
+
 	public LocalDateTime getHappyInit() {
 		return happyInit;
 	}
