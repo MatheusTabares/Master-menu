@@ -52,7 +52,7 @@ public class Product {
 	
 	private Long happyWeek;
 	
-	private boolean menu;
+	private boolean menu = true;
 	
 	public boolean isMenu() {
 		return menu;

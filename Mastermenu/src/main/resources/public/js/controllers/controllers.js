@@ -28,8 +28,12 @@ mastermenuControllers.controller('BebidasCtrl', [
 			var t = date.getTime();
 			console.log("t: " + t);
 			for (var i = 0; i < $scope.produtos.length; i++) { 
-				if($scope.produtos[i].happyInit > t && t < $scope.produtos[i].happyEnd)
+				if($scope.produtos[i].happyInit > t && t < $scope.produtos[i].happyEnd) {
+					$scope.produtos[i].menu = false;
+					$http.put("mastermenu/v1/product/"+$scope.id, $scope.produtos[i]).success(
+							function(data) {});
 					delete $scope.produtos[i];
+				}
   			}
 		}
 
