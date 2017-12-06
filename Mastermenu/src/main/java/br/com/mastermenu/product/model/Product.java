@@ -46,11 +46,11 @@ public class Product {
 	@JoinColumn(name="house_id")
 	private House house;
 	
-	private LocalDateTime happyInit;
+	private Long happyInit;
 	
-	private LocalDateTime happyEnd;
+	private Long happyEnd;
 	
-	private LocalDateTime happyWeek;
+	private Long happyWeek;
 	
 	private boolean menu;
 	
@@ -61,28 +61,28 @@ public class Product {
 	public void setMenu(boolean menu) {
 		this.menu = menu;
 	}
-
-	public LocalDateTime getHappyInit() {
+	
+	public Long getHappyInit() {
 		return happyInit;
 	}
 
-	public void setHappyInit(LocalDateTime happyInit) {
+	public void setHappyInit(Long happyInit) {
 		this.happyInit = happyInit;
 	}
 
-	public LocalDateTime getHappyEnd() {
+	public Long getHappyEnd() {
 		return happyEnd;
 	}
 
-	public void setHappyEnd(LocalDateTime happyEnd) {
+	public void setHappyEnd(Long happyEnd) {
 		this.happyEnd = happyEnd;
 	}
 
-	public LocalDateTime getHappyWeek() {
+	public Long getHappyWeek() {
 		return happyWeek;
 	}
 
-	public void setHappyWeek(LocalDateTime happyWeek) {
+	public void setHappyWeek(Long happyWeek) {
 		this.happyWeek = happyWeek;
 	}
 

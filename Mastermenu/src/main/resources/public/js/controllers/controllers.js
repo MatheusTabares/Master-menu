@@ -19,9 +19,20 @@ mastermenuControllers.controller('BebidasCtrl', [
 			$http.get("mastermenu/v1/produtoPorCategoria/1/"+$scope.idHouse).success(
 					function(data) {
 						$scope.produtos = data;
+						$scope.showMenu();
 					});
 		}
 		
+		$scope.showMenu = function() {
+			var date = new Date();
+			var t = date.getTime();
+			console.log("t: " + t);
+			for (var i = 0; i < $scope.produtos.length; i++) { 
+				if($scope.produtos[i].happyInit > t && t < $scope.produtos[i].happyEnd)
+					delete $scope.produtos[i];
+  			}
+		}
+
 		$scope.adicionar = function(produto) {
  			$scope.solicitation = {
  					"id" : null,
@@ -351,12 +362,8 @@ mastermenuControllers.controller('ProductCtrl', [
   		$scope.checkHappyHour = function() {
   			$scope.productHappyHour.happyInit = $scope.productHappyHour.happyInit.getTime();
   			$scope.productHappyHour.happyEnd = $scope.productHappyHour.happyEnd.getTime();
-  			console.log("happy init: " + $scope.productHappyHour.happyInit);
-  			console.log("happy end: " + $scope.productHappyHour.happyEnd);
   			$http.put("mastermenu/v1/product/"+$scope.productHappyHour.id, $scope.productHappyHour).success(
-  					function(data) {
-  						$scope.init();
-  					});
+  					function(data) {});
   		}
   		
   		$scope.init();
