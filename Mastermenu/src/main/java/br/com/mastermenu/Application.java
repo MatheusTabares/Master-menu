@@ -522,11 +522,6 @@ public class Application {
 		get(mastermenu + "/product/:idHouse", (req, res) -> {
 			int idHouse = Integer.parseInt(req.params(":idHouse"));
 			List<Product> products = productService.read(idHouse);
-			for(Product p : products) {
-				if(!p.isMenu()) {
-					products.remove(p);
-				}
-			}
 			String productsReturn = gson.toJson(products);
 			if(!productsReturn.trim().equals(""))
 				return  productsReturn;
@@ -573,9 +568,16 @@ public class Application {
 		get(mastermenu + "/produtoPorCategoria/:idCategoria/:idHouse", (req, res) -> {
 			int idCategoria = Integer.parseInt(req.params(":idCategoria"));
 			int idHouse = Integer.parseInt(req.params(":idHouse"));
-			String products = gson.toJson(productService.encontrarPorIdCategoria(idCategoria, idHouse));
-			if(!products.trim().equals(""))
-				return  products;
+			List<Product> products = productService.encontrarPorIdCategoria(idCategoria, idHouse);
+			List<Product> productsMenu = new ArrayList<>();
+			for(Product p : products) {
+				if(p.isMenu()) {
+					productsMenu.add(p);
+				}
+			}
+			String productsReturn = gson.toJson(productsMenu);
+			if(!productsReturn.trim().equals(""))
+				return  productsReturn;
 			else
 				return "Sem produtos!";
 		});

@@ -56,6 +56,11 @@
 					</div>
 					
 					<div class="form-group">
+						<label for="menuProduct">Menu:</label>
+						<input type="checkbox" ng-model="isMenu"checked >
+					</div>
+					
+					<div class="form-group">
 						<label for="categoryProduct">Categoria:</label>
 						<select id="categoryProduct" name="pCategory" ng-model="product.categoria" ng-options="category.nome for category in categories" 
 							ng-init=" pCategory = categories[0].nome" required="true" class="form-control"><option value="">*</option></select>

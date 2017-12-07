@@ -272,6 +272,7 @@ mastermenuControllers.controller('ProductCtrl', [
   	'$window',
   	function($scope, $http, $location, $routeParams, $route, $window) {
   		$scope.init = function() {
+  			$scope.isMenu = false;
   			$scope.idUser = $routeParams.idUser;
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.selected = [];
@@ -329,6 +330,8 @@ mastermenuControllers.controller('ProductCtrl', [
 		}
   		
   		$scope.addProduct = function(product) {
+  			product.menu = $scope.isMenu;
+  			console.log("menu: " + product.menu);
   			product.house = new Object();
   			product.house.id = $scope.idHouse;
   			product.compositions = $scope.selected;
