@@ -58,16 +58,50 @@
 		<tr>
 			<th>Número da mesa</th>
 			<th>Reservada</th>
-			<th>Ação</th>
+			<th>Ações</th>
 		</tr>
 		<tr ng-repeat="dts in diningTables">
 			<td>{{dts.number}}</td>
 			<td>{{checkReserve(dts.reserved)}}</td>
-			<td><button type="button" class="btn btn-info" ng-click="edit(dts)">Editar</button></td>
+			<td><button type="button" class="btn btn-info" ng-click="edit(dts)">Editar</button>
+			<div ng-show="dts.reserved">
+	        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDetailReserve" ng-click="actionDetailReserve(dts)">Detalhes</button>
+	        </div>
+	        </td>
 		</tr>
 	</table>
 	
 	<br/>
+	<div id="modalDetailReserve" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title">Reserva: Mesa {{reserve.number}}</h4>
+			      </div>
+			      <div class="modal-body">
+			      	 <div class="form-group">
+						<label for="reservePeopleNumber">N° de pessoas:</label>
+						{{reserve.peopleNumber}}
+					</div>
+					<div class="form-group">
+						<label for="reserveDate">Data e hora:</label>
+						{{dateReserve}}
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			      	<div ng-show="!reserve.reserved">
+			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reserveDiningTable(reserve)">Confirmar</button>
+			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve(reserve)">Cancelar</button>
+			        </div>
+			        <div ng-show="reserve.reserved">
+			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve(reserve)">Cancelar Reserva</button>
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+			      </div>
+			    </div>
+			
+			  </div>
+			</div>
+			</div>
 	<a href="" ng-click="back()" >Voltar</a>
     </header>
 

@@ -41,7 +41,7 @@
 
     <header>
       <div class="container-fluid">
-      		<h1>Reservar</h1>
+      		<h1>Mesas</h1>
 			<div class="row">
 			<div class="card col-md-4" ng-repeat="dts in diningTables">
 			  <div class="card-block">
@@ -54,7 +54,7 @@
 		            {{dts.reserved}}
 		        </div>
 		        <div ng-show="dts.idClient == idUser && dts.reserved">
-		        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalReserve" ng-click="actionReserve(dts)">Mais...</button>
+		        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalReserve" ng-click="actionReserve(dts)">Detalhes</button>
 		        </div>
 			  </div>
 			</div>
@@ -63,7 +63,7 @@
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h4 class="modal-title">Reserva Mesa {{reserve.number}}</h4>
+			        <h4 class="modal-title">Reserva: Mesa {{reserve.number}}</h4>
 			      </div>
 			      <div class="modal-body">
 			      	 <div class="form-group">
@@ -74,7 +74,7 @@
 					<div class="form-group">
 						<label for="reserveDate">Data e hora:</label>
 						<input id="reserveDate" type="datetime-local"
-							 ng-model="productHappyHour.happyHour" class="form-control" value="" required/>
+							 ng-model="reserve.date" class="form-control" value="" required/>
 					</div>
 			      </div>
 			      <div class="modal-footer">

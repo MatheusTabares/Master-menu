@@ -28,9 +28,9 @@ mastermenuControllers.controller('BebidasCtrl', [
 			var t = date.getTime();
 			console.log("t: " + t);
 			for (var i = 0; i < $scope.produtos.length; i++) { 
-				if($scope.produtos[i].happyInit > t && t < $scope.produtos[i].happyEnd) {
+				if(t > $scope.produtos[i].happyEnd) {
 					$scope.produtos[i].menu = false;
-					$http.put("mastermenu/v1/product/"+$scope.id, $scope.produtos[i]).success(
+					$http.put("mastermenu/v1/product/"+$scope.produtos[i].id, $scope.produtos[i]).success(
 							function(data) {});
 					delete $scope.produtos[i];
 				}
@@ -934,6 +934,12 @@ mastermenuControllers.controller('DiningTableCtrl', [
  							$route.reload();
  						});
  			}
+ 		}
+ 		
+ 		$scope.actionDetailReserve = function(reserve) {
+ 			$scope.reserve = reserve;
+ 			$scope.dateReserve = reserve.date.replace("T", "      ");
+ 			$scope.dateReserve += "hs";
  		}
  		
  		$scope.init();
