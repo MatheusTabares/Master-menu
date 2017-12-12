@@ -26,13 +26,11 @@ mastermenuControllers.controller('BebidasCtrl', [
 		$scope.showMenu = function() {
 			var date = new Date();
 			var t = date.getTime();
-			console.log("t: " + t);
 			for (var i = 0; i < $scope.produtos.length; i++) { 
-				if(t > $scope.produtos[i].happyEnd) {
-					$scope.produtos[i].menu = false;
-					$http.put("mastermenu/v1/product/"+$scope.produtos[i].id, $scope.produtos[i]).success(
-							function(data) {});
-					delete $scope.produtos[i];
+				if(t > $scope.produtos[i].happyInit && t < $scope.produtos[i].happyEnd) {
+					$scope.produtos[i].happy = true;
+				} else {
+					$scope.produtos[i].happy = false;
 				}
   			}
 		}
@@ -331,7 +329,6 @@ mastermenuControllers.controller('ProductCtrl', [
   		
   		$scope.addProduct = function(product) {
   			product.menu = $scope.isMenu;
-  			console.log("menu: " + product.menu);
   			product.house = new Object();
   			product.house.id = $scope.idHouse;
   			product.compositions = $scope.selected;

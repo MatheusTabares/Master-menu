@@ -176,8 +176,13 @@
 		<input id="happyHour" type="datetime-local"
 			 ng-model="productHappyHour.happyEnd" class="form-control" value="" required/>
 			 
-		<label for="happyHour">Dias da semana:</label>
-		<label for="happyHour">Todos os dias:</label>
+		<div class="form-group">
+			<label for="priceHappyProduct">Preço Promocional:</label>
+			<input
+				id="priceHappyProduct" type="number" ng-model="productHappyHour.priceHappy"
+				name="pPrice" required="true" placeholder="*" class="form-control" />
+		</div>
+					
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="checkHappyHour()">Confirmar</button>

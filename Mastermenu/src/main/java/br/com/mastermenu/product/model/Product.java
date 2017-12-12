@@ -52,11 +52,24 @@ public class Product {
 	
 	private Long happyWeek;
 	
+	private double priceHappy;
+	
 	private boolean menu = true;
 	
 	public boolean isMenu() {
 		return menu;
 	}
+	
+	
+	public double getPriceHappy() {
+		return priceHappy;
+	}
+
+
+	public void setPriceHappy(double priceHappy) {
+		this.priceHappy = priceHappy;
+	}
+
 
 	public void setMenu(boolean menu) {
 		this.menu = menu;

@@ -41,7 +41,12 @@
 		</tr>
 		<tr ng-repeat="produto in produtos">
 			<td>{{produto.name}}</td>
-			<td>{{produto.price}}</td>
+			<td>
+				<div ng-show="produto.happy">
+					{{produto.priceHappy}} <span style="color:red;">**PROMOÇÃO**</span></div>
+				<div ng-show="!produto.happy">
+					{{produto.price}}</div>	
+					</td>
 			<td><button class="btn btn-info" ng-click="adicionar(produto)">Add</button></td>
 		</tr>
 	</table>
