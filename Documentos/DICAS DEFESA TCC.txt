@@ -1,0 +1,17 @@
+qual a diferença entre o sistema proposto e um sistema voltado a pediatria?
+onde irá implantar isso?
+Modelos eloquentes exemplo.
+Eu posso colocar um template bootstrap na agenda do full calendar
+Qualquer um pode se cadastrar no cadastro de profissional e paciente
+Eu posso ser responsável e profissional com mesmo email
+Proximos passos
+==============DICAS 
+Numero slides
+trazer dados para cadastrar
+inserir trabalhos relacionados antes de apresentar as funcionalidades do sistema
+Se utilizar o powerpoint: utilizar o recurso bloco de notar na parte inferior
+Inserir logo nas tecnologias utilizadas
+Slides de backup com pontos relevantes(diagrama de classes, arquitetura) para possiveis perguntas
+Trabalhos futuros
+Não apresentar cronogramsa
+
