@@ -616,10 +616,10 @@ public class Application {
 			Composition compositionValidated = parseCompositionFromBody(body); 
 			if(validationComposition(compositionValidated, Optional.empty()) == true) {
 				compositionService.create(compositionValidated);
-				return gson.toJson("Composição - " + compositionValidated.getName() +", inserido com sucesso!");
+				return true;
 			}
 			res.status(404);
-			return "Composição não inserido!";
+			return "Composição não inserida!";
 		});
 		
 		get(mastermenu + "/composition", (req, res) -> {
@@ -635,7 +635,7 @@ public class Application {
 			Composition compositionValidated = parseCompositionFromBody(body);
 			if (validationComposition(compositionValidated, Optional.of("update")) == true) {
 				compositionService.update(compositionValidated);
-				return gson.toJson("Composição - " + compositionValidated.getName() + ", atualizada com sucesso!");
+				return true;
 			} else {
 				res.status(404);
 				return "Composição não encontrada para atualizar!";
@@ -646,7 +646,8 @@ public class Application {
 			int id = Integer.parseInt(req.queryParams("id"));
 			Optional<Composition> compostionDeleted = compositionService.readById(id);
 			if(compostionDeleted.isPresent()) {
-				return compositionService.delete(compostionDeleted.get());
+				compositionService.delete(compostionDeleted.get());
+				return true;
 			} else {
 				res.status(404);
 				return false;

@@ -316,6 +316,7 @@ mastermenuControllers.controller('ProductCtrl', [
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.selected = [];
   			$scope.selectedOptions = [];
+  			$scope.buttonComposition = "Add";
   			
   			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
   					function(data) {
@@ -410,6 +411,49 @@ mastermenuControllers.controller('ProductCtrl', [
   			$scope.productHappyHour.happyEnd = $scope.productHappyHour.happyEnd.getTime();
   			$http.put("mastermenu/v1/product/"+$scope.productHappyHour.id, $scope.productHappyHour).success(
   					function(data) {});
+  		}
+  		
+  		$scope.addComposition = function(composition) {
+  			if($scope.buttonComposition === "Add") {
+	  			$http.post("mastermenu/v1/composition", composition).success(
+	  					function(data) {
+	  						$scope.data = data;
+	  					});
+  			} else {
+  				$http.put("mastermenu/v1/composition", composition).success(
+  						function(data) {
+  							$scope.data = data;
+  							$scope.buttonComposition = "Add";
+  						});
+  			}
+  			delete $scope.composition;
+  			$scope.updateListCompositions();
+		}
+  		
+  		$scope.updateListCompositions = function() {
+  			$http.get("mastermenu/v1/composition").success(
+  	 				function(data) {
+  	 					$scope.compositions = data;
+  	 					$scope.optionsComposition = data;
+  	 		});
+  		}
+  		$scope.updateComposition = function(c) {
+  			$scope.composition = c;
+  			$scope.buttonComposition = "Editar";
+  		}
+  		
+  		$scope.deleteComposition = function(c) {
+  			$http.delete("mastermenu/v1/composition?id="+c.id).success(
+  					function(data) {
+  						$scope.updateListCompositions();
+  					});
+  		}
+  		$scope.actionDeleteComposition = function(c) {
+  			$scope.compositionDeleted = c;
+  		}
+  		
+  		$scope.cancelComposition = function() {
+  			delete $scope.compositionDeleted;
   		}
   		
   		$scope.init();

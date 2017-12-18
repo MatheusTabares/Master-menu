@@ -74,7 +74,6 @@
 						    
 						      <div class="modal-content">
 						        <div class="modal-header">
-						          <button type="button" class="close" data-dismiss="modal" ng-click="closeModalComposition()">&times;</button>
 						          <h4 class="modal-title">Marque as Opções</h4>
 						        </div>
 						        <div class="modal-body">
@@ -83,26 +82,42 @@
 										<table>
 											<thead>
 												<tr>
-													<th>Composição</th>
+													<th>Nome</th>
+													<th></th>
+													<th>Ações</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr ng-repeat="c in compositions | filter:searchText">
-													<td>{{c.name}}</td>
 													<td><input type="checkbox" name="" ng-model="selected" ng-checked="exist(c)"
-													ng-click="toggleSelection(c)"></td>
+															ng-click="toggleSelection(c)"></td>
+													<td>{{c.name}}</td>
+													<td>
+														<button type="button" class="btn btn-default" ng-click="updateComposition(c)">Editar</button>
+														<button type="button" class="btn btn-default" data-toggle="modal"
+														 data-target="#modalDeleteComposition" ng-click="actionDeleteComposition(c)">Excluir</button>
+													</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
+									<form name="formComposition" novalidate>
+										<div class="form-group">
+											<label for="nameComposition">Nome:</label> <input
+												id="nameComposition" type="text" ng-model="composition.name"
+												name="cName" required="true" placeholder="*" class="form-control" />
+											<button type="button" class="btn btn-info" ng-click="addComposition(composition)">{{buttonComposition}}</button>
+										</div>
+									</form>	
 						        </div>
 						        <div class="modal-footer">
-						          <button type="button" class="btn btn-default" data-dismiss="modal">Salvar</button>
+						          <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
 						        </div>
 						      </div>
 						    </div>
 						  </div>
 						</div>
+						</br>
 					<div>
 						<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalOptionsComposition">Composições Opcionais</button>
 						  <div class="modal fade" id="modalOptionsComposition" role="dialog">
@@ -179,6 +194,25 @@
 
   </div>
 </div>
+<div id="modalDeleteComposition" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Exluir Composição</h4>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir a composição: </p> <b>{{compositionDeleted.name}}</b>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteComposition(compositionDeleted)">Sim</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelComposition()">Não</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div id="modalHappyHour" class="modal fade" role="dialog">
   <div class="modal-dialog">
 

@@ -29,7 +29,7 @@ modal para confirmar solicitação
 ==================================PLANEJAMENTO
 17/12: 
 cadastro estabelecimento apenas um campo(inserir cnpj)
-manter composição
+->manter composição
 
 18/12:
 foto do produto
@@ -44,6 +44,8 @@ video
 
 20/12:
 treinar apresentação
+ler monografia
+preparar possíveis respostas
 anotar dados de cadastro
 
 
