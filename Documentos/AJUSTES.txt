@@ -24,6 +24,7 @@ tela inicial com estabelecimentos fixos
 modais sem template bootstrap
 esqueci minha senha
 modal para confirmar solicitação
+perfil funcionários
 ==================================PROBLEMAS
 
 ==================================PLANEJAMENTO

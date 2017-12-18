@@ -267,7 +267,7 @@ public class Application {
 			House houseValidated = parseHouseFromBody(body);
 			if(validationHouse(houseValidated, Optional.empty()) == true) {
 				houseService.create(houseValidated);
-				return gson.toJson("Estabelecimento - " + houseValidated.getName() +", inserido com sucesso!");
+				return gson.toJson("Estabelecimento - " + houseValidated.getSocialName() +", inserido com sucesso!");
 			}
 			res.status(404);
 			return "Estabelecimento não inserido!";
@@ -300,7 +300,7 @@ public class Application {
 			Optional<House> houseDeleted = houseService.readById(id);
 			if(houseDeleted.isPresent()) {
 				houseService.delete(houseDeleted.get());
-				return houseDeleted.get().getName() + " excluído com sucesso!";
+				return houseDeleted.get().getSocialName() + " excluído com sucesso!";
 			} else {
 				res.status(404);
 				return false;
@@ -721,11 +721,11 @@ public class Application {
 	
 	private static boolean validationHouse(House house, Optional<String> toUpdate) {
 		if(toUpdate.isPresent() && toUpdate.get().equals("update")) {
-			if(house.getId() != null && house.getName() != null && !house.getName().trim().equals("")) {
+			if(house.getId() != null && house.getSocialName() != null && !house.getSocialName().trim().equals("")) {
 				return true;
 			}
 		} else {
-			if(house.getId() == null && house.getName() != null && !house.getName().trim().equals("")) {
+			if(house.getId() == null && house.getSocialName() != null && !house.getSocialName().trim().equals("")) {
 				return true;
 			}
 		}
