@@ -39,16 +39,16 @@ public class UserDAO implements IUserDAO{
 
 	
 	@Override
-	public void create(User u) {
+	public User create(User u) {
 		try {
 			em.getTransaction().begin();
 			em.persist(u);
 			em.getTransaction().commit();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
 		}
+		return findByEmail(u.getEmail());
 	}
 
 	@Override

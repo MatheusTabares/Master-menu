@@ -163,11 +163,11 @@ public class Application {
 			if(validationUser(u, Optional.empty()) == true) {
 				PasswordSecurity ps = new PasswordSecurity();
 				u.setPassword(HashUtil.generateHash(u.getPassword(), ps.getSALT()));
-				userService.create(u);
+				User userReturn = userService.create(u);
 				ps.setUser(u);
 				psService.create(ps);
 				
-				return gson.toJson("Usuário - " + u.getName() +", inserido com sucesso!");
+				return gson.toJson(userReturn);
 			}
 			res.status(404);
 			return "Problemas ao inserir usuário!";

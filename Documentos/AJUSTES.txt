@@ -29,13 +29,13 @@ perfil funcionários
 
 ==================================PLANEJAMENTO
 17/12: 
-cadastro estabelecimento apenas um campo(inserir cnpj)
-->manter composição
+cadastro estabelecimento apenas um campo(inserir cnpj)-OK
+manter composição-OK
 
 18/12:
 foto do produto
 Preço total e quantidade de pedidos
-slides backup
+slides backup - OK
 
 19/12:
 mesa do cliente ao solicitar o pedido

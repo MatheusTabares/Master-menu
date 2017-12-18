@@ -6,7 +6,7 @@ import java.util.Optional;
 import br.com.mastermenu.user.model.User;
 
 public interface IUserDAO {
-	public void create(User u);
+	public User create(User u);
 	
 	public void update(User u);
 	

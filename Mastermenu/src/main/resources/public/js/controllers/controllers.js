@@ -508,7 +508,7 @@ mastermenuControllers.controller('MainCtrl', [
   		 				} else {
   		 					delete $scope.userCreate;
   	  						delete $scope.confirmPassword;
-  		 					$location.path("/panel");
+  		 					$location.path("/panel/"+data.id);
   		 				}
   					});
  			}

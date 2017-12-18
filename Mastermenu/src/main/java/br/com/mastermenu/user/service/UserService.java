@@ -12,8 +12,8 @@ public class UserService implements IUserService {
 	private IUserDAO userDAO = new UserDAO();
 	
 	@Override
-	public void create(User u) {
-		userDAO.create(u);
+	public User create(User u) {
+		return userDAO.create(u);
 	}
 
 	@Override
