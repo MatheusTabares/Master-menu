@@ -37,12 +37,82 @@
 		<tr>
 			<th>Nome</th>
 			<th>Preço R$</th>
+			<th></th>
 		</tr>
 		<tr ng-repeat="solicitation in solicitationsTemp">
 			<td>{{solicitation.product.name}}</td>
 			<td>{{solicitation.product.price}}</td>
+			<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDetail" ng-click="actionDetail(solicitation)">Personalizar</button>
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCancel" ng-click="actionCancel(solicitation)">Cancelar</button></td>
 		</tr>
 	</table>
+	
+	<div id="modalDetail" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    Modal content
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Detalhes do pedido</h4>
+	      </div>
+	      <div class="modal-body">
+	       	<div class="container.fluid">
+			  <div class="row">
+			    <div class="col-md-6">
+			    	<h4>Composição:</h4>
+			    	<table>
+						<tbody>
+							<tr ng-repeat="composition in solicitationDetail.product.compositions">
+								<td>{{composition.name}}</td>
+								<td><input type="checkbox" name="" ng-model="selected" ng-checked="true"
+												ng-click="toggleSelectionOptions(composition)"></td>
+							</tr>
+						</tbody>
+					</table>
+			    </div>
+			    <div class="col-md-6">
+			    	<h4>Opções:</h4>
+			    	<table>
+						<tbody>
+							<tr ng-repeat="optionComposition in solicitationDetail.product.optionsComposition">
+								<td>{{optionComposition.name}}</td>
+								<td><input type="checkbox" name="" ng-model="selected" ng-checked="existOptions(optionComposition)"
+												ng-click="toggleSelectionOptions(optionComposition)"></td>
+							</tr>
+						</tbody>
+					</table>
+			    </div>
+			  </div>
+			 </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Confirmar</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
+	
+	<div id="modalCancel" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    Modal content
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Cancelar pedido</h4>
+	      </div>
+	      <div class="modal-body">
+	       	<p>Tem certeza que deseja retirar o pedido <b>{{solicitationCanceled.product.name}}</b> da lista?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelOrder()">Sim</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
 	
 	<a	class="btn btn-danger" href="" ng-click="back()">Voltar</a>
 	<button	class="btn btn-info" ng-click="solicitationOrders()">Solicitar</button>
@@ -53,13 +123,41 @@
 			<th>Nome</th>
 			<th>Hora de envio</th>
 			<th>Prazo estimado</th>
+			<th></th>
 		</tr>
 		<tr ng-repeat="o in orders">
 			<td>{{o.product.name}}</td>
 			<td>{{o.currentDate.time.hour}}:{{o.currentDate.time.minute}}hs</td>
 			<td>{{o.estimatedDate.time.hour}}:{{o.estimatedDate.time.minute}}hs</td>
+			<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDetailOrder" ng-click="actionDetailOrder(o)">Detalhes</button></td>
 		</tr>
 	</table>
+	
+	<div id="modalDetailOrder" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    Modal content
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Detalhes do pedido</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<label><b>Composição:</b></label>
+	       	<table>
+				<tbody>
+					<tr ng-repeat="com in solicitationDetailOrder.selectedCompositions">
+						<td>{{com.name}}</td>
+					</tr>
+				</tbody>
+			</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
     
     </header>
     

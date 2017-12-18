@@ -1,0 +1,50 @@
+MVP-
+Cadastrar usuário 1
+Cadastrar usuário 2
+Cadastrar Estabelecimento usuario 1
+Cadastrar Estabelecimento usuario 2
+Cadastrar produtos (comida e bebida)
+Adicionar produtos a lista
+Personalizar pedidos
+Solicitar pedidos
+Acompanhar pedidos
+Aviso do pedido atrasado
+Encerrar pedido
+Visualizar pedido na comanda
+Cadastrar promoção de produto
+Visualizar promoção de produto somente na data especificada
+Cadastrar mesas
+Reservar mesa
+==================================PROBLEMAS
+links errados no menu superior
+editar usuário
+datalhes sem limites
+sessão do usuário perde se atualizar a página
+tela inicial com estabelecimentos fixos
+modais sem template bootstrap
+esqueci minha senha
+modal para confirmar solicitação
+==================================PROBLEMAS
+
+==================================PLANEJAMENTO
+17/12: 
+cadastro estabelecimento apenas um campo(inserir cnpj)
+manter composição
+
+18/12:
+foto do produto
+Preço total e quantidade de pedidos
+slides backup
+
+19/12:
+mesa do cliente ao solicitar o pedido
+no cadastro do usuário não vai para a página de logado
+Falta atualizar o preço promocional na lista de pedidos e lista e produtos
+video
+
+20/12:
+treinar apresentação
+anotar dados de cadastro
+
+
+

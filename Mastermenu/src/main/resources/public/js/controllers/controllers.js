@@ -105,7 +105,8 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   	'$location',
   	'$routeParams',
   	'$route',
-  	function($scope, $http, $location, $routeParams, $route) {
+  	'$window',
+  	function($scope, $http, $location, $routeParams, $route, $window) {
   		$scope.init = function(){                  
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idClient = $routeParams.idUser;
@@ -151,6 +152,29 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   			$route.reload();
   		}
   		
+  		$scope.actionDetail = function(solicitation) {
+				$scope.solicitationDetail = solicitation;
+				$scope.solicitationDetail.selectedCompositions = solicitation.product.compositions;
+		}
+  		
+  		$scope.actionDetailOrder = function(solicitation) {
+			$scope.solicitationDetailOrder = solicitation;
+			$scope.solicitationDetailOrder.selectedCompositions = solicitation.selectedCompositions;
+	}
+  		
+  		$scope.toggleSelectionOptions = function(co) {
+			var idx = $scope.solicitationDetail.selectedCompositions.indexOf(co);
+			if(idx > -1) {
+				$scope.solicitationDetail.selectedCompositions.splice(idx, 1);
+			} else {
+				$scope.solicitationDetail.selectedCompositions.push(co);
+			}
+		}
+  		
+  		$scope.existOptions = function(co) {
+			return $scope.solicitationDetail.selectedCompositions.indexOf(co) > -1;
+		}
+  		
   		$scope.findOrders = function() {
   			$http.get("mastermenu/v1/solicitation/"+$scope.idHouse+"/house/"+$scope.idClient+"/user").success(
   	 				function(data) {
@@ -161,6 +185,23 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   		$scope.back = function() {
  			$location.path('houseResource/'+$scope.idHouse+'/'+$scope.idClient);
  		}
+  		
+  		$scope.actionCancel = function(solicitation) {
+  			$scope.solicitationCanceled = solicitation;
+  		}
+  		
+  		$scope.cancelOrder = function() {
+  			for (var i = 0; i < $scope.solicitationsTemp.length; i++) { 
+					if($scope.solicitationsTemp[i].product.id === $scope.solicitationCanceled.product.id) {
+						$http.put("mastermenu/v1/solicitationTemp/"+$scope.solicitationsTemp[i].product.id+"/product", $scope.solicitationsTemp[i]).success(
+								function(data) {
+									alert(data);
+								});
+	  				}
+	  			}
+  			delete $scope.solicitationsTemp;
+  			$scope.init();
+  		}
   		
         $scope.init();
   	} ]);
@@ -295,18 +336,6 @@ mastermenuControllers.controller('ProductCtrl', [
   				}
   			}
   			
-  			$scope.existOptions = function(co) {
-  				return $scope.selectedOptions.indexOf(co) > -1;
-  			}
-  			
-  			$scope.toggleSelectionOptions = function(co) {
-  				var idx = $scope.selectedOptions.indexOf(co);
-  				if(idx > -1) {
-  					$scope.selectedOptions.splice(idx, 1);
-  				} else {
-  					$scope.selectedOptions.push(co);
-  				}
-  			}
   			$http.get("mastermenu/v1/category").success(
   	 				function(data) {
   	 					$scope.categories = data;
@@ -322,6 +351,19 @@ mastermenuControllers.controller('ProductCtrl', [
   	 		});
   			
   		}
+  		
+  		$scope.existOptions = function(co) {
+				return $scope.selectedOptions.indexOf(co) > -1;
+		}
+		
+		$scope.toggleSelectionOptions = function(co) {
+			var idx = $scope.selectedOptions.indexOf(co);
+			if(idx > -1) {
+				$scope.selectedOptions.splice(idx, 1);
+			} else {
+				$scope.selectedOptions.push(co);
+			}
+		}
   		
   		$scope.back = function() {
 			$location.path('house/'+$scope.idHouse+'/'+$scope.idUser);
@@ -345,7 +387,7 @@ mastermenuControllers.controller('ProductCtrl', [
   		
   		$scope.actionUpdate = function(product) {
   			var idProduct = product.id;
-  			$location.path('updateProduct/'+idProduct+'/'+$scope.idHouse);
+  			$location.path('updateProduct/'+idProduct+'/'+$scope.idHouse+'/'+$scope.idUser);
   		}
   		
   		$scope.actionDelete = function(productDeleted) {
@@ -410,17 +452,17 @@ mastermenuControllers.controller('MainCtrl', [
  		}
  		
  		$scope.save = function() {
- 			if($scope.user.password != $scope.confirmPassword) {
+ 			if($scope.userCreate.password != $scope.confirmPassword) {
  				alert("Por favor, confirme a senha correta.");
  				$scope.confirmPassword = "";
  			} else {
- 				$http.post("mastermenu/v1/user", $scope.user).success(
+ 				$http.post("mastermenu/v1/user", $scope.userCreate).success(
   					function(data) {
   						if(data === "E-mail já cadastrado!") {
-  							delete $scope.user.email;
+  							delete $scope.userCreate.email;
   		 					alert(data);
   		 				} else {
-  		 					delete $scope.user;
+  		 					delete $scope.userCreate;
   	  						delete $scope.confirmPassword;
   		 					$location.path("/panel");
   		 				}
@@ -765,6 +807,14 @@ mastermenuControllers.controller('SolicitationFoodCtrl', [
   	 		});
    		}
    		
+   		$scope.actionDetail = function(s) {
+   			$scope.detailSol = s;
+   			$http.get("mastermenu/v1/user/"+s.idClient).success(
+	 				function(data) {
+	 					$scope.client = data;
+	 		});
+   		}
+   		
    		$scope.init();
    	} ]);
 
@@ -847,7 +897,7 @@ mastermenuControllers.controller('CommandsCtrl', [
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idUser = $routeParams.idUser;
   			
-  			$http.get("mastermenu/v1/commands/"+$scope.idHouse).success(
+  			$http.get("mastermenu/v1/commands/"+$scope.idHouse+"/house").success(
   	 				function(data) {
   	 					$scope.commands = data;
   	 		});
@@ -934,6 +984,10 @@ mastermenuControllers.controller('DiningTableCtrl', [
  		}
  		
  		$scope.actionDetailReserve = function(reserve) {
+ 			$http.get("mastermenu/v1/user/"+reserve.idClient).success(
+	 				function(data) {
+	 					$scope.reserveClient = data;
+	 		});
  			$scope.reserve = reserve;
  			$scope.dateReserve = reserve.date.replace("T", "      ");
  			$scope.dateReserve += "hs";

@@ -173,6 +173,17 @@ public class Application {
 			return "Problemas ao inserir usuário!";
 		});
 		
+		get(mastermenu + "/user/:id", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			Optional<User> u = userService.findById(id);
+			if (u.isPresent()) {
+				return gson.toJson(u.get());
+			} else {
+				res.status(404);
+				return "Usuário não encontrado!";
+			}
+		});
+		
 		post(mastermenu + "/authenticate", (req, res) -> {
 			User u = parseUserFromBody(req.body());
 			User uReturn = userService.findByEmail(u.getEmail());
@@ -221,11 +232,16 @@ public class Application {
 			}
 		});
 		
-		get(mastermenu + "/commands/:id", (req, res) -> {
+		get(mastermenu + "/commands/:id/house", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			List<Commands> c = commandsService.read(id);
-			if (c.size() != 0) {
-				return gson.toJson(c);
+			List<Commands> commands = commandsService.read(id);
+			if (commands.size() != 0) {
+				for(Commands c : commands) {
+					Optional<User> u = userService.findById(c.getIdClient());
+					if(u.isPresent())
+						c.setNameClient(u.get().getName());
+				}
+				return gson.toJson(commands);
 			} else {
 				res.status(404);
 				return "Comanda não encontrada!";
@@ -373,6 +389,17 @@ public class Application {
 		/**
 		 * TODO: CRUD SOLICITATION
 		 */
+		put(mastermenu + "/solicitationTemp/:id/product", (req, res) -> {
+			int id = Integer.parseInt(req.params(":id"));
+			for(Solicitation s : teste) {
+				if(s.getProduct().getId() == id) {
+					teste.remove(s);
+					return gson.toJson("Retirado da lista!");
+				}
+			}
+			res.status(404);
+			return "Erro ao encerrar o Pedido!";
+		});
 		
 		post(mastermenu + "/solicitationTemp", (req, res) -> {
 			String body = req.body();

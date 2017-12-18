@@ -45,10 +45,37 @@
 			<td>{{s.currentDate.time.hour}}:{{s.currentDate.time.minute}}hs</td>
 			<td ng-style="!s.visibility && {'color':'red'}">{{s.estimatedDate.time.hour}}:{{s.estimatedDate.time.minute}}hs</td>
 			<td><button type="button" class="btn btn-info" 
-			 ng-click="closeSolicitation(s)">PRONTO</button></td></td>
+			 ng-click="closeSolicitation(s)">Encerrar</button>
+			 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDetail" ng-click="actionDetail(s)">Detalhes</button></td>
 		</tr>
 	</table>
 	
+	<div id="modalDetail" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    Modal content
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Detalhes do pedido</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<label><b>Cliente:</b></label>{{client.name}}</br>
+	       	<label><b>Composição:</b></label>
+	       	<table>
+				<tbody>
+					<tr ng-repeat="com in detailSol.selectedCompositions">
+						<td>{{com.name}}</td>
+					</tr>
+				</tbody>
+			</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
 	<a	class="btn btn-danger" href="" ng-click="back()" >Voltar</a>
 	
 	<!-- Modal -->

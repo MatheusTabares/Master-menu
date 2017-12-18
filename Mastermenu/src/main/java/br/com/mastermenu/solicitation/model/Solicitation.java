@@ -10,9 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import br.com.mastermenu.composition.model.Composition;
 import br.com.mastermenu.model.House;
 import br.com.mastermenu.product.model.Product;
 
@@ -26,7 +29,9 @@ public class Solicitation {
 	@OneToOne(fetch = FetchType.EAGER)
 	private Product product;
 	
-	private String selectedCompositions;
+	@ManyToMany
+    @JoinTable(name="solicitation_has_compositions")
+	private List<Composition> selectedCompositions;
 	
 	private int quantity = 1;
 	
@@ -67,10 +72,11 @@ public class Solicitation {
 	public void setFinalized(LocalDateTime finalized) {
 		this.finalized = finalized;
 	}
-	public String getSelectedCompositions() {
+	
+	public List<Composition> getSelectedCompositions() {
 		return selectedCompositions;
 	}
-	public void setSelectedCompositions(String selectedCompositions) {
+	public void setSelectedCompositions(List<Composition> selectedCompositions) {
 		this.selectedCompositions = selectedCompositions;
 	}
 	public LocalDateTime getCurrentDate() {

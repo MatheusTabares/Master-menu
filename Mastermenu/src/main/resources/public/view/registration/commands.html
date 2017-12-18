@@ -37,13 +37,14 @@
 
 	<ul ng-repeat="c in commands">
   <li >
-      <b>Id do Cliente</b> :{{c.idClient}}
+      <b>Cliente</b> :{{c.nameClient}}
   </li>
   <ul>
   	<b>Seus pedidos</b>
     <li ng-repeat="sol in c.solicitations">
-		{{sol.product.name}}
+		{{sol.product.name}}       R$ {{sol.product.price}}
     </li>
+    
   </ul>
 </ul>
 <!-- 	  <table class="table table-striped">

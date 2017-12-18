@@ -19,6 +19,8 @@ public class Commands {
 	
 	private int idClient;
 	
+	private String nameClient;
+	
 	private int idHouse;
 	
 	private int mesa;
@@ -28,6 +30,15 @@ public class Commands {
 	private List<Solicitation> solicitations;
 	
 	private float total;
+
+	
+	public String getNameClient() {
+		return nameClient;
+	}
+
+	public void setNameClient(String nameClient) {
+		this.nameClient = nameClient;
+	}
 
 	public int getIdHouse() {
 		return idHouse;

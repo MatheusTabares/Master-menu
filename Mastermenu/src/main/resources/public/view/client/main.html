@@ -171,17 +171,24 @@
             <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
             <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
             <form name="sentMessage" id="contactForm" novalidate ng-submit="save()">
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                  <label>Nome</label>
+                  <input class="form-control" id="email" type="text" placeholder="Nome" required data-validation-required-message="Por favor insira o e-mail válido." ng-model="userCreate.name">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>E-mail</label>
-                  <input class="form-control" id="email" type="email" placeholder="E-mail" required data-validation-required-message="Por favor insira o e-mail válido." ng-model="user.email">
+                  <input class="form-control" id="email" type="email" placeholder="E-mail" required data-validation-required-message="Por favor insira o nome válido." ng-model="userCreate.email">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Senha</label>
-                  <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor insira senha." ng-model="user.password">
+                  <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor insira senha." ng-model="userCreate.password">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>

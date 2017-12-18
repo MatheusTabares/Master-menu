@@ -48,7 +48,7 @@ angular.module('mastermenuModule', [ 'ngRoute', 'mastermenuControllers', 'master
 				templateUrl : '../../view/registration/createHouse.html',
 				controller : 'CreateHouseCtrl'
 			})
-			.when('/updateProduct/:idProduct/:idHouse', {
+			.when('/updateProduct/:idProduct/:idHouse/:idUser', {
 				templateUrl : '../../view/registration/updateProduct.html',
 				controller : 'UpdateProductCtrl'
 			})
