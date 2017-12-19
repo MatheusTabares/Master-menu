@@ -75,6 +75,9 @@
 						      <div class="modal-content">
 						        <div class="modal-header">
 						          <h4 class="modal-title">Marque as Opções</h4>
+						          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
 						        </div>
 						        <div class="modal-body">
 						          	<div class="form-group">
@@ -101,17 +104,17 @@
 											</tbody>
 										</table>
 									</div>
-									<form name="formComposition" novalidate>
-										<div class="form-group">
-											<label for="nameComposition">Nome:</label> <input
-												id="nameComposition" type="text" ng-model="composition.name"
-												name="cName" required="true" placeholder="*" class="form-control" />
-											<button type="button" class="btn btn-info" ng-click="addComposition(composition)">{{buttonComposition}}</button>
-										</div>
-									</form>	
+									 <ng-form name="formComposition" novalidate>
+											<div class="form-group">
+												<label for="nameComposition">Nome:</label> <input
+													id="nameComposition" type="text" ng-model="composition.name"
+													name="cName" required="true" placeholder="*" class="form-control" />
+												<button type="button" class="btn btn-info" ng-click="addComposition(composition)">{{buttonComposition}}</button>
+											</div>
+									</ng-form>	
 						        </div>
 						        <div class="modal-footer">
-						          <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+							        
 						        </div>
 						      </div>
 						    </div>
@@ -125,8 +128,10 @@
 						    
 						      <div class="modal-content">
 						        <div class="modal-header">
-						          <button type="button" class="close" data-dismiss="modal" ng-click="closeModalOptionsComposition()">&times;</button>
 						          <h4 class="modal-title">Marque as Opções</h4>
+						          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
 						        </div>
 						        <div class="modal-body">
 						          <table>
@@ -139,9 +144,7 @@
 										</tbody>
 									</table>
 						        </div>
-						        <div class="modal-footer">
-						          <button type="button" class="btn btn-default" data-dismiss="modal">Salvar</button>
-						        </div>
+						       
 						      </div>
 						    </div>
 						  </div>
@@ -151,8 +154,7 @@
 					</p>
 					
 					<div id=button>
-						<input class="btn btn-info" type="submit" value="Salvar"
-							ng-disabled="form.$invalid" />
+						<input class="btn btn-info" type="submit" value="Salvar"/>
 						 <a	class="btn btn-danger" href="" ng-click="back()">Voltar</a>
 					</div>
 	
