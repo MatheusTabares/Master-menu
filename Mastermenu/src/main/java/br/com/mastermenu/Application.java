@@ -405,6 +405,13 @@ public class Application {
 			String body = req.body();
 			Solicitation solicitation = parseSolicitationFromBody(body); 
 			if(solicitation != null) {
+				for(Solicitation s : teste) {
+					if(s.getProduct().getName().equalsIgnoreCase(solicitation.getProduct().getName().trim())) {
+						s.setQuantity(s.getQuantity() + 1);
+						return gson.toJson("Pedido - " + solicitation.getProduct().getName() +", adicionado a lista!");
+					}
+				}
+				
 				teste.add(solicitation);
 				return gson.toJson("Pedido - " + solicitation.getProduct().getName() +", adicionado a lista!");
 			}

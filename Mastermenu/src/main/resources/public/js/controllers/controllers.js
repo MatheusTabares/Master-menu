@@ -110,6 +110,7 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   		$scope.init = function(){                  
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idClient = $routeParams.idUser;
+  			$scope.total = 0;
   			//$scope.idClient = 1;
   			
   			$scope.findOrders();
@@ -126,6 +127,7 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
         }
   		
   		$scope.solicitationOrders = function() {
+  			$scope.total = 0;
   			for (var i = 0; i < $scope.solicitationsTemp.length; i++) { 
   				$http.post("mastermenu/v1/solicitation", $scope.solicitationsTemp[i]).success(
   						function(data) {}
@@ -201,6 +203,18 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
 	  			}
   			delete $scope.solicitationsTemp;
   			$scope.init();
+  		}
+  		
+  		$scope.subTotal = function(quantity, price) {
+  			return quantity * price;
+  		}
+  		
+  		$scope.total = function() {
+  			var subTotal = 0;
+  			for (var i = 0; i < $scope.solicitationsTemp.length; i++) { 
+  				subTotal = $scope.solicitationsTemp[i].quantity * $scope.solicitationsTemp[i].product.price; 
+				$scope.total += subTotal;
+  			}
   		}
   		
         $scope.init();

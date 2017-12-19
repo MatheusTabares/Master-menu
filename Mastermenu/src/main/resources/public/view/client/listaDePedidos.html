@@ -36,15 +36,27 @@
 	<table class="table table-striped">
 		<tr>
 			<th>Nome</th>
-			<th>Preço R$</th>
+			<th>Quant.</th>
+			<th>Preço Unit. (R$)</th>
+			<th>Sub Total (R$)</th>
 			<th></th>
 		</tr>
 		<tr ng-repeat="solicitation in solicitationsTemp">
 			<td>{{solicitation.product.name}}</td>
+			<td>{{solicitation.quantity}}</td>
 			<td>{{solicitation.product.price}}</td>
+			<td>{{subTotal(solicitation.quantity, solicitation.product.price)}}</td>
 			<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDetail" ng-click="actionDetail(solicitation)">Personalizar</button>
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCancel" ng-click="actionCancel(solicitation)">Cancelar</button></td>
 		</tr>
+		<tfoot>
+    	<tr>
+    		<td></td>
+    		<td></td>
+    		<td><b>Total (R$):</b></td>
+    		<td>{{total}}</td>
+    	</tr>
+		</tfoot>
 	</table>
 	
 	<div id="modalDetail" class="modal fade" role="dialog">
@@ -142,6 +154,9 @@
 	        <h4 class="modal-title">Detalhes do pedido</h4>
 	      </div>
 	      <div class="modal-body">
+	      	<label><b>Quantidade:</b></label>{{solicitationDetailOrder.quantity}}</br>
+	      	<label><b>Preço Unitário (R$):</b></label>{{solicitationDetailOrder.product.price}}</br>
+	      	<label><b>Sub Total (R$):</b></label>{{subTotal(solicitationDetailOrder.quantity, solicitationDetailOrder.product.price)}}</br>
 	      	<label><b>Composição:</b></label>
 	       	<table>
 				<tbody>
