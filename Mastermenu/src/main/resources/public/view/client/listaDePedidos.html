@@ -54,7 +54,7 @@
     		<td></td>
     		<td></td>
     		<td><b>Total (R$):</b></td>
-    		<td>{{total}}</td>
+    		<td>{{priceTotal.toFixed(2)}}</td>
     	</tr>
 		</tfoot>
 	</table>
@@ -160,7 +160,10 @@
 	      	<label><b>Composição:</b></label>
 	       	<table>
 				<tbody>
-					<tr ng-repeat="com in solicitationDetailOrder.selectedCompositions">
+					<tr ng-repeat="com in solicitationDetailOrder.product.compositions">
+						<td>{{com.name}}</td>
+					</tr>
+					<tr ng-repeat="com in solicitationDetailOrder.product.optionsComposition">
 						<td>{{com.name}}</td>
 					</tr>
 				</tbody>

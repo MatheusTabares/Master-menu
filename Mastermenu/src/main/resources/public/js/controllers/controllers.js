@@ -110,13 +110,16 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   		$scope.init = function(){                  
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idClient = $routeParams.idUser;
-  			$scope.total = 0;
+  			$scope.priceTotal = 0;
   			//$scope.idClient = 1;
   			
   			$scope.findOrders();
   			$http.get("mastermenu/v1/solicitationTemp/"+$scope.idHouse+"/"+$scope.idClient).success(
  				function(data) {
  					$scope.solicitationsTemp = data;
+ 					if($scope.solicitationsTemp.length > 0) {
+ 						$scope.total();
+ 					}
  				});
   			
   			$http.get("mastermenu/v1/house/"+$scope.idHouse).success(
@@ -125,14 +128,18 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   	 				});
   	 		
         }
+  		function postSolicitation(element, index, array) {
+  		  //console.log("a[" + index + "] = " + element);
+  		  $http.post("mastermenu/v1/solicitation", element).success(
+						function(data) {}
+				)
+  		}
   		
   		$scope.solicitationOrders = function() {
-  			$scope.total = 0;
-  			for (var i = 0; i < $scope.solicitationsTemp.length; i++) { 
-  				$http.post("mastermenu/v1/solicitation", $scope.solicitationsTemp[i]).success(
-  						function(data) {}
-  				);
-  			}
+  			$scope.priceTotal = 0;
+  			$scope.solicitationsTemp.forEach(postSolicitation);
+  			
+  			
   			
   			$scope.commands = {
  					"id" : null,
@@ -213,7 +220,7 @@ mastermenuControllers.controller('ListaDePedidosCtrl', [
   			var subTotal = 0;
   			for (var i = 0; i < $scope.solicitationsTemp.length; i++) { 
   				subTotal = $scope.solicitationsTemp[i].quantity * $scope.solicitationsTemp[i].product.price; 
-				$scope.total += subTotal;
+				$scope.priceTotal += subTotal;
   			}
   		}
   		
@@ -883,7 +890,8 @@ mastermenuControllers.controller('SolicitationDrinkCtrl', [
    	'$location',
    	'$routeParams',
    	'$window',
-   	function($scope, $http, $location, $routeParams, $window) {
+   	'$route',
+   	function($scope, $http, $location, $routeParams, $window, $route) {
    		$scope.init = function() {
   			$scope.idHouse = $routeParams.idHouse;
   			$scope.idUser = $routeParams.idUser;
@@ -904,7 +912,7 @@ mastermenuControllers.controller('SolicitationDrinkCtrl', [
    			$http.put("mastermenu/v1/solicitation/"+solicitation.id, solicitation).success(
    					function(data) {});
    			alert("Encerrado com sucesso!");
-   			$window.location.reload();
+   			$route.reload();
    		}
    		
    		$scope.init();

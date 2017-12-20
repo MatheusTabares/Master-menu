@@ -53,7 +53,7 @@
 		</div>
 	</form>
 	
-	<h1>{{house.name}} : Mesas</h1>
+	<h1>{{house.fantasyName}} : Mesas</h1>
 	<table class="table table-striped">
 		<tr>
 			<th>Número da mesa</th>
@@ -93,13 +93,7 @@
 					</div>
 			      </div>
 			      <div class="modal-footer">
-			      	<div ng-show="!reserve.reserved">
-			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reserveDiningTable(reserve)">Confirmar</button>
-			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve(reserve)">Cancelar</button>
-			        </div>
-			        <div ng-show="reserve.reserved">
-			        	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelReserve(reserve)">Cancelar Reserva</button>
-			        	<button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+			      	 	<button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
 			      </div>
 			    </div>
 			
