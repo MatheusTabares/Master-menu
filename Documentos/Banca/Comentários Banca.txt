@@ -1,0 +1,28 @@
+Comentários Banca Matheus
+
+
+Jean
+
+
+- Perfis de usuário. Cliente não pode cadastrar estabelecimento.
+
+- Levantamento de requisitos do sistema. Como foi a metodologia?
+
+- Capítulo de avaliação/validação.
+
+- Qual metodologia para levantar os trabalhos relacionados?
+
+- Quais objetivos foram alcançados? Colocar na conclusão.
+
+
+
+Eduarda 
+
+
+- Arquitetura do sistema. Falar do MVC separado das tecnologias.
+
+
+
+
+
+
