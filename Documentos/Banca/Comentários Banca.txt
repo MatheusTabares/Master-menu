@@ -16,13 +16,4 @@ Jean
 
 
 
-Eduarda 
-
-
-- Arquitetura do sistema. Falar do MVC separado das tecnologias.
-
-
-
-
-
 
